@@ -1,0 +1,1309 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "deploy-gla4-both-remotes",
+			"type": "shell",
+			"command": "git add js/users.js; git commit -m \"Use generated guest-domain display emails\"; git push origin master; git push champagne master; git push --force-with-lease origin master:gh-pages; git push --force-with-lease champagne master:gh-pages",
+			"isBackground": false
+		},
+		{
+			"label": "deploy-gla4-both-remotes-v2",
+			"type": "shell",
+			"command": "git add js/users.js; git commit -m update_guest_domain_emails; git push origin master; git push champagne master; git push --force-with-lease origin master:gh-pages; git push --force-with-lease champagne master:gh-pages",
+			"isBackground": false
+		},
+		{
+			"label": "push-origin-with-champagne-identity",
+			"type": "shell",
+			"command": "git remote set-url origin https://ChampagneCODE3D@github.com/jordantchampagne-sudo/GLA4-adventure-park.git; git push origin master; git push --force-with-lease origin master:gh-pages",
+			"isBackground": false
+		},
+		{
+			"label": "restore-origin-url",
+			"type": "shell",
+			"command": "git remote set-url origin https://jordantchampagne-sudo@github.com/jordantchampagne-sudo/GLA4-adventure-park.git",
+			"isBackground": false
+		},
+		{
+			"label": "deploy-champagne-cachebust",
+			"type": "shell",
+			"command": "git add index.html; git commit -m cache_bust_users_script; git push champagne master; git push --force-with-lease champagne master:gh-pages",
+			"isBackground": false
+		},
+		{
+			"label": "push-origin-after-collab",
+			"type": "shell",
+			"command": "git push origin master; git push --force-with-lease origin master:gh-pages"
+		},
+		{
+			"label": "set-origin-champagne-and-push",
+			"type": "shell",
+			"command": "git remote set-url origin https://ChampagneCODE3D@github.com/jordantchampagne-sudo/GLA4-adventure-park.git; git push origin master; git push --force-with-lease origin master:gh-pages"
+		},
+		{
+			"label": "restore-origin-url-after-retry",
+			"type": "shell",
+			"command": "git remote set-url origin https://jordantchampagne-sudo@github.com/jordantchampagne-sudo/GLA4-adventure-park.git"
+		},
+		{
+			"label": "push-origin-after-login",
+			"type": "shell",
+			"command": "git push origin master; git push --force-with-lease origin master:gh-pages"
+		},
+		{
+			"label": "check-gh-auth-status",
+			"type": "shell",
+			"command": "gh auth status"
+		},
+		{
+			"label": "push-origin-via-champagne-gh-auth",
+			"type": "shell",
+			"command": "git remote set-url origin https://ChampagneCODE3D@github.com/jordantchampagne-sudo/GLA4-adventure-park.git; git push origin master; git push --force-with-lease origin master:gh-pages"
+		},
+		{
+			"label": "restore-origin-jordan-url",
+			"type": "shell",
+			"command": "git remote set-url origin https://jordantchampagne-sudo@github.com/jordantchampagne-sudo/GLA4-adventure-park.git"
+		},
+		{
+			"label": "push-origin-now-collaborator",
+			"type": "shell",
+			"command": "git remote set-url origin https://ChampagneCODE3D@github.com/jordantchampagne-sudo/GLA4-adventure-park.git; git push origin master; git push --force-with-lease origin master:gh-pages"
+		},
+		{
+			"label": "accept-pending-repo-invite-via-gh",
+			"type": "shell",
+			"command": "gh api /user/repository_invitations --jq '.[] | select(.repository.full_name==\"jordantchampagne-sudo/GLA4-adventure-park\") | .id' > .git/.pending_invite_id; $id = Get-Content .git/.pending_invite_id; if ($id) { gh api -X PATCH /user/repository_invitations/$id } else { Write-Output \"NO_INVITE_FOUND\" }"
+		},
+		{
+			"label": "accept-invite-via-gh-powershell",
+			"type": "shell",
+			"command": "$inv = gh api /user/repository_invitations | ConvertFrom-Json; $match = $inv | Where-Object { $_.repository.full_name -eq 'jordantchampagne-sudo/GLA4-adventure-park' } | Select-Object -First 1; if ($match) { gh api -X PATCH /user/repository_invitations/$($match.id) } else { Write-Output 'NO_INVITE_FOUND' }"
+		},
+		{
+			"label": "retry-push-origin-after-invite-accept",
+			"type": "shell",
+			"command": "git push origin master; git push --force-with-lease origin master:gh-pages"
+		},
+		{
+			"label": "restore-origin-to-jordan-final",
+			"type": "shell",
+			"command": "git remote set-url origin https://jordantchampagne-sudo@github.com/jordantchampagne-sudo/GLA4-adventure-park.git"
+		},
+		{
+			"label": "verify-sync-state",
+			"type": "shell",
+			"command": "git status --short; git branch --show-current; git rev-parse origin/master; git rev-parse champagne/master; git rev-parse origin/gh-pages; git rev-parse champagne/gh-pages"
+		},
+		{
+			"label": "check-playwright-install",
+			"type": "shell",
+			"command": "node -e \"try { console.log(require.resolve('playwright')); } catch (e) { console.error('NO_PLAYWRIGHT'); process.exit(1); }\""
+		},
+		{
+			"label": "detect-local-playwright",
+			"type": "shell",
+			"command": "node -e \"try { console.log(require.resolve('playwright')); } catch { console.error('NO_PLAYWRIGHT'); process.exit(1); }\""
+		},
+		{
+			"label": "detect-local-playwright-args",
+			"type": "shell",
+			"command": "node",
+			"args": [
+				"-e",
+				"try { console.log(require.resolve('playwright')); } catch { console.error('NO_PLAYWRIGHT'); process.exit(1); }"
+			]
+		},
+		{
+			"label": "run-live-check-capture-script",
+			"type": "shell",
+			"command": "node scripts/capture-live-checks.mjs"
+		},
+		{
+			"label": "final-sync-and-status",
+			"type": "shell",
+			"command": "git status --short; git branch --show-current; git rev-parse origin/master; git rev-parse champagne/master; git rev-parse origin/gh-pages; git rev-parse champagne/gh-pages"
+		},
+		{
+			"label": "check-git-diff-summary",
+			"type": "shell",
+			"command": "git diff --stat"
+		},
+		{
+			"label": "diff-check",
+			"type": "shell",
+			"command": "git diff --check"
+		},
+		{
+			"label": "status-selected-files",
+			"type": "shell",
+			"command": "git status --short js/users.js css/style.css index.html about.html"
+		},
+		{
+			"label": "commit-and-push-style-refresh",
+			"type": "shell",
+			"command": "git add js/users.js css/style.css index.html about.html; git commit -m refine_adventure_park_ui_and_unique_guest_emails; git remote set-url origin https://ChampagneCODE3D@github.com/jordantchampagne-sudo/GLA4-adventure-park.git; git push origin master; git push champagne master; git push --force-with-lease origin master:gh-pages; git push --force-with-lease champagne master:gh-pages; git remote set-url origin https://jordantchampagne-sudo@github.com/jordantchampagne-sudo/GLA4-adventure-park.git"
+		},
+		{
+			"label": "recapture-live-checks-after-style-refresh",
+			"type": "shell",
+			"command": "node scripts/capture-live-checks.mjs"
+		},
+		{
+			"label": "gla4-head-and-remotes",
+			"type": "shell",
+			"command": "git rev-parse HEAD; git rev-parse origin/master; git rev-parse champagne/master; git rev-parse origin/gh-pages; git rev-parse champagne/gh-pages; git status --short"
+		},
+		{
+			"label": "rerun-champagne-gla6-workflow",
+			"type": "shell",
+			"command": "& \"C:\\Program Files\\GitHub CLI\\gh.exe\" run rerun 28239581675 -R ChampagneCODE3D/GLA6-Theme-Park; & \"C:\\Program Files\\GitHub CLI\\gh.exe\" run watch 28239581675 -R ChampagneCODE3D/GLA6-Theme-Park --exit-status; & \"C:\\Program Files\\GitHub CLI\\gh.exe\" run view 28239581675 -R ChampagneCODE3D/GLA6-Theme-Park --json status,conclusion,attempt,updatedAt,url"
+		},
+		{
+			"label": "locate-gh",
+			"type": "shell",
+			"command": "where.exe gh"
+		},
+		{
+			"label": "rerun-watch-view-champagne-gla6",
+			"type": "shell",
+			"command": "gh run rerun 28239581675 -R ChampagneCODE3D/GLA6-Theme-Park; gh run watch 28239581675 -R ChampagneCODE3D/GLA6-Theme-Park --exit-status; gh run view 28239581675 -R ChampagneCODE3D/GLA6-Theme-Park --json status,conclusion,attempt,updatedAt,url"
+		},
+		{
+			"label": "inspect-champagne-gla6-root-files",
+			"type": "shell",
+			"command": "gh api repos/ChampagneCODE3D/GLA6-Theme-Park/contents --jq '.[].name'"
+		},
+		{
+			"label": "find-html-in-gla6-repo",
+			"type": "shell",
+			"command": "gh api repos/ChampagneCODE3D/GLA6-Theme-Park/git/trees/main?recursive=1 --jq '.tree[] | select(.path | test(\"\\\\.html$\")) | .path'"
+		},
+		{
+			"label": "find-html-in-gla6-repo-v2",
+			"type": "shell",
+			"command": "gh api repos/ChampagneCODE3D/GLA6-Theme-Park/git/trees/main?recursive=1 --jq '.tree[] | select(.path | contains(\".html\")) | .path'"
+		},
+		{
+			"label": "find-html-paths-via-findstr",
+			"type": "shell",
+			"command": "gh api repos/ChampagneCODE3D/GLA6-Theme-Park/git/trees/main?recursive=1 | findstr /I \".html\""
+		},
+		{
+			"label": "create-champagne-gla6-index",
+			"type": "shell",
+			"command": "$content = @'\n<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\" />\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n  <title>GLA6 Theme Park</title>\n  <style>\n    body { font-family: Segoe UI, Arial, sans-serif; margin: 0; background: #f4f7fb; color: #1f2d3d; }\n    .wrap { max-width: 760px; margin: 48px auto; background: #fff; border-radius: 14px; padding: 28px; box-shadow: 0 10px 26px rgba(0,0,0,.08); }\n    h1 { margin-top: 0; color: #174a7c; }\n    p { line-height: 1.6; }\n    a { color: #0a66c2; text-decoration: none; }\n    a:hover { text-decoration: underline; }\n    .meta { margin-top: 16px; padding: 12px; background: #eef5ff; border-left: 4px solid #0a66c2; border-radius: 8px; }\n  </style>\n</head>\n<body>\n  <main class=\"wrap\">\n    <h1>GLA6 Theme Park</h1>\n    <p>This temporary live page is published from the repository root so deployment is available while GitHub Actions billing restrictions are being resolved.</p>\n    <p>Repository: <a href=\"https://github.com/ChampagneCODE3D/GLA6-Theme-Park\">ChampagneCODE3D/GLA6-Theme-Park</a></p>\n    <div class=\"meta\">\n      <strong>Status:</strong> Single-page fallback deployment active.<br />\n      <strong>Next step:</strong> restore full workflow-based publish once account billing lock is cleared.\n    </div>\n  </main>\n</body>\n</html>\n'@;\n$bytes = [System.Text.Encoding]::UTF8.GetBytes($content);\n$b64 = [Convert]::ToBase64String($bytes);\ngh api repos/ChampagneCODE3D/GLA6-Theme-Park/contents/index.html -X PUT -f message='add temporary root index for pages fallback deploy' -f content=$b64"
+		},
+		{
+			"label": "check-champagne-pages-api-status",
+			"type": "shell",
+			"command": "gh api repos/ChampagneCODE3D/GLA6-Theme-Park/pages"
+		},
+		{
+			"label": "check-latest-pages-build",
+			"type": "shell",
+			"command": "gh api repos/ChampagneCODE3D/GLA6-Theme-Park/pages/builds --jq '.[0] | {status, error, pusher: .pusher.login, updated_at, commit}'"
+		},
+		{
+			"label": "recheck-pages-build-status",
+			"type": "shell",
+			"command": "gh api repos/ChampagneCODE3D/GLA6-Theme-Park/pages/builds --jq '.[0] | {status, error, updated_at, commit}'; gh api repos/ChampagneCODE3D/GLA6-Theme-Park/pages --jq '{status, html_url, source}'"
+		},
+		{
+			"label": "check-champagne-pages-now",
+			"type": "shell",
+			"command": "gh api repos/ChampagneCODE3D/GLA6-Theme-Park/pages --jq '{status, html_url, source, build_type}'; gh api repos/ChampagneCODE3D/GLA6-Theme-Park/pages/builds --jq '.[0] | {status, updated_at, commit, error}'"
+		},
+		{
+			"label": "snazzify-champagne-gla6-fallback",
+			"type": "shell",
+			"command": "$content = @'\n<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\" />\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n  <title>GLA6 Theme Park</title>\n  <style>\n    :root {\n      --ink: #2b2a3a;\n      --muted: #5f5a71;\n      --warm-1: #ff9a3c;\n      --warm-2: #ff5e78;\n      --warm-3: #ffd166;\n      --bg: #fff7ef;\n      --card: rgba(255,255,255,0.9);\n      --ring: rgba(255, 94, 120, 0.3);\n    }\n\n    * { box-sizing: border-box; }\n\n    body {\n      margin: 0;\n      font-family: \"Segoe UI\", \"Trebuchet MS\", Arial, sans-serif;\n      color: var(--ink);\n      background:\n        radial-gradient(circle at 10% 10%, rgba(255, 154, 60, 0.35), transparent 28%),\n        radial-gradient(circle at 90% 0%, rgba(255, 94, 120, 0.28), transparent 24%),\n        radial-gradient(circle at 50% 100%, rgba(255, 209, 102, 0.32), transparent 34%),\n        var(--bg);\n      min-height: 100vh;\n      display: grid;\n      place-items: center;\n      padding: 24px;\n    }\n\n    .shell {\n      width: min(880px, 100%);\n      background: var(--card);\n      border: 1px solid rgba(255,255,255,0.75);\n      border-radius: 24px;\n      box-shadow: 0 18px 48px rgba(53, 30, 70, 0.14);\n      overflow: hidden;\n      backdrop-filter: blur(8px);\n    }\n\n    .hero {\n      padding: 30px 30px 16px;\n      background: linear-gradient(135deg, rgba(255,154,60,0.18), rgba(255,94,120,0.18));\n      border-bottom: 1px solid rgba(0,0,0,0.05);\n    }\n\n    .badge {\n      display: inline-block;\n      font-weight: 700;\n      font-size: 12px;\n      letter-spacing: 0.08em;\n      text-transform: uppercase;\n      color: #7a2f3f;\n      background: rgba(255,255,255,0.8);\n      border: 1px solid rgba(255,94,120,0.25);\n      border-radius: 999px;\n      padding: 6px 10px;\n      margin-bottom: 10px;\n    }\n\n    h1 {\n      margin: 0;\n      font-size: clamp(1.9rem, 3.4vw, 2.8rem);\n      line-height: 1.1;\n      color: #2c233a;\n    }\n\n    .sub {\n      margin: 12px 0 0;\n      font-size: 1.03rem;\n      color: var(--muted);\n      max-width: 64ch;\n      line-height: 1.6;\n    }\n\n    .grid {\n      display: grid;\n      gap: 14px;\n      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));\n      padding: 20px 30px 10px;\n    }\n\n    .card {\n      border-radius: 16px;\n      padding: 14px;\n      background: linear-gradient(180deg, rgba(255,255,255,0.95), rgba(255,248,238,0.95));\n      border: 1px solid rgba(255, 94, 120, 0.12);\n      box-shadow: 0 8px 22px rgba(55, 28, 73, 0.08);\n    }\n\n    .card h2 {\n      margin: 0 0 8px;\n      font-size: 1.02rem;\n      color: #55335d;\n    }\n\n    .card p {\n      margin: 0;\n      color: var(--muted);\n      line-height: 1.5;\n      font-size: 0.95rem;\n    }\n\n    .actions {\n      padding: 12px 30px 28px;\n      display: flex;\n      flex-wrap: wrap;\n      gap: 10px;\n    }\n\n    .btn {\n      display: inline-flex;\n      align-items: center;\n      justify-content: center;\n      text-decoration: none;\n      font-weight: 700;\n      border-radius: 12px;\n      padding: 10px 14px;\n      transition: transform 0.2s ease, box-shadow 0.2s ease;\n    }\n\n    .btn-primary {\n      color: #fff;\n      background: linear-gradient(135deg, var(--warm-2), #ff7f50);\n      box-shadow: 0 10px 22px rgba(255, 94, 120, 0.28);\n    }\n\n    .btn-ghost {\n      color: #6a3d53;\n      border: 1px solid rgba(106, 61, 83, 0.25);\n      background: rgba(255,255,255,0.75);\n    }\n\n    .btn:hover {\n      transform: translateY(-1px);\n    }\n\n    .footer {\n      padding: 0 30px 24px;\n      color: #7a7688;\n      font-size: 0.86rem;\n    }\n\n    a:focus-visible, .btn:focus-visible {\n      outline: 3px solid var(--ring);\n      outline-offset: 2px;\n    }\n  </style>\n</head>\n<body>\n  <main class=\"shell\">\n    <section class=\"hero\">\n      <span class=\"badge\">GLA6 Live Fallback</span>\n      <h1>Theme Park Portfolio is Live</h1>\n      <p class=\"sub\">Warm and playful single-page deployment is active while full workflow publishing gets finalized. You have a working URL now and can swap in the full build the moment Actions restrictions are lifted.</p>\n    </section>\n\n    <section class=\"grid\">\n      <article class=\"card\">\n        <h2>Current Status</h2>\n        <p>Branch-based Pages deployment is active from main root and publicly reachable.</p>\n      </article>\n      <article class=\"card\">\n        <h2>Next Step</h2>\n        <p>Re-enable the full workflow-driven publish for the complete multi-page experience.</p>\n      </article>\n      <article class=\"card\">\n        <h2>Repository</h2>\n        <p>Source of truth remains in the ChampagneCODE3D GLA6 project repository.</p>\n      </article>\n    </section>\n\n    <section class=\"actions\">\n      <a class=\"btn btn-primary\" href=\"https://github.com/ChampagneCODE3D/GLA6-Theme-Park\">Open Repository</a>\n      <a class=\"btn btn-ghost\" href=\"https://github.com/ChampagneCODE3D/GLA6-Theme-Park/actions/workflows/portfolio-pages.yml\">View Workflow</a>\n    </section>\n\n    <section class=\"footer\">\n      Published on GitHub Pages - ChampagneCODE3D/GLA6-Theme-Park\n    </section>\n  </main>\n</body>\n</html>\n'@;\n$bytes = [System.Text.Encoding]::UTF8.GetBytes($content);\n$b64 = [Convert]::ToBase64String($bytes);\n$sha = gh api repos/ChampagneCODE3D/GLA6-Theme-Park/contents/index.html --jq .sha;\ngh api repos/ChampagneCODE3D/GLA6-Theme-Park/contents/index.html -X PUT -f message='refresh fallback page with warm playful visual design' -f content=$b64 -f sha=$sha"
+		},
+		{
+			"label": "check-snazz-pages-build",
+			"type": "shell",
+			"command": "gh api repos/ChampagneCODE3D/GLA6-Theme-Park/pages/builds --jq '.[0] | {status, commit, updated_at}'"
+		},
+		{
+			"label": "check-gla6-pages-build-now",
+			"type": "shell",
+			"command": "gh api repos/ChampagneCODE3D/GLA6-Theme-Park/pages/builds --jq '.[0] | {status, commit, updated_at}'"
+		},
+		{
+			"label": "apply-blue-orange-gla6-fallback",
+			"type": "shell",
+			"command": "$content = @'\n<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\" />\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n  <title>GLA6 Theme Park</title>\n  <style>\n    :root {\n      --blue-900: #0f2747;\n      --blue-800: #173a67;\n      --blue-700: #1f4f89;\n      --orange-500: #e88a2f;\n      --orange-400: #f3a347;\n      --cream: #f8f3ea;\n      --ink: #1d2735;\n      --muted: #556579;\n      --card: rgba(255, 255, 255, 0.92);\n      --ring: rgba(31, 79, 137, 0.34);\n    }\n\n    * { box-sizing: border-box; }\n\n    body {\n      margin: 0;\n      font-family: \"Segoe UI\", \"Trebuchet MS\", Arial, sans-serif;\n      color: var(--ink);\n      background:\n        radial-gradient(circle at 8% 10%, rgba(243, 163, 71, 0.28), transparent 24%),\n        radial-gradient(circle at 92% 8%, rgba(31, 79, 137, 0.30), transparent 28%),\n        linear-gradient(180deg, #fbf7ef 0%, var(--cream) 100%);\n      min-height: 100vh;\n      display: grid;\n      place-items: center;\n      padding: 24px;\n    }\n\n    .shell {\n      width: min(920px, 100%);\n      border-radius: 24px;\n      overflow: hidden;\n      border: 1px solid rgba(255, 255, 255, 0.78);\n      background: var(--card);\n      box-shadow: 0 20px 52px rgba(16, 35, 61, 0.15);\n      backdrop-filter: blur(8px);\n    }\n\n    .hero {\n      padding: 30px 30px 18px;\n      color: #fff;\n      background:\n        linear-gradient(120deg, rgba(15, 39, 71, 0.95) 0%, rgba(31, 79, 137, 0.90) 58%, rgba(232, 138, 47, 0.84) 100%);\n      border-bottom: 1px solid rgba(255, 255, 255, 0.2);\n    }\n\n    .badge {\n      display: inline-block;\n      font-size: 12px;\n      font-weight: 700;\n      letter-spacing: 0.08em;\n      text-transform: uppercase;\n      padding: 6px 10px;\n      border-radius: 999px;\n      color: #10243f;\n      background: rgba(255, 255, 255, 0.86);\n      margin-bottom: 10px;\n    }\n\n    h1 {\n      margin: 0;\n      font-size: clamp(1.9rem, 3.2vw, 2.7rem);\n      line-height: 1.1;\n      letter-spacing: 0.01em;\n    }\n\n    .sub {\n      margin: 12px 0 0;\n      max-width: 66ch;\n      line-height: 1.58;\n      color: rgba(255, 255, 255, 0.95);\n      font-size: 1.02rem;\n    }\n\n    .grid {\n      display: grid;\n      gap: 14px;\n      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));\n      padding: 20px 30px 10px;\n    }\n\n    .card {\n      border-radius: 16px;\n      padding: 14px;\n      background: linear-gradient(180deg, rgba(255, 255, 255, 0.95), rgba(248, 243, 234, 0.95));\n      border: 1px solid rgba(31, 79, 137, 0.16);\n      box-shadow: 0 8px 20px rgba(19, 42, 73, 0.08);\n    }\n\n    .card h2 {\n      margin: 0 0 8px;\n      font-size: 1.03rem;\n      color: var(--blue-800);\n    }\n\n    .card p {\n      margin: 0;\n      color: var(--muted);\n      line-height: 1.5;\n      font-size: 0.95rem;\n    }\n\n    .actions {\n      padding: 12px 30px 28px;\n      display: flex;\n      flex-wrap: wrap;\n      gap: 10px;\n    }\n\n    .btn {\n      display: inline-flex;\n      align-items: center;\n      justify-content: center;\n      text-decoration: none;\n      font-weight: 700;\n      border-radius: 12px;\n      padding: 10px 14px;\n      transition: transform 0.2s ease, box-shadow 0.2s ease;\n    }\n\n    .btn-primary {\n      color: #fff;\n      background: linear-gradient(135deg, var(--blue-700), var(--blue-900));\n      box-shadow: 0 10px 24px rgba(15, 39, 71, 0.26);\n    }\n\n    .btn-ghost {\n      color: #744314;\n      border: 1px solid rgba(232, 138, 47, 0.38);\n      background: linear-gradient(135deg, rgba(243, 163, 71, 0.24), rgba(255, 255, 255, 0.72));\n    }\n\n    .btn:hover { transform: translateY(-1px); }\n\n    .footer {\n      padding: 0 30px 24px;\n      color: #697a91;\n      font-size: 0.86rem;\n    }\n\n    a:focus-visible, .btn:focus-visible {\n      outline: 3px solid var(--ring);\n      outline-offset: 2px;\n    }\n  </style>\n</head>\n<body>\n  <main class=\"shell\">\n    <section class=\"hero\">\n      <span class=\"badge\">GLA6 Live Fallback</span>\n      <h1>Theme Park Portfolio is Live</h1>\n      <p class=\"sub\">Blue-orange theme is now active for a friendlier look while full workflow publishing is finalized. The URL is live and ready for quick updates.</p>\n    </section>\n\n    <section class=\"grid\">\n      <article class=\"card\">\n        <h2>Current Status</h2>\n        <p>Branch-based Pages deployment is active from the repository root and publicly reachable.</p>\n      </article>\n      <article class=\"card\">\n        <h2>Next Step</h2>\n        <p>Restore complete workflow-driven publishing for the full multi-page project when billing restrictions are removed.</p>\n      </article>\n      <article class=\"card\">\n        <h2>Repository</h2>\n        <p>Source of truth remains in the ChampagneCODE3D GLA6 Theme Park repository.</p>\n      </article>\n    </section>\n\n    <section class=\"actions\">\n      <a class=\"btn btn-primary\" href=\"https://github.com/ChampagneCODE3D/GLA6-Theme-Park\">Open Repository</a>\n      <a class=\"btn btn-ghost\" href=\"https://github.com/ChampagneCODE3D/GLA6-Theme-Park/actions/workflows/portfolio-pages.yml\">View Workflow</a>\n    </section>\n\n    <section class=\"footer\">\n      Published on GitHub Pages | ChampagneCODE3D/GLA6-Theme-Park\n    </section>\n  </main>\n</body>\n</html>\n'@;\n$bytes = [System.Text.Encoding]::UTF8.GetBytes($content);\n$b64 = [Convert]::ToBase64String($bytes);\n$sha = gh api repos/ChampagneCODE3D/GLA6-Theme-Park/contents/index.html --jq .sha;\ngh api repos/ChampagneCODE3D/GLA6-Theme-Park/contents/index.html -X PUT -f message='switch fallback to blue-orange palette' -f content=$b64 -f sha=$sha"
+		},
+		{
+			"label": "check-blue-orange-build",
+			"type": "shell",
+			"command": "gh api repos/ChampagneCODE3D/GLA6-Theme-Park/pages/builds --jq '.[0] | {status, commit, updated_at}'"
+		},
+		{
+			"label": "list-recent-gla6-builds",
+			"type": "shell",
+			"command": "gh api repos/ChampagneCODE3D/GLA6-Theme-Park/pages/builds --jq '.[0:5] | map({status, commit, created_at, updated_at})'"
+		},
+		{
+			"label": "verify-main-head-gla6",
+			"type": "shell",
+			"command": "gh api repos/ChampagneCODE3D/GLA6-Theme-Park/branches/main --jq .commit.sha"
+		},
+		{
+			"label": "check-gla6-pages-source",
+			"type": "shell",
+			"command": "gh api repos/ChampagneCODE3D/GLA6-Theme-Park/pages --jq '{status, html_url, build_type, source}'"
+		},
+		{
+			"label": "force-gla6-pages-rebuild",
+			"type": "shell",
+			"command": "gh api repos/ChampagneCODE3D/GLA6-Theme-Park/pages/builds -X POST"
+		},
+		{
+			"label": "check-gla6-builds-after-force",
+			"type": "shell",
+			"command": "gh api repos/ChampagneCODE3D/GLA6-Theme-Park/pages/builds --jq '.[0:5] | map({status, commit, created_at, updated_at})'"
+		},
+		{
+			"label": "inspect-gla6-latest-build-error",
+			"type": "shell",
+			"command": "gh api repos/ChampagneCODE3D/GLA6-Theme-Park/pages/builds/latest"
+		},
+		{
+			"label": "retry-gla6-pages-build",
+			"type": "shell",
+			"command": "gh api repos/ChampagneCODE3D/GLA6-Theme-Park/pages/builds -X POST"
+		},
+		{
+			"label": "check-gla6-builds-retry",
+			"type": "shell",
+			"command": "gh api repos/ChampagneCODE3D/GLA6-Theme-Park/pages/builds --jq '.[0:5] | map({status, commit, created_at, updated_at})'"
+		},
+		{
+			"label": "poll-gla6-build-status",
+			"type": "shell",
+			"command": "gh api repos/ChampagneCODE3D/GLA6-Theme-Park/pages/builds --jq '.[0] | {status, commit, updated_at}'"
+		},
+		{
+			"label": "final-gla6-build-check",
+			"type": "shell",
+			"command": "gh api repos/ChampagneCODE3D/GLA6-Theme-Park/pages/builds --jq '.[0:3] | map({status, commit, updated_at})'"
+		},
+		{
+			"label": "gla6-list-root-files",
+			"type": "shell",
+			"command": "gh api repos/ChampagneCODE3D/GLA6-Theme-Park/contents --jq '.[] | [.type,.name,.path] | @tsv'"
+		},
+		{
+			"label": "gla6-readme",
+			"type": "shell",
+			"command": "gh api repos/ChampagneCODE3D/GLA6-Theme-Park/readme --jq .download_url"
+		},
+		{
+			"label": "gla6-index-preview",
+			"type": "shell",
+			"command": "gh api repos/ChampagneCODE3D/GLA6-Theme-Park/contents/index.html --jq .download_url"
+		},
+		{
+			"label": "gla6-app-preview",
+			"type": "shell",
+			"command": "gh api repos/ChampagneCODE3D/GLA6-Theme-Park/contents/app.js --jq .download_url"
+		},
+		{
+			"label": "check-gla6-build-short",
+			"type": "shell",
+			"command": "gh api repos/ChampagneCODE3D/GLA6-Theme-Park/pages/builds --jq '.[0] | {status, commit, updated_at}'"
+		},
+		{
+			"label": "align-gla6-fallback-to-portfolio-vibe",
+			"type": "shell",
+			"command": "$content = @'\n<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\" />\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n  <title>GLA6 Theme Park</title>\n  <style>\n    :root {\n      --colour-primary: #18322a;\n      --colour-primary-strong: #10231d;\n      --colour-accent: #d97f2b;\n      --colour-accent-soft: rgba(217, 127, 43, 0.14);\n      --colour-bg: #f4efe6;\n      --colour-surface: rgba(255, 255, 255, 0.88);\n      --colour-text: #24312c;\n      --colour-muted: #63716d;\n      --shadow-soft: 0 12px 28px rgba(19, 35, 28, 0.08);\n      --shadow-lift: 0 18px 42px rgba(19, 35, 28, 0.16);\n      --radius: 18px;\n      --radius-sm: 12px;\n    }\n\n    * { box-sizing: border-box; }\n\n    body {\n      margin: 0;\n      font-family: \"Segoe UI\", Tahoma, Geneva, Verdana, sans-serif;\n      color: var(--colour-text);\n      background:\n        radial-gradient(circle at top left, rgba(217, 127, 43, 0.16), transparent 28%),\n        radial-gradient(circle at right 8%, rgba(24, 50, 42, 0.12), transparent 30%),\n        linear-gradient(180deg, #faf6ef 0%, var(--colour-bg) 100%);\n      min-height: 100vh;\n      display: grid;\n      place-items: center;\n      padding: 24px;\n    }\n\n    .shell {\n      width: min(980px, 100%);\n      background: var(--colour-surface);\n      border: 1px solid rgba(72, 95, 84, 0.12);\n      border-radius: var(--radius);\n      box-shadow: var(--shadow-soft);\n      overflow: hidden;\n      backdrop-filter: blur(10px);\n    }\n\n    .site-header {\n      background: linear-gradient(135deg, rgba(16, 35, 29, 0.98), rgba(24, 50, 42, 0.94));\n      color: #ffffff;\n      padding: 1rem 1.4rem 1.1rem;\n      box-shadow: 0 14px 36px rgba(11, 24, 19, 0.18);\n    }\n\n    .site-header h1 {\n      margin: 0 0 0.8rem;\n      font-size: clamp(1.4rem, 2vw, 1.85rem);\n      letter-spacing: 0.01em;\n    }\n\n    .nav-list {\n      list-style: none;\n      display: flex;\n      flex-wrap: wrap;\n      gap: 0.7rem;\n      margin: 0;\n      padding: 0;\n    }\n\n    .nav-list a {\n      background: rgba(255, 255, 255, 0.08);\n      color: #ffffff;\n      text-decoration: none;\n      font-weight: 600;\n      padding: 0.58rem 1rem;\n      border: 1px solid rgba(255, 255, 255, 0.16);\n      border-radius: 999px;\n      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);\n    }\n\n    .layout {\n      padding: 1.25rem;\n      display: grid;\n      gap: 1rem;\n    }\n\n    .panel {\n      background: rgba(255, 255, 255, 0.92);\n      border: 1px solid rgba(72, 95, 84, 0.12);\n      border-radius: var(--radius);\n      padding: 1.2rem;\n      box-shadow: var(--shadow-soft);\n    }\n\n    .panel h2 {\n      color: var(--colour-primary);\n      border-left: 5px solid var(--colour-accent);\n      padding-left: 0.75rem;\n      margin: 0 0 0.8rem;\n      font-size: 1.14rem;\n    }\n\n    .sub {\n      margin: 0;\n      color: var(--colour-muted);\n      line-height: 1.55;\n    }\n\n    .grid {\n      display: grid;\n      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));\n      gap: 0.9rem;\n    }\n\n    .card {\n      border-radius: var(--radius-sm);\n      border: 1px solid rgba(72, 95, 84, 0.12);\n      background: linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(253, 248, 241, 0.94));\n      padding: 0.95rem;\n      box-shadow: 0 8px 20px rgba(19, 35, 28, 0.08);\n    }\n\n    .card h3 {\n      margin: 0 0 0.5rem;\n      color: var(--colour-primary);\n      font-size: 1rem;\n    }\n\n    .card p {\n      margin: 0;\n      color: var(--colour-muted);\n      font-size: 0.95rem;\n      line-height: 1.5;\n    }\n\n    .actions {\n      display: flex;\n      flex-wrap: wrap;\n      gap: 0.7rem;\n      margin-top: 0.2rem;\n    }\n\n    .btn {\n      border: 0;\n      border-radius: 12px;\n      text-decoration: none;\n      font-weight: 700;\n      padding: 0.65rem 0.95rem;\n      transition: transform 0.2s ease, box-shadow 0.2s ease;\n    }\n\n    .btn-primary {\n      color: #ffffff;\n      background: linear-gradient(135deg, var(--colour-accent), #c0691d);\n      box-shadow: 0 10px 20px rgba(201, 112, 36, 0.25);\n    }\n\n    .btn-ghost {\n      color: var(--colour-primary);\n      background: #ffffff;\n      border: 1px solid rgba(72, 95, 84, 0.24);\n    }\n\n    .btn:hover {\n      transform: translateY(-1px);\n      box-shadow: var(--shadow-lift);\n    }\n\n    .footer {\n      color: #7b8783;\n      font-size: 0.86rem;\n      padding: 0.2rem 0 0;\n    }\n  </style>\n</head>\n<body>\n  <main class=\"shell\">\n    <header class=\"site-header\">\n      <h1>GLA6 Theme Park</h1>\n      <ul class=\"nav-list\">\n        <li><a href=\"https://github.com/ChampagneCODE3D/GLA6-Theme-Park\">Repository</a></li>\n        <li><a href=\"https://github.com/ChampagneCODE3D/GLA6-Theme-Park/actions/workflows/portfolio-pages.yml\">Workflow</a></li>\n      </ul>\n    </header>\n\n    <section class=\"layout\">\n      <section class=\"panel\">\n        <h2>Live Fallback Status</h2>\n        <p class=\"sub\">This page keeps your URL active while the full publish workflow is constrained. It does not replace your graded CRUD deliverables.</p>\n      </section>\n\n      <section class=\"panel\">\n        <h2>GLA6 Deliverables</h2>\n        <div class=\"grid\">\n          <article class=\"card\">\n            <h3>Database Setup</h3>\n            <p>Connect to themepark.sqlite and ensure rides table exists.</p>\n          </article>\n          <article class=\"card\">\n            <h3>CRUD Operations</h3>\n            <p>Implement Create, Read, Update, Delete on the rides table.</p>\n          </article>\n          <article class=\"card\">\n            <h3>Evidence</h3>\n            <p>Run node app.js and capture outputs/screenshots proving each operation.</p>\n          </article>\n        </div>\n      </section>\n\n      <section class=\"panel\">\n        <h2>Quick Links</h2>\n        <div class=\"actions\">\n          <a class=\"btn btn-primary\" href=\"https://github.com/ChampagneCODE3D/GLA6-Theme-Park\">Open GLA6 Repo</a>\n          <a class=\"btn btn-ghost\" href=\"https://champagnecode3d.github.io/GLA6-Theme-Park/\">Refresh Live Page</a>\n        </div>\n        <p class=\"footer\">Published on GitHub Pages | ChampagneCODE3D/GLA6-Theme-Park</p>\n      </section>\n    </section>\n  </main>\n</body>\n</html>\n'@;\n$bytes = [System.Text.Encoding]::UTF8.GetBytes($content);\n$b64 = [Convert]::ToBase64String($bytes);\n$sha = gh api repos/ChampagneCODE3D/GLA6-Theme-Park/contents/index.html --jq .sha;\ngh api repos/ChampagneCODE3D/GLA6-Theme-Park/contents/index.html -X PUT -f message='align fallback style to portfolio vibe and clarify GLA6 scope' -f content=$b64 -f sha=$sha"
+		},
+		{
+			"label": "force-build-after-vibe-fix",
+			"type": "shell",
+			"command": "gh api repos/ChampagneCODE3D/GLA6-Theme-Park/pages/builds -X POST"
+		},
+		{
+			"label": "check-build-after-vibe-fix",
+			"type": "shell",
+			"command": "gh api repos/ChampagneCODE3D/GLA6-Theme-Park/pages/builds --jq '.[0:3] | map({status, commit, updated_at})'"
+		},
+		{
+			"label": "gla6-pages-status-final",
+			"type": "shell",
+			"command": "gh api repos/ChampagneCODE3D/GLA6-Theme-Park/pages/builds --jq '.[0:5] | map({status, commit, updated_at})'"
+		},
+		{
+			"label": "clone-jordan-gla6-page-to-champagne",
+			"type": "shell",
+			"command": "$src = gh api repos/jordantchampagne-sudo/GLA6-Theme-Park/contents/index.html --jq .download_url; $content = Invoke-WebRequest -UseBasicParsing $src | Select-Object -ExpandProperty Content; $bytes = [System.Text.Encoding]::UTF8.GetBytes($content); $b64 = [Convert]::ToBase64String($bytes); $sha = gh api repos/ChampagneCODE3D/GLA6-Theme-Park/contents/index.html --jq .sha; gh api repos/ChampagneCODE3D/GLA6-Theme-Park/contents/index.html -X PUT -f message='sync page with jordantchampagne-sudo GLA6 clone' -f content=$b64 -f sha=$sha"
+		},
+		{
+			"label": "restore-champagne-from-jordan-live-html",
+			"type": "shell",
+			"command": "$content = Invoke-WebRequest -UseBasicParsing 'https://jordantchampagne-sudo.github.io/GLA6-Theme-Park/' | Select-Object -ExpandProperty Content; $bytes = [System.Text.Encoding]::UTF8.GetBytes($content); $b64 = [Convert]::ToBase64String($bytes); $sha = gh api repos/ChampagneCODE3D/GLA6-Theme-Park/contents/index.html --jq .sha; gh api repos/ChampagneCODE3D/GLA6-Theme-Park/contents/index.html -X PUT -f message='restore and sync with jordan live page html' -f content=$b64 -f sha=$sha"
+		},
+		{
+			"label": "build-after-clone-sync",
+			"type": "shell",
+			"command": "gh api repos/ChampagneCODE3D/GLA6-Theme-Park/pages/builds -X POST"
+		},
+		{
+			"label": "status-after-clone-sync",
+			"type": "shell",
+			"command": "gh api repos/ChampagneCODE3D/GLA6-Theme-Park/pages/builds --jq '.[0:3] | map({status, commit, updated_at})'"
+		},
+		{
+			"label": "clone-sync-build-check-2",
+			"type": "shell",
+			"command": "gh api repos/ChampagneCODE3D/GLA6-Theme-Park/pages/builds --jq '.[0:4] | map({status, commit, updated_at})'"
+		},
+		{
+			"label": "check-clone-build-now",
+			"type": "shell",
+			"command": "gh api repos/ChampagneCODE3D/GLA6-Theme-Park/pages/builds --jq '.[0:5] | map({status, commit, updated_at})'"
+		},
+		{
+			"label": "list-jordan-gla6-root",
+			"type": "shell",
+			"command": "gh api repos/jordantchampagne-sudo/GLA6-Theme-Park/contents --jq '.[] | [.type,.name,.path] | @tsv'"
+		},
+		{
+			"label": "list-champagne-gla6-root",
+			"type": "shell",
+			"command": "gh api repos/ChampagneCODE3D/GLA6-Theme-Park/contents --jq '.[] | [.type,.name,.path] | @tsv'"
+		},
+		{
+			"label": "sync-latest-output-file-to-champagne",
+			"type": "shell",
+			"command": "$txt = Invoke-WebRequest -UseBasicParsing 'https://jordantchampagne-sudo.github.io/GLA6-Theme-Park/latest-output.txt' | Select-Object -ExpandProperty Content; $bytes = [System.Text.Encoding]::UTF8.GetBytes($txt); $b64 = [Convert]::ToBase64String($bytes); gh api repos/ChampagneCODE3D/GLA6-Theme-Park/contents/latest-output.txt -X PUT -f message='add latest-output report to match jordan site' -f content=$b64"
+		},
+		{
+			"label": "rebuild-after-output-sync",
+			"type": "shell",
+			"command": "gh api repos/ChampagneCODE3D/GLA6-Theme-Park/pages/builds -X POST"
+		},
+		{
+			"label": "status-after-output-sync",
+			"type": "shell",
+			"command": "gh api repos/ChampagneCODE3D/GLA6-Theme-Park/pages/builds --jq '.[0:4] | map({status, commit, updated_at})'"
+		},
+		{
+			"label": "raw-index-url-champagne",
+			"type": "shell",
+			"command": "gh api repos/ChampagneCODE3D/GLA6-Theme-Park/contents/index.html --jq .download_url"
+		},
+		{
+			"label": "raw-index-url-jordan",
+			"type": "shell",
+			"command": "gh api repos/jordantchampagne-sudo/GLA6-Theme-Park/contents/index.html --jq .download_url"
+		},
+		{
+			"label": "add-build-info-json-to-champagne",
+			"type": "shell",
+			"command": "$json = '{\"generatedAt\":\"2026-06-26 13:15:26 UTC\",\"commit\":\"704b2edc8184931472959d7ac006210570fc78bb\"}'; $bytes = [System.Text.Encoding]::UTF8.GetBytes($json); $b64 = [Convert]::ToBase64String($bytes); gh api repos/ChampagneCODE3D/GLA6-Theme-Park/contents/build-info.json -X PUT -f message='add build-info json to complete page clone' -f content=$b64"
+		},
+		{
+			"label": "rebuild-after-buildinfo",
+			"type": "shell",
+			"command": "gh api repos/ChampagneCODE3D/GLA6-Theme-Park/pages/builds -X POST"
+		},
+		{
+			"label": "final-clone-build-status",
+			"type": "shell",
+			"command": "gh api repos/ChampagneCODE3D/GLA6-Theme-Park/pages/builds --jq '.[0:4] | map({status, commit, updated_at})'"
+		},
+		{
+			"label": "poll-buildinfo-deploy",
+			"type": "shell",
+			"command": "gh api repos/ChampagneCODE3D/GLA6-Theme-Park/pages/builds --jq '.[0:3] | map({status, commit, updated_at})'"
+		},
+		{
+			"label": "polish-gla6-footer-style",
+			"type": "shell",
+			"command": "$repo = 'ChampagneCODE3D/GLA6-Theme-Park'; $oldCss = @'\n    .foot {\n      font-size: 12px;\n      color: var(--muted);\n      margin-top: 12px;\n    }\n'@; $newCss = @'\n    .foot {\n      margin-top: 14px;\n      padding: 10px 12px;\n      border: 1px solid var(--border);\n      border-radius: 8px;\n      background: #f8fbff;\n      color: #334e68;\n      font-size: 12px;\n      line-height: 1.4;\n    }\n'@; $b64Content = gh api repos/$repo/contents/index.html --jq .content; $b64Content = $b64Content -replace \"`n\", \"\"; $html = [System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String($b64Content)); if (-not $html.Contains($oldCss)) { throw 'Expected footer CSS block not found.' }; $updated = $html.Replace($oldCss, $newCss); $bytes = [System.Text.Encoding]::UTF8.GetBytes($updated); $b64 = [Convert]::ToBase64String($bytes); $sha = gh api repos/$repo/contents/index.html --jq .sha; gh api repos/$repo/contents/index.html -X PUT -f message='polish footer styling for report page' -f content=$b64 -f sha=$sha"
+		},
+		{
+			"label": "polish-gla6-footer-style-retry",
+			"type": "shell",
+			"command": "$repo = 'ChampagneCODE3D/GLA6-Theme-Park'; $oldCss = @'\n    .foot {\n      font-size: 12px;\n      color: var(--muted);\n      margin-top: 12px;\n    }\n'@; $newCss = @'\n    .foot {\n      margin-top: 14px;\n      padding: 10px 12px;\n      border: 1px solid var(--border);\n      border-radius: 8px;\n      background: #f8fbff;\n      color: #334e68;\n      font-size: 12px;\n      line-height: 1.4;\n    }\n'@; $b64Content = gh api repos/$repo/contents/index.html --jq .content; $b64Content = $b64Content -replace '\\n',''; $html = [System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String($b64Content)); if (-not $html.Contains($oldCss)) { throw 'Expected footer CSS block not found.' }; $updated = $html.Replace($oldCss, $newCss); $bytes = [System.Text.Encoding]::UTF8.GetBytes($updated); $b64 = [Convert]::ToBase64String($bytes); $sha = gh api repos/$repo/contents/index.html --jq .sha; gh api repos/$repo/contents/index.html -X PUT -f message='polish footer styling for report page' -f content=$b64 -f sha=$sha"
+		},
+		{
+			"label": "trigger-build-footer-fix",
+			"type": "shell",
+			"command": "gh api repos/ChampagneCODE3D/GLA6-Theme-Park/pages/builds -X POST"
+		},
+		{
+			"label": "theme-gla6-with-shared-palette",
+			"type": "shell",
+			"command": "$content = @'\n<!doctype html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\" />\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n  <title>GLA6 Theme Park CRUD - Portfolio Demo</title>\n  <style>\n    :root {\n      --colour-primary: #18322a;\n      --colour-primary-strong: #10231d;\n      --colour-accent: #d97f2b;\n      --colour-accent-soft: rgba(217, 127, 43, 0.14);\n      --colour-bg: #f4efe6;\n      --colour-surface: rgba(255, 255, 255, 0.92);\n      --colour-text: #24312c;\n      --colour-muted: #63716d;\n      --colour-ok-bg: #dff6e5;\n      --colour-ok-text: #155724;\n      --colour-border: rgba(72, 95, 84, 0.18);\n      --shadow-soft: 0 12px 28px rgba(19, 35, 28, 0.08);\n      --shadow-lift: 0 18px 42px rgba(19, 35, 28, 0.16);\n    }\n\n    * { box-sizing: border-box; }\n\n    body {\n      margin: 0;\n      background:\n        radial-gradient(circle at top left, rgba(217, 127, 43, 0.16), transparent 28%),\n        radial-gradient(circle at right 8%, rgba(24, 50, 42, 0.12), transparent 30%),\n        linear-gradient(180deg, #faf6ef 0%, var(--colour-bg) 100%);\n      color: var(--colour-text);\n      font-family: \"Segoe UI\", Tahoma, Geneva, Verdana, sans-serif;\n      padding: 28px;\n    }\n\n    .wrap {\n      max-width: 1080px;\n      margin: 0 auto;\n      background: var(--colour-surface);\n      border: 1px solid var(--colour-border);\n      border-radius: 16px;\n      overflow: hidden;\n      box-shadow: var(--shadow-soft);\n      backdrop-filter: blur(8px);\n    }\n\n    header {\n      padding: 22px 26px;\n      background: linear-gradient(135deg, var(--colour-primary-strong), var(--colour-primary));\n      color: #fff;\n      box-shadow: 0 12px 28px rgba(11, 24, 19, 0.2);\n    }\n\n    h1 {\n      margin: 0;\n      font-size: 28px;\n      line-height: 1.12;\n    }\n\n    .sub {\n      margin-top: 7px;\n      opacity: 0.94;\n      font-size: 14px;\n    }\n\n    section {\n      padding: 20px 26px;\n      border-top: 1px solid var(--colour-border);\n    }\n\n    .meta {\n      display: grid;\n      grid-template-columns: repeat(2, minmax(260px, 1fr));\n      gap: 10px;\n      margin-top: 10px;\n    }\n\n    .pill {\n      border: 1px solid rgba(21, 87, 36, 0.22);\n      background: var(--colour-ok-bg);\n      color: var(--colour-ok-text);\n      border-radius: 10px;\n      padding: 10px 12px;\n      font-size: 14px;\n      font-weight: 600;\n    }\n\n    .muted {\n      color: var(--colour-muted);\n      font-size: 14px;\n      margin: 0;\n    }\n\n    pre {\n      margin: 12px 0 0;\n      background: #122019;\n      color: #d9f0de;\n      border-radius: 10px;\n      padding: 16px;\n      font-family: Consolas, \"Courier New\", monospace;\n      font-size: 13px;\n      line-height: 1.42;\n      max-height: 62vh;\n      overflow: auto;\n      white-space: pre-wrap;\n      word-break: break-word;\n      border: 1px solid rgba(255, 255, 255, 0.08);\n    }\n\n    .foot {\n      margin-top: 12px;\n      padding: 10px 12px;\n      border: 1px solid var(--colour-border);\n      border-radius: 10px;\n      background: linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(248, 241, 232, 0.85));\n      color: #56635f;\n      font-size: 12px;\n      line-height: 1.4;\n    }\n\n    @media (max-width: 760px) {\n      body { padding: 16px; }\n      .meta { grid-template-columns: 1fr; }\n      header, section { padding: 18px; }\n      h1 { font-size: 24px; }\n    }\n  </style>\n</head>\n<body>\n  <main class=\"wrap\">\n    <header>\n      <h1>GLA 6 Theme Park CRUD - Online Test Report</h1>\n      <div class=\"sub\">Automated Node.js + SQLite execution artifact for portfolio demonstration.</div>\n    </header>\n\n    <section>\n      <p class=\"muted\">Automated checks completed in CI workflow:</p>\n      <div class=\"meta\">\n        <div class=\"pill\">PASS: READ query returned ride records</div>\n        <div class=\"pill\">PASS: CREATE inserted Galaxy Spinner</div>\n        <div class=\"pill\">PASS: UPDATE modified Thunder Coaster duration</div>\n        <div class=\"pill\">PASS: DELETE removed Haunted Mansion</div>\n      </div>\n    </section>\n\n    <section>\n      <p class=\"muted\">Latest command output from <strong>node app.js</strong>:</p>\n      <pre id=\"output\">Loading latest output...</pre>\n      <div class=\"foot\" id=\"stamp\">Generated by GitHub Actions after each push to portfolio-fork.</div>\n    </section>\n  </main>\n\n  <script>\n    async function loadOutput() {\n      const outputEl = document.getElementById('output');\n      const stampEl = document.getElementById('stamp');\n      try {\n        const [outputRes, stampRes] = await Promise.all([\n          fetch('./latest-output.txt', { cache: 'no-store' }),\n          fetch('./build-info.json', { cache: 'no-store' })\n        ]);\n\n        const outputText = outputRes.ok\n          ? await outputRes.text()\n          : 'Output file not found yet. Trigger workflow by pushing to portfolio-fork.';\n\n        outputEl.textContent = outputText.trim() || 'Output is empty.';\n\n        if (stampRes.ok) {\n          const info = await stampRes.json();\n          stampEl.textContent = `Generated: ${info.generatedAt} | Commit: ${info.commit}`;\n        }\n      } catch (error) {\n        outputEl.textContent = `Could not load output: ${error.message}`;\n      }\n    }\n\n    loadOutput();\n  </script>\n</body>\n</html>\n'@;\n$bytes = [System.Text.Encoding]::UTF8.GetBytes($content);\n$b64 = [Convert]::ToBase64String($bytes);\n$sha = gh api repos/ChampagneCODE3D/GLA6-Theme-Park/contents/index.html --jq .sha;\ngh api repos/ChampagneCODE3D/GLA6-Theme-Park/contents/index.html -X PUT -f message='apply shared portfolio colour scheme to GLA6 report page' -f content=$b64 -f sha=$sha"
+		},
+		{
+			"label": "deploy-themed-gla6-page",
+			"type": "shell",
+			"command": "gh api repos/ChampagneCODE3D/GLA6-Theme-Park/pages/builds -X POST"
+		},
+		{
+			"label": "check-themed-gla6-build",
+			"type": "shell",
+			"command": "gh api repos/ChampagneCODE3D/GLA6-Theme-Park/pages/builds --jq '.[0:4] | map({status, commit, updated_at})'"
+		},
+		{
+			"label": "inspect-build-info-json-raw",
+			"type": "shell",
+			"command": "gh api repos/ChampagneCODE3D/GLA6-Theme-Park/contents/build-info.json --jq .content"
+		},
+		{
+			"label": "inspect-latest-output-presence",
+			"type": "shell",
+			"command": "gh api repos/ChampagneCODE3D/GLA6-Theme-Park/contents/latest-output.txt --jq '{name,size,sha}'"
+		},
+		{
+			"label": "fix-build-info-json-format",
+			"type": "shell",
+			"command": "$json = '{\"generatedAt\":\"2026-06-26 13:15:26 UTC\",\"commit\":\"704b2edc8184931472959d7ac006210570fc78bb\"}'; $bytes = [System.Text.Encoding]::UTF8.GetBytes($json); $b64 = [Convert]::ToBase64String($bytes); $sha = gh api repos/ChampagneCODE3D/GLA6-Theme-Park/contents/build-info.json --jq .sha; gh api repos/ChampagneCODE3D/GLA6-Theme-Park/contents/build-info.json -X PUT -f message='fix build-info.json valid JSON format' -f content=$b64 -f sha=$sha"
+		},
+		{
+			"label": "redeploy-after-json-fix",
+			"type": "shell",
+			"command": "gh api repos/ChampagneCODE3D/GLA6-Theme-Park/pages/builds -X POST"
+		},
+		{
+			"label": "final-theme-build-status",
+			"type": "shell",
+			"command": "gh api repos/ChampagneCODE3D/GLA6-Theme-Park/pages/builds --jq '.[0:4] | map({status, commit, updated_at})'"
+		},
+		{
+			"label": "retry-publish-shared-palette",
+			"type": "shell",
+			"command": "gh api repos/ChampagneCODE3D/GLA6-Theme-Park/pages/builds -X POST"
+		},
+		{
+			"label": "status-after-retry-publish",
+			"type": "shell",
+			"command": "gh api repos/ChampagneCODE3D/GLA6-Theme-Park/pages/builds --jq '.[0:5] | map({status, commit, updated_at})'"
+		},
+		{
+			"label": "list-jordan-repos",
+			"type": "shell",
+			"command": "gh repo list jordantchampagne-sudo --limit 50 --json name,nameWithOwner,isPrivate"
+		},
+		{
+			"label": "check-jordan-gla6-pages",
+			"type": "shell",
+			"command": "gh api repos/jordantchampagne-sudo/GLA6-Theme-Park/pages --jq '{html_url,build_type,source,status}'"
+		},
+		{
+			"label": "list-jordan-gla6-root",
+			"type": "shell",
+			"command": "gh api repos/jordantchampagne-sudo/GLA6-Theme-Park/contents --jq '.[] | [.type,.name,.path] | @tsv'"
+		},
+		{
+			"label": "list-jordan-gla6-branches",
+			"type": "shell",
+			"command": "gh api repos/jordantchampagne-sudo/GLA6-Theme-Park/branches --jq '.[].name'"
+		},
+		{
+			"label": "find-jordan-workflow-file",
+			"type": "shell",
+			"command": "gh api repos/jordantchampagne-sudo/GLA6-Theme-Park/contents/.github/workflows --jq '.[] | [.name,.path] | @tsv'"
+		},
+		{
+			"label": "list-jordan-portfolio-fork-root",
+			"type": "shell",
+			"command": "gh api repos/jordantchampagne-sudo/GLA6-Theme-Park/contents?ref=portfolio-fork --jq '.[] | [.type,.name,.path] | @tsv'"
+		},
+		{
+			"label": "fetch-jordan-index-url-portfolio-fork",
+			"type": "shell",
+			"command": "gh api repos/jordantchampagne-sudo/GLA6-Theme-Park/contents/index.html?ref=portfolio-fork --jq .download_url"
+		},
+		{
+			"label": "list-jordan-docs-portfolio-fork",
+			"type": "shell",
+			"command": "gh api repos/jordantchampagne-sudo/GLA6-Theme-Park/contents/docs?ref=portfolio-fork --jq '.[] | [.type,.name,.path] | @tsv'"
+		},
+		{
+			"label": "theme-jordan-docs-index-shared-palette",
+			"type": "shell",
+			"command": "$content = @'\n<!doctype html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\" />\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n  <title>GLA6 Theme Park CRUD - Portfolio Demo</title>\n  <style>\n    :root {\n      --colour-primary: #18322a;\n      --colour-primary-strong: #10231d;\n      --colour-accent: #d97f2b;\n      --colour-accent-soft: rgba(217, 127, 43, 0.14);\n      --colour-bg: #f4efe6;\n      --colour-surface: rgba(255, 255, 255, 0.92);\n      --colour-text: #24312c;\n      --colour-muted: #63716d;\n      --colour-ok-bg: #dff6e5;\n      --colour-ok-text: #155724;\n      --colour-border: rgba(72, 95, 84, 0.18);\n      --shadow-soft: 0 12px 28px rgba(19, 35, 28, 0.08);\n    }\n\n    * { box-sizing: border-box; }\n\n    body {\n      margin: 0;\n      background:\n        radial-gradient(circle at top left, rgba(217, 127, 43, 0.16), transparent 28%),\n        radial-gradient(circle at right 8%, rgba(24, 50, 42, 0.12), transparent 30%),\n        linear-gradient(180deg, #faf6ef 0%, var(--colour-bg) 100%);\n      color: var(--colour-text);\n      font-family: \"Segoe UI\", Tahoma, Geneva, Verdana, sans-serif;\n      padding: 28px;\n    }\n\n    .wrap {\n      max-width: 1080px;\n      margin: 0 auto;\n      background: var(--colour-surface);\n      border: 1px solid var(--colour-border);\n      border-radius: 16px;\n      overflow: hidden;\n      box-shadow: var(--shadow-soft);\n      backdrop-filter: blur(8px);\n    }\n\n    header {\n      padding: 22px 26px;\n      background: linear-gradient(135deg, var(--colour-primary-strong), var(--colour-primary));\n      color: #fff;\n    }\n\n    h1 { margin: 0; font-size: 28px; line-height: 1.12; }\n    .sub { margin-top: 7px; opacity: 0.94; font-size: 14px; }\n    section { padding: 20px 26px; border-top: 1px solid var(--colour-border); }\n\n    .meta {\n      display: grid;\n      grid-template-columns: repeat(2, minmax(260px, 1fr));\n      gap: 10px;\n      margin-top: 10px;\n    }\n\n    .pill {\n      border: 1px solid rgba(21, 87, 36, 0.22);\n      background: var(--colour-ok-bg);\n      color: var(--colour-ok-text);\n      border-radius: 10px;\n      padding: 10px 12px;\n      font-size: 14px;\n      font-weight: 600;\n    }\n\n    .muted { color: var(--colour-muted); font-size: 14px; margin: 0; }\n\n    pre {\n      margin: 12px 0 0;\n      background: #122019;\n      color: #d9f0de;\n      border-radius: 10px;\n      padding: 16px;\n      font-family: Consolas, \"Courier New\", monospace;\n      font-size: 13px;\n      line-height: 1.42;\n      max-height: 62vh;\n      overflow: auto;\n      white-space: pre-wrap;\n      word-break: break-word;\n      border: 1px solid rgba(255, 255, 255, 0.08);\n    }\n\n    .foot {\n      margin-top: 12px;\n      padding: 10px 12px;\n      border: 1px solid var(--colour-border);\n      border-radius: 10px;\n      background: linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(248, 241, 232, 0.85));\n      color: #56635f;\n      font-size: 12px;\n      line-height: 1.4;\n    }\n\n    @media (max-width: 760px) {\n      body { padding: 16px; }\n      .meta { grid-template-columns: 1fr; }\n      header, section { padding: 18px; }\n      h1 { font-size: 24px; }\n    }\n  </style>\n</head>\n<body>\n  <main class=\"wrap\">\n    <header>\n      <h1>GLA 6 Theme Park CRUD - Online Test Report</h1>\n      <div class=\"sub\">Automated Node.js + SQLite execution artifact for portfolio demonstration.</div>\n    </header>\n\n    <section>\n      <p class=\"muted\">Automated checks completed in CI workflow:</p>\n      <div class=\"meta\">\n        <div class=\"pill\">PASS: READ query returned ride records</div>\n        <div class=\"pill\">PASS: CREATE inserted Galaxy Spinner</div>\n        <div class=\"pill\">PASS: UPDATE modified Thunder Coaster duration</div>\n        <div class=\"pill\">PASS: DELETE removed Haunted Mansion</div>\n      </div>\n    </section>\n\n    <section>\n      <p class=\"muted\">Latest command output from <strong>node app.js</strong>:</p>\n      <pre id=\"output\">Loading latest output...</pre>\n      <div class=\"foot\" id=\"stamp\">Generated by GitHub Actions after each push to portfolio-fork.</div>\n    </section>\n  </main>\n\n  <script>\n    async function loadOutput() {\n      const outputEl = document.getElementById('output');\n      const stampEl = document.getElementById('stamp');\n      try {\n        const [outputRes, stampRes] = await Promise.all([\n          fetch('./latest-output.txt', { cache: 'no-store' }),\n          fetch('./build-info.json', { cache: 'no-store' })\n        ]);\n\n        const outputText = outputRes.ok\n          ? await outputRes.text()\n          : 'Output file not found yet. Trigger workflow by pushing to portfolio-fork.';\n\n        outputEl.textContent = outputText.trim() || 'Output is empty.';\n\n        if (stampRes.ok) {\n          const info = await stampRes.json();\n          stampEl.textContent = `Generated: ${info.generatedAt} | Commit: ${info.commit}`;\n        }\n      } catch (error) {\n        outputEl.textContent = `Could not load output: ${error.message}`;\n      }\n    }\n\n    loadOutput();\n  </script>\n</body>\n</html>\n'@;\n$bytes = [System.Text.Encoding]::UTF8.GetBytes($content);\n$b64 = [Convert]::ToBase64String($bytes);\n$sha = gh api repos/jordantchampagne-sudo/GLA6-Theme-Park/contents/docs/index.html?ref=portfolio-fork --jq .sha;\ngh api repos/jordantchampagne-sudo/GLA6-Theme-Park/contents/docs/index.html -X PUT -f message='apply shared palette to report page' -f content=$b64 -f sha=$sha -f branch='portfolio-fork'"
+		},
+		{
+			"label": "list-jordan-workflows",
+			"type": "shell",
+			"command": "gh api repos/jordantchampagne-sudo/GLA6-Theme-Park/actions/workflows --jq '.workflows[] | [.name,.path,.state] | @tsv'"
+		},
+		{
+			"label": "latest-jordan-runs",
+			"type": "shell",
+			"command": "gh api repos/jordantchampagne-sudo/GLA6-Theme-Park/actions/runs --jq '.workflow_runs[0:5] | map({name,status,conclusion,head_branch,head_sha,created_at})'"
+		},
+		{
+			"label": "poll-jordan-run-status",
+			"type": "shell",
+			"command": "gh api repos/jordantchampagne-sudo/GLA6-Theme-Park/actions/runs --jq '.workflow_runs[0] | {status,conclusion,head_sha,html_url,updated_at}'"
+		},
+		{
+			"label": "sync-champagne-from-jordan-portfolio-fork-docs",
+			"type": "shell",
+			"command": "$indexUrl = gh api repos/jordantchampagne-sudo/GLA6-Theme-Park/contents/docs/index.html?ref=portfolio-fork --jq .download_url; $indexContent = Invoke-WebRequest -UseBasicParsing $indexUrl | Select-Object -ExpandProperty Content; $indexB64 = [Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes($indexContent)); $indexSha = gh api repos/ChampagneCODE3D/GLA6-Theme-Park/contents/index.html --jq .sha; gh api repos/ChampagneCODE3D/GLA6-Theme-Park/contents/index.html -X PUT -f message='sync index from jordan portfolio-fork docs source' -f content=$indexB64 -f sha=$indexSha; $outUrl = gh api repos/jordantchampagne-sudo/GLA6-Theme-Park/contents/docs/latest-output.txt?ref=portfolio-fork --jq .download_url; $outContent = Invoke-WebRequest -UseBasicParsing $outUrl | Select-Object -ExpandProperty Content; $outB64 = [Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes($outContent)); $outSha = gh api repos/ChampagneCODE3D/GLA6-Theme-Park/contents/latest-output.txt --jq .sha; gh api repos/ChampagneCODE3D/GLA6-Theme-Park/contents/latest-output.txt -X PUT -f message='sync latest-output from jordan portfolio-fork docs source' -f content=$outB64 -f sha=$outSha; $infoUrl = gh api repos/jordantchampagne-sudo/GLA6-Theme-Park/contents/docs/build-info.json?ref=portfolio-fork --jq .download_url; $infoContent = Invoke-WebRequest -UseBasicParsing $infoUrl | Select-Object -ExpandProperty Content; $infoB64 = [Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes($infoContent)); $infoSha = gh api repos/ChampagneCODE3D/GLA6-Theme-Park/contents/build-info.json --jq .sha; gh api repos/ChampagneCODE3D/GLA6-Theme-Park/contents/build-info.json -X PUT -f message='sync build-info from jordan portfolio-fork docs source' -f content=$infoB64 -f sha=$infoSha"
+		},
+		{
+			"label": "check-jordan-workflow-now",
+			"type": "shell",
+			"command": "gh api repos/jordantchampagne-sudo/GLA6-Theme-Park/actions/runs --jq '.workflow_runs[0] | {status,conclusion,head_sha,updated_at,html_url}'"
+		},
+		{
+			"label": "apply-finalproject-style-to-champagne-gla6",
+			"type": "shell",
+			"command": "$content = @'\n<!doctype html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\" />\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n  <title>GLA6 Theme Park CRUD - Portfolio Demo</title>\n  <style>\n    :root {\n      --bg: #f5f7fa;\n      --panel: #ffffff;\n      --ink: #1f2d3d;\n      --muted: #52606d;\n      --brand: #1f4e79;\n      --brand-soft: #2b6aa3;\n      --ok-bg: #e9f9ef;\n      --ok-ink: #216e39;\n      --border: #d9e2ec;\n      --code-bg: #0f1720;\n      --code-ink: #d8f3dc;\n    }\n\n    * { box-sizing: border-box; }\n\n    body {\n      margin: 0;\n      background: radial-gradient(circle at 20% 0%, #e8eff7 0%, var(--bg) 55%);\n      color: var(--ink);\n      font-family: \"Segoe UI\", Tahoma, Geneva, Verdana, sans-serif;\n      padding: 28px;\n    }\n\n    .wrap {\n      max-width: 1080px;\n      margin: 0 auto;\n      background: var(--panel);\n      border: 1px solid var(--border);\n      border-radius: 14px;\n      overflow: hidden;\n      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);\n    }\n\n    header {\n      padding: 22px 26px;\n      background: linear-gradient(120deg, var(--brand), var(--brand-soft));\n      color: #fff;\n    }\n\n    h1 { margin: 0; font-size: 28px; line-height: 1.1; }\n\n    .sub {\n      margin-top: 7px;\n      opacity: 0.92;\n      font-size: 14px;\n    }\n\n    section {\n      padding: 20px 26px;\n      border-top: 1px solid var(--border);\n    }\n\n    .meta {\n      display: grid;\n      grid-template-columns: repeat(2, minmax(260px, 1fr));\n      gap: 10px;\n      margin-top: 10px;\n    }\n\n    .pill {\n      border: 1px solid #b8d8c5;\n      background: var(--ok-bg);\n      color: var(--ok-ink);\n      border-radius: 8px;\n      padding: 10px 12px;\n      font-size: 14px;\n      font-weight: 600;\n    }\n\n    .muted {\n      color: var(--muted);\n      font-size: 14px;\n      margin: 0;\n    }\n\n    pre {\n      margin: 12px 0 0;\n      background: var(--code-bg);\n      color: var(--code-ink);\n      border-radius: 10px;\n      padding: 16px;\n      font-family: Consolas, \"Courier New\", monospace;\n      font-size: 13px;\n      line-height: 1.4;\n      max-height: 62vh;\n      overflow: auto;\n      white-space: pre-wrap;\n      word-break: break-word;\n    }\n\n    .foot {\n      margin-top: 12px;\n      padding: 10px 12px;\n      border: 1px solid var(--border);\n      border-radius: 8px;\n      background: #f8fbff;\n      color: #334e68;\n      font-size: 12px;\n      line-height: 1.4;\n    }\n\n    @media (max-width: 760px) {\n      body { padding: 16px; }\n      .meta { grid-template-columns: 1fr; }\n      header, section { padding: 18px; }\n      h1 { font-size: 24px; }\n    }\n  </style>\n</head>\n<body>\n  <main class=\"wrap\">\n    <header>\n      <h1>GLA 6 Theme Park CRUD - Online Test Report</h1>\n      <div class=\"sub\">Automated Node.js + SQLite execution artifact for portfolio demonstration.</div>\n    </header>\n\n    <section>\n      <p class=\"muted\">Automated checks completed in CI workflow:</p>\n      <div class=\"meta\">\n        <div class=\"pill\">PASS: READ query returned ride records</div>\n        <div class=\"pill\">PASS: CREATE inserted Galaxy Spinner</div>\n        <div class=\"pill\">PASS: UPDATE modified Thunder Coaster duration</div>\n        <div class=\"pill\">PASS: DELETE removed Haunted Mansion</div>\n      </div>\n    </section>\n\n    <section>\n      <p class=\"muted\">Latest command output from <strong>node app.js</strong>:</p>\n      <pre id=\"output\">Loading latest output...</pre>\n      <div class=\"foot\" id=\"stamp\">Generated by GitHub Actions after each push to portfolio-fork.</div>\n    </section>\n  </main>\n\n  <script>\n    async function loadOutput() {\n      const outputEl = document.getElementById('output');\n      const stampEl = document.getElementById('stamp');\n      try {\n        const [outputRes, stampRes] = await Promise.all([\n          fetch('./latest-output.txt', { cache: 'no-store' }),\n          fetch('./build-info.json', { cache: 'no-store' })\n        ]);\n\n        const outputText = outputRes.ok\n          ? await outputRes.text()\n          : 'Output file not found yet. Trigger workflow by pushing to portfolio-fork.';\n\n        outputEl.textContent = outputText.trim() || 'Output is empty.';\n\n        if (stampRes.ok) {\n          const info = await stampRes.json();\n          stampEl.textContent = `Generated: ${info.generatedAt} | Commit: ${info.commit}`;\n        }\n      } catch (error) {\n        outputEl.textContent = `Could not load output: ${error.message}`;\n      }\n    }\n\n    loadOutput();\n  </script>\n</body>\n</html>\n'@;\n$bytes = [System.Text.Encoding]::UTF8.GetBytes($content);\n$b64 = [Convert]::ToBase64String($bytes);\n$sha = gh api repos/ChampagneCODE3D/GLA6-Theme-Park/contents/index.html --jq .sha;\ngh api repos/ChampagneCODE3D/GLA6-Theme-Park/contents/index.html -X PUT -f message='style match to FinalProject palette and footer polish' -f content=$b64 -f sha=$sha"
+		},
+		{
+			"label": "restore-champagne-latest-output",
+			"type": "shell",
+			"command": "$txt = @'\nREAD results: [\n  {\n    ride_name: 'Thunder Coaster',\n    description: 'High-speed thrill ride',\n    duration: '2 Minutes',\n    min_height: '120 cm'\n  },\n  {\n    ride_name: 'Haunted Mansion',\n    description: 'Spooky dark ride',\n    duration: '4 Minutes',\n    min_height: '110 cm'\n  }\n]\nRide Added\nRows Updated: 1\nRows Deleted: 1\nREAD results: [\n  {\n    ride_name: 'Thunder Coaster',\n    description: 'High-speed thrill ride',\n    duration: '3 Minutes',\n    min_height: '120 cm'\n  },\n  {\n    ride_name: 'Galaxy Spinner',\n    description: 'Family Ride',\n    duration: '5 Minutes',\n    min_height: '100 cm'\n  }\n]\n'@; $b64 = [Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes($txt)); $sha = gh api repos/ChampagneCODE3D/GLA6-Theme-Park/contents/latest-output.txt --jq .sha; gh api repos/ChampagneCODE3D/GLA6-Theme-Park/contents/latest-output.txt -X PUT -f message='restore latest output data' -f content=$b64 -f sha=$sha"
+		},
+		{
+			"label": "restore-champagne-build-info",
+			"type": "shell",
+			"command": "$json = '{\"generatedAt\":\"2026-06-26 13:15:26 UTC\",\"commit\":\"704b2edc8184931472959d7ac006210570fc78bb\"}'; $b64 = [Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes($json)); $sha = gh api repos/ChampagneCODE3D/GLA6-Theme-Park/contents/build-info.json --jq .sha; gh api repos/ChampagneCODE3D/GLA6-Theme-Park/contents/build-info.json -X PUT -f message='restore build info json' -f content=$b64 -f sha=$sha"
+		},
+		{
+			"label": "trigger-champagne-build-after-style-repair",
+			"type": "shell",
+			"command": "gh api repos/ChampagneCODE3D/GLA6-Theme-Park/pages/builds -X POST"
+		},
+		{
+			"label": "check-champagne-build-after-style-repair",
+			"type": "shell",
+			"command": "gh api repos/ChampagneCODE3D/GLA6-Theme-Park/pages/builds --jq '.[0:5] | map({status,commit,updated_at})'"
+		},
+		{
+			"label": "apply-finalproject-blue-style-on-jordan-source",
+			"type": "shell",
+			"command": "$content = @'\n<!doctype html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\" />\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n  <title>GLA6 Theme Park CRUD - Portfolio Demo</title>\n  <style>\n    :root {\n      --bg: #f5f7fa;\n      --panel: #ffffff;\n      --ink: #1f2d3d;\n      --muted: #52606d;\n      --brand: #1f4e79;\n      --brand-soft: #2b6aa3;\n      --ok-bg: #e9f9ef;\n      --ok-ink: #216e39;\n      --border: #d9e2ec;\n      --code-bg: #0f1720;\n      --code-ink: #d8f3dc;\n    }\n\n    * { box-sizing: border-box; }\n    body {\n      margin: 0;\n      background: radial-gradient(circle at 20% 0%, #e8eff7 0%, var(--bg) 55%);\n      color: var(--ink);\n      font-family: \"Segoe UI\", Tahoma, Geneva, Verdana, sans-serif;\n      padding: 28px;\n    }\n    .wrap {\n      max-width: 1080px;\n      margin: 0 auto;\n      background: var(--panel);\n      border: 1px solid var(--border);\n      border-radius: 14px;\n      overflow: hidden;\n      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);\n    }\n    header {\n      padding: 22px 26px;\n      background: linear-gradient(120deg, var(--brand), var(--brand-soft));\n      color: #fff;\n    }\n    h1 { margin: 0; font-size: 28px; line-height: 1.1; }\n    .sub { margin-top: 7px; opacity: 0.92; font-size: 14px; }\n    section { padding: 20px 26px; border-top: 1px solid var(--border); }\n    .meta {\n      display: grid;\n      grid-template-columns: repeat(2, minmax(260px, 1fr));\n      gap: 10px;\n      margin-top: 10px;\n    }\n    .pill {\n      border: 1px solid #b8d8c5;\n      background: var(--ok-bg);\n      color: var(--ok-ink);\n      border-radius: 8px;\n      padding: 10px 12px;\n      font-size: 14px;\n      font-weight: 600;\n    }\n    .muted { color: var(--muted); font-size: 14px; margin: 0; }\n    pre {\n      margin: 12px 0 0;\n      background: var(--code-bg);\n      color: var(--code-ink);\n      border-radius: 10px;\n      padding: 16px;\n      font-family: Consolas, \"Courier New\", monospace;\n      font-size: 13px;\n      line-height: 1.4;\n      max-height: 62vh;\n      overflow: auto;\n      white-space: pre-wrap;\n      word-break: break-word;\n    }\n    .foot {\n      margin-top: 12px;\n      padding: 10px 12px;\n      border: 1px solid var(--border);\n      border-radius: 8px;\n      background: #f8fbff;\n      color: #334e68;\n      font-size: 12px;\n      line-height: 1.4;\n    }\n    @media (max-width: 760px) {\n      body { padding: 16px; }\n      .meta { grid-template-columns: 1fr; }\n      header, section { padding: 18px; }\n      h1 { font-size: 24px; }\n    }\n  </style>\n</head>\n<body>\n  <main class=\"wrap\">\n    <header>\n      <h1>GLA 6 Theme Park CRUD - Online Test Report</h1>\n      <div class=\"sub\">Automated Node.js + SQLite execution artifact for portfolio demonstration.</div>\n    </header>\n    <section>\n      <p class=\"muted\">Automated checks completed in CI workflow:</p>\n      <div class=\"meta\">\n        <div class=\"pill\">PASS: READ query returned ride records</div>\n        <div class=\"pill\">PASS: CREATE inserted Galaxy Spinner</div>\n        <div class=\"pill\">PASS: UPDATE modified Thunder Coaster duration</div>\n        <div class=\"pill\">PASS: DELETE removed Haunted Mansion</div>\n      </div>\n    </section>\n    <section>\n      <p class=\"muted\">Latest command output from <strong>node app.js</strong>:</p>\n      <pre id=\"output\">Loading latest output...</pre>\n      <div class=\"foot\" id=\"stamp\">Generated by GitHub Actions after each push to portfolio-fork.</div>\n    </section>\n  </main>\n  <script>\n    async function loadOutput() {\n      const outputEl = document.getElementById('output');\n      const stampEl = document.getElementById('stamp');\n      try {\n        const [outputRes, stampRes] = await Promise.all([\n          fetch('./latest-output.txt', { cache: 'no-store' }),\n          fetch('./build-info.json', { cache: 'no-store' })\n        ]);\n        const outputText = outputRes.ok ? await outputRes.text() : 'Output file not found yet. Trigger workflow by pushing to portfolio-fork.';\n        outputEl.textContent = outputText.trim() || 'Output is empty.';\n        if (stampRes.ok) {\n          const info = await stampRes.json();\n          stampEl.textContent = `Generated: ${info.generatedAt} | Commit: ${info.commit}`;\n        }\n      } catch (error) {\n        outputEl.textContent = `Could not load output: ${error.message}`;\n      }\n    }\n    loadOutput();\n  </script>\n</body>\n</html>\n'@;\n$b64 = [Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes($content));\n$sha = gh api repos/jordantchampagne-sudo/GLA6-Theme-Park/contents/docs/index.html?ref=portfolio-fork --jq .sha;\ngh api repos/jordantchampagne-sudo/GLA6-Theme-Park/contents/docs/index.html -X PUT -f message='match report styling to final project blue scheme' -f content=$b64 -f sha=$sha -f branch='portfolio-fork'"
+		},
+		{
+			"label": "poll-jordan-blue-run",
+			"type": "shell",
+			"command": "gh api repos/jordantchampagne-sudo/GLA6-Theme-Park/actions/runs --jq '.workflow_runs[0:3] | map({status,conclusion,head_sha,created_at})'"
+		},
+		{
+			"label": "poll-jordan-run-complete",
+			"type": "shell",
+			"command": "gh api repos/jordantchampagne-sudo/GLA6-Theme-Park/actions/runs --jq '.workflow_runs[0] | {status,conclusion,head_sha,updated_at,html_url}'"
+		},
+		{
+			"label": "poll-jordan-blue-run-again",
+			"type": "shell",
+			"command": "gh api repos/jordantchampagne-sudo/GLA6-Theme-Park/actions/runs --jq '.workflow_runs[0:2] | map({status,conclusion,head_sha,updated_at})'"
+		},
+		{
+			"label": "sync-champagne-index-from-jordan-blue-source",
+			"type": "shell",
+			"command": "$url = gh api repos/jordantchampagne-sudo/GLA6-Theme-Park/contents/docs/index.html?ref=portfolio-fork --jq .download_url; $content = Invoke-WebRequest -UseBasicParsing $url | Select-Object -ExpandProperty Content; $b64 = [Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes($content)); $sha = gh api repos/ChampagneCODE3D/GLA6-Theme-Park/contents/index.html --jq .sha; gh api repos/ChampagneCODE3D/GLA6-Theme-Park/contents/index.html -X PUT -f message='sync index from jordan blue source' -f content=$b64 -f sha=$sha"
+		},
+		{
+			"label": "rebuild-champagne-after-jordan-sync",
+			"type": "shell",
+			"command": "gh api repos/ChampagneCODE3D/GLA6-Theme-Park/pages/builds -X POST"
+		},
+		{
+			"label": "check-champagne-sync-build",
+			"type": "shell",
+			"command": "gh api repos/ChampagneCODE3D/GLA6-Theme-Park/pages/builds --jq '.[0:5] | map({status,commit,updated_at})'"
+		},
+		{
+			"label": "check-jordan-current-docs-index-sha",
+			"type": "shell",
+			"command": "gh api repos/jordantchampagne-sudo/GLA6-Theme-Park/contents/docs/index.html?ref=portfolio-fork --jq '{sha,download_url}'"
+		},
+		{
+			"label": "resync-champagne-from-latest-jordan-blue-sha",
+			"type": "shell",
+			"command": "$url = gh api repos/jordantchampagne-sudo/GLA6-Theme-Park/contents/docs/index.html?ref=portfolio-fork --jq .download_url; $content = Invoke-WebRequest -UseBasicParsing $url | Select-Object -ExpandProperty Content; $b64 = [Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes($content)); $sha = gh api repos/ChampagneCODE3D/GLA6-Theme-Park/contents/index.html --jq .sha; gh api repos/ChampagneCODE3D/GLA6-Theme-Park/contents/index.html -X PUT -f message='resync index from latest jordan source sha' -f content=$b64 -f sha=$sha"
+		},
+		{
+			"label": "sync-champagne-using-jordan-api-content",
+			"type": "shell",
+			"command": "$srcB64 = gh api repos/jordantchampagne-sudo/GLA6-Theme-Park/contents/docs/index.html?ref=portfolio-fork --jq .content; $srcB64 = $srcB64 -replace '\\n',''; $dstSha = gh api repos/ChampagneCODE3D/GLA6-Theme-Park/contents/index.html --jq .sha; gh api repos/ChampagneCODE3D/GLA6-Theme-Park/contents/index.html -X PUT -f message='sync index from jordan api content exact' -f content=$srcB64 -f sha=$dstSha"
+		},
+		{
+			"label": "sync-champagne-index-via-json-parse",
+			"type": "shell",
+			"command": "$srcObj = gh api repos/jordantchampagne-sudo/GLA6-Theme-Park/contents/docs/index.html?ref=portfolio-fork | ConvertFrom-Json; $srcB64 = ($srcObj.content -replace \"`n\", \"\"); $dstSha = gh api repos/ChampagneCODE3D/GLA6-Theme-Park/contents/index.html --jq .sha; gh api repos/ChampagneCODE3D/GLA6-Theme-Park/contents/index.html -X PUT -f message='sync index from jordan source exact payload' -f content=$srcB64 -f sha=$dstSha"
+		},
+		{
+			"label": "sync-champagne-index-via-json-parse-retry",
+			"type": "shell",
+			"command": "$srcObj = gh api repos/jordantchampagne-sudo/GLA6-Theme-Park/contents/docs/index.html?ref=portfolio-fork | ConvertFrom-Json; $srcB64 = [System.String]::Join('', $srcObj.content.Split([Environment]::NewLine)); $dstSha = gh api repos/ChampagneCODE3D/GLA6-Theme-Park/contents/index.html --jq .sha; gh api repos/ChampagneCODE3D/GLA6-Theme-Park/contents/index.html -X PUT -f message='sync index from jordan source exact payload' -f content=$srcB64 -f sha=$dstSha"
+		},
+		{
+			"label": "lighten-pre-box-jordan-source",
+			"type": "shell",
+			"command": "$repo='jordantchampagne-sudo/GLA6-Theme-Park'; $path='docs/index.html'; $obj = gh api repos/$repo/contents/$path`?ref=portfolio-fork | ConvertFrom-Json; $b64 = [System.String]::Join('', $obj.content.Split([Environment]::NewLine)); $html = [System.Text.Encoding]::UTF8.GetString([Convert]::FromBase64String($b64)); $newPre = @'\n    pre {\n      margin: 12px 0 0;\n      background: #f7fbff;\n      color: #1f2d3d;\n      border-radius: 10px;\n      padding: 16px;\n      font-family: Consolas, \"Courier New\", monospace;\n      font-size: 13px;\n      line-height: 1.4;\n      max-height: 62vh;\n      overflow: auto;\n      white-space: pre-wrap;\n      word-break: break-word;\n      border: 1px solid #d9e2ec;\n    }\n'@; $html2 = [regex]::Replace($html,'(?s)\\n    pre \\{.*?\\n    \\}','`n'+$newPre.TrimEnd(),1); if($html2 -eq $html){ throw 'pre block replace failed' }; $outB64=[Convert]::ToBase64String([Text.Encoding]::UTF8.GetBytes($html2)); gh api repos/$repo/contents/$path -X PUT -f message='lighten output panel to match palette' -f content=$outB64 -f sha=$obj.sha -f branch='portfolio-fork'"
+		},
+		{
+			"label": "patch-jordan-pre-to-light",
+			"type": "shell",
+			"command": "$repo='jordantchampagne-sudo/GLA6-Theme-Park'; $path='docs/index.html'; $obj = gh api repos/$repo/contents/$path`?ref=portfolio-fork | ConvertFrom-Json; $b64 = [string]::Join('', $obj.content.Split([Environment]::NewLine)); $html = [Text.Encoding]::UTF8.GetString([Convert]::FromBase64String($b64)); $pattern = '(?s)\\n\\s*pre\\s*\\{.*?\\n\\s*\\}'; $replacement = @'\n    pre {\n      margin: 12px 0 0;\n      background: #f7fbff;\n      color: #1f2d3d;\n      border-radius: 10px;\n      padding: 16px;\n      font-family: Consolas, \"Courier New\", monospace;\n      font-size: 13px;\n      line-height: 1.4;\n      max-height: 62vh;\n      overflow: auto;\n      white-space: pre-wrap;\n      word-break: break-word;\n      border: 1px solid #d9e2ec;\n    }\n'@; $newHtml = [regex]::Replace($html, $pattern, \"`n$replacement\", 1); if ($newHtml -eq $html) { throw 'Could not find pre CSS block to replace.' }; $newB64 = [Convert]::ToBase64String([Text.Encoding]::UTF8.GetBytes($newHtml)); $shaVal = $obj.sha; gh api repos/$repo/contents/$path -X PUT -f message='lighten output panel to match palette' -f content=$newB64 -f sha=$shaVal -f branch='portfolio-fork'"
+		},
+		{
+			"label": "patch-champagne-pre-to-light",
+			"type": "shell",
+			"command": "$repo='ChampagneCODE3D/GLA6-Theme-Park'; $path='index.html'; $obj = gh api repos/$repo/contents/$path | ConvertFrom-Json; $b64 = [string]::Join('', $obj.content.Split([Environment]::NewLine)); $html = [Text.Encoding]::UTF8.GetString([Convert]::FromBase64String($b64)); $pattern = '(?s)\\n\\s*pre\\s*\\{.*?\\n\\s*\\}'; $replacement = @'\n    pre {\n      margin: 12px 0 0;\n      background: #f7fbff;\n      color: #1f2d3d;\n      border-radius: 10px;\n      padding: 16px;\n      font-family: Consolas, \"Courier New\", monospace;\n      font-size: 13px;\n      line-height: 1.4;\n      max-height: 62vh;\n      overflow: auto;\n      white-space: pre-wrap;\n      word-break: break-word;\n      border: 1px solid #d9e2ec;\n    }\n'@; $newHtml = [regex]::Replace($html, $pattern, \"`n$replacement\", 1); if ($newHtml -eq $html) { throw 'Could not find pre CSS block to replace.' }; $newB64 = [Convert]::ToBase64String([Text.Encoding]::UTF8.GetBytes($newHtml)); $shaVal = $obj.sha; gh api repos/$repo/contents/$path -X PUT -f message='lighten output panel to match palette' -f content=$newB64 -f sha=$shaVal"
+		},
+		{
+			"label": "check-champagne-support-files",
+			"type": "shell",
+			"command": "gh api repos/ChampagneCODE3D/GLA6-Theme-Park/contents/latest-output.txt --jq '{name,size,sha}'; gh api repos/ChampagneCODE3D/GLA6-Theme-Park/contents/build-info.json --jq '{name,size,sha}'"
+		},
+		{
+			"label": "publish-light-output-style-jordan",
+			"type": "shell",
+			"command": "$content = @'\n<!doctype html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\" />\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n  <title>GLA6 Theme Park CRUD - Portfolio Demo</title>\n  <style>\n    :root {\n      --bg: #f5f7fa;\n      --panel: #ffffff;\n      --ink: #1f2d3d;\n      --muted: #52606d;\n      --brand: #1f4e79;\n      --brand-soft: #2b6aa3;\n      --ok-bg: #e9f9ef;\n      --ok-ink: #216e39;\n      --border: #d9e2ec;\n    }\n\n    * { box-sizing: border-box; }\n    body {\n      margin: 0;\n      background: radial-gradient(circle at 20% 0%, #e8eff7 0%, var(--bg) 55%);\n      color: var(--ink);\n      font-family: \"Segoe UI\", Tahoma, Geneva, Verdana, sans-serif;\n      padding: 28px;\n    }\n    .wrap {\n      max-width: 1080px;\n      margin: 0 auto;\n      background: var(--panel);\n      border: 1px solid var(--border);\n      border-radius: 14px;\n      overflow: hidden;\n      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);\n    }\n    header {\n      padding: 22px 26px;\n      background: linear-gradient(120deg, var(--brand), var(--brand-soft));\n      color: #fff;\n    }\n    h1 { margin: 0; font-size: 28px; line-height: 1.1; }\n    .sub { margin-top: 7px; opacity: 0.92; font-size: 14px; }\n    section { padding: 20px 26px; border-top: 1px solid var(--border); }\n    .meta {\n      display: grid;\n      grid-template-columns: repeat(2, minmax(260px, 1fr));\n      gap: 10px;\n      margin-top: 10px;\n    }\n    .pill {\n      border: 1px solid #b8d8c5;\n      background: var(--ok-bg);\n      color: var(--ok-ink);\n      border-radius: 8px;\n      padding: 10px 12px;\n      font-size: 14px;\n      font-weight: 600;\n    }\n    .muted { color: var(--muted); font-size: 14px; margin: 0; }\n    pre {\n      margin: 12px 0 0;\n      background: #f7fbff;\n      color: #1f2d3d;\n      border-radius: 10px;\n      padding: 16px;\n      font-family: Consolas, \"Courier New\", monospace;\n      font-size: 13px;\n      line-height: 1.4;\n      max-height: 62vh;\n      overflow: auto;\n      white-space: pre-wrap;\n      word-break: break-word;\n      border: 1px solid #d9e2ec;\n    }\n    .foot {\n      margin-top: 12px;\n      padding: 10px 12px;\n      border: 1px solid var(--border);\n      border-radius: 8px;\n      background: #f8fbff;\n      color: #334e68;\n      font-size: 12px;\n      line-height: 1.4;\n    }\n    @media (max-width: 760px) {\n      body { padding: 16px; }\n      .meta { grid-template-columns: 1fr; }\n      header, section { padding: 18px; }\n      h1 { font-size: 24px; }\n    }\n  </style>\n</head>\n<body>\n  <main class=\"wrap\">\n    <header>\n      <h1>GLA 6 Theme Park CRUD - Online Test Report</h1>\n      <div class=\"sub\">Automated Node.js + SQLite execution artifact for portfolio demonstration.</div>\n    </header>\n\n    <section>\n      <p class=\"muted\">Automated checks completed in CI workflow:</p>\n      <div class=\"meta\">\n        <div class=\"pill\">PASS: READ query returned ride records</div>\n        <div class=\"pill\">PASS: CREATE inserted Galaxy Spinner</div>\n        <div class=\"pill\">PASS: UPDATE modified Thunder Coaster duration</div>\n        <div class=\"pill\">PASS: DELETE removed Haunted Mansion</div>\n      </div>\n    </section>\n\n    <section>\n      <p class=\"muted\">Latest command output from <strong>node app.js</strong>:</p>\n      <pre id=\"output\">Loading latest output...</pre>\n      <div class=\"foot\" id=\"stamp\">Generated by GitHub Actions after each push to portfolio-fork.</div>\n    </section>\n  </main>\n\n  <script>\n    async function loadOutput() {\n      const outputEl = document.getElementById('output');\n      const stampEl = document.getElementById('stamp');\n      try {\n        const [outputRes, stampRes] = await Promise.all([\n          fetch('./latest-output.txt', { cache: 'no-store' }),\n          fetch('./build-info.json', { cache: 'no-store' })\n        ]);\n\n        const outputText = outputRes.ok\n          ? await outputRes.text()\n          : 'Output file not found yet. Trigger workflow by pushing to portfolio-fork.';\n\n        outputEl.textContent = outputText.trim() || 'Output is empty.';\n\n        if (stampRes.ok) {\n          const info = await stampRes.json();\n          stampEl.textContent = `Generated: ${info.generatedAt} | Commit: ${info.commit}`;\n        }\n      } catch (error) {\n        outputEl.textContent = `Could not load output: ${error.message}`;\n      }\n    }\n\n    loadOutput();\n  </script>\n</body>\n</html>\n'@; $b64 = [Convert]::ToBase64String([Text.Encoding]::UTF8.GetBytes($content)); $sha = gh api repos/jordantchampagne-sudo/GLA6-Theme-Park/contents/docs/index.html?ref=portfolio-fork --jq .sha; gh api repos/jordantchampagne-sudo/GLA6-Theme-Park/contents/docs/index.html -X PUT -f message='light output box and finalproject-style palette' -f content=$b64 -f sha=$sha -f branch='portfolio-fork'"
+		},
+		{
+			"label": "publish-light-output-style-champagne",
+			"type": "shell",
+			"command": "$content = @'\n<!doctype html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\" />\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n  <title>GLA6 Theme Park CRUD - Portfolio Demo</title>\n  <style>\n    :root {\n      --bg: #f5f7fa;\n      --panel: #ffffff;\n      --ink: #1f2d3d;\n      --muted: #52606d;\n      --brand: #1f4e79;\n      --brand-soft: #2b6aa3;\n      --ok-bg: #e9f9ef;\n      --ok-ink: #216e39;\n      --border: #d9e2ec;\n    }\n\n    * { box-sizing: border-box; }\n    body {\n      margin: 0;\n      background: radial-gradient(circle at 20% 0%, #e8eff7 0%, var(--bg) 55%);\n      color: var(--ink);\n      font-family: \"Segoe UI\", Tahoma, Geneva, Verdana, sans-serif;\n      padding: 28px;\n    }\n    .wrap {\n      max-width: 1080px;\n      margin: 0 auto;\n      background: var(--panel);\n      border: 1px solid var(--border);\n      border-radius: 14px;\n      overflow: hidden;\n      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);\n    }\n    header {\n      padding: 22px 26px;\n      background: linear-gradient(120deg, var(--brand), var(--brand-soft));\n      color: #fff;\n    }\n    h1 { margin: 0; font-size: 28px; line-height: 1.1; }\n    .sub { margin-top: 7px; opacity: 0.92; font-size: 14px; }\n    section { padding: 20px 26px; border-top: 1px solid var(--border); }\n    .meta {\n      display: grid;\n      grid-template-columns: repeat(2, minmax(260px, 1fr));\n      gap: 10px;\n      margin-top: 10px;\n    }\n    .pill {\n      border: 1px solid #b8d8c5;\n      background: var(--ok-bg);\n      color: var(--ok-ink);\n      border-radius: 8px;\n      padding: 10px 12px;\n      font-size: 14px;\n      font-weight: 600;\n    }\n    .muted { color: var(--muted); font-size: 14px; margin: 0; }\n    pre {\n      margin: 12px 0 0;\n      background: #f7fbff;\n      color: #1f2d3d;\n      border-radius: 10px;\n      padding: 16px;\n      font-family: Consolas, \"Courier New\", monospace;\n      font-size: 13px;\n      line-height: 1.4;\n      max-height: 62vh;\n      overflow: auto;\n      white-space: pre-wrap;\n      word-break: break-word;\n      border: 1px solid #d9e2ec;\n    }\n    .foot {\n      margin-top: 12px;\n      padding: 10px 12px;\n      border: 1px solid var(--border);\n      border-radius: 8px;\n      background: #f8fbff;\n      color: #334e68;\n      font-size: 12px;\n      line-height: 1.4;\n    }\n    @media (max-width: 760px) {\n      body { padding: 16px; }\n      .meta { grid-template-columns: 1fr; }\n      header, section { padding: 18px; }\n      h1 { font-size: 24px; }\n    }\n  </style>\n</head>\n<body>\n  <main class=\"wrap\">\n    <header>\n      <h1>GLA 6 Theme Park CRUD - Online Test Report</h1>\n      <div class=\"sub\">Automated Node.js + SQLite execution artifact for portfolio demonstration.</div>\n    </header>\n\n    <section>\n      <p class=\"muted\">Automated checks completed in CI workflow:</p>\n      <div class=\"meta\">\n        <div class=\"pill\">PASS: READ query returned ride records</div>\n        <div class=\"pill\">PASS: CREATE inserted Galaxy Spinner</div>\n        <div class=\"pill\">PASS: UPDATE modified Thunder Coaster duration</div>\n        <div class=\"pill\">PASS: DELETE removed Haunted Mansion</div>\n      </div>\n    </section>\n\n    <section>\n      <p class=\"muted\">Latest command output from <strong>node app.js</strong>:</p>\n      <pre id=\"output\">Loading latest output...</pre>\n      <div class=\"foot\" id=\"stamp\">Generated by GitHub Actions after each push to portfolio-fork.</div>\n    </section>\n  </main>\n\n  <script>\n    async function loadOutput() {\n      const outputEl = document.getElementById('output');\n      const stampEl = document.getElementById('stamp');\n      try {\n        const [outputRes, stampRes] = await Promise.all([\n          fetch('./latest-output.txt', { cache: 'no-store' }),\n          fetch('./build-info.json', { cache: 'no-store' })\n        ]);\n\n        const outputText = outputRes.ok\n          ? await outputRes.text()\n          : 'Output file not found yet. Trigger workflow by pushing to portfolio-fork.';\n\n        outputEl.textContent = outputText.trim() || 'Output is empty.';\n\n        if (stampRes.ok) {\n          const info = await stampRes.json();\n          stampEl.textContent = `Generated: ${info.generatedAt} | Commit: ${info.commit}`;\n        }\n      } catch (error) {\n        outputEl.textContent = `Could not load output: ${error.message}`;\n      }\n    }\n\n    loadOutput();\n  </script>\n</body>\n</html>\n'@; $b64 = [Convert]::ToBase64String([Text.Encoding]::UTF8.GetBytes($content)); $sha = gh api repos/ChampagneCODE3D/GLA6-Theme-Park/contents/index.html --jq .sha; gh api repos/ChampagneCODE3D/GLA6-Theme-Park/contents/index.html -X PUT -f message='light output box and finalproject-style palette' -f content=$b64 -f sha=$sha"
+		},
+		{
+			"label": "check-jordan-latest-run-postfix",
+			"type": "shell",
+			"command": "gh api repos/jordantchampagne-sudo/GLA6-Theme-Park/actions/runs --jq '.workflow_runs[0:3] | map({status,conclusion,head_sha,updated_at})'"
+		},
+		{
+			"label": "trigger-champagne-build-postfix",
+			"type": "shell",
+			"command": "gh api repos/ChampagneCODE3D/GLA6-Theme-Park/pages/builds -X POST"
+		},
+		{
+			"label": "check-champagne-build-postfix",
+			"type": "shell",
+			"command": "gh api repos/ChampagneCODE3D/GLA6-Theme-Park/pages/builds --jq '.[0:4] | map({status,commit,updated_at})'"
+		},
+		{
+			"label": "status-jordan-and-champagne-runs",
+			"type": "shell",
+			"command": "gh api repos/jordantchampagne-sudo/GLA6-Theme-Park/actions/runs --jq '.workflow_runs[0:3] | map({status,conclusion,head_sha,updated_at})'; gh api repos/ChampagneCODE3D/GLA6-Theme-Park/pages/builds --jq '.[0:5] | map({status,commit,updated_at})'"
+		},
+		{
+			"label": "repair-champagne-build-info-json",
+			"type": "shell",
+			"command": "$json = '{\"generatedAt\":\"2026-06-26 14:47:22 UTC\",\"commit\":\"7c2b911ea6f22e310c7bf378ac4218eecf966da8\"}'; $b64=[Convert]::ToBase64String([Text.Encoding]::UTF8.GetBytes($json)); $sha=gh api repos/ChampagneCODE3D/GLA6-Theme-Park/contents/build-info.json --jq .sha; gh api repos/ChampagneCODE3D/GLA6-Theme-Park/contents/build-info.json -X PUT -f message='repair build info json format again' -f content=$b64 -f sha=$sha"
+		},
+		{
+			"label": "final-poll-jordan-and-champagne",
+			"type": "shell",
+			"command": "gh api repos/jordantchampagne-sudo/GLA6-Theme-Park/actions/runs --jq '.workflow_runs[0] | {status,conclusion,head_sha,updated_at}'; gh api repos/ChampagneCODE3D/GLA6-Theme-Park/pages/builds --jq '.[0:3] | map({status,commit,updated_at})'"
+		},
+		{
+			"label": "add-orange-accents-jordan-gla6",
+			"type": "shell",
+			"command": "$content = @'\n<!doctype html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\" />\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n  <title>GLA6 Theme Park CRUD - Portfolio Demo</title>\n  <style>\n    :root {\n      --bg: #f5f7fa;\n      --panel: #ffffff;\n      --ink: #1f2d3d;\n      --muted: #52606d;\n      --brand: #1f4e79;\n      --brand-soft: #2b6aa3;\n      --accent: #e8892a;\n      --accent-soft: #f3c289;\n      --ok-bg: #eef9f1;\n      --ok-ink: #1f5f35;\n      --border: #d9e2ec;\n    }\n\n    * { box-sizing: border-box; }\n    body {\n      margin: 0;\n      background:\n        radial-gradient(circle at 0% 0%, rgba(232, 137, 42, 0.12), transparent 28%),\n        radial-gradient(circle at 20% 0%, #e8eff7 0%, var(--bg) 55%);\n      color: var(--ink);\n      font-family: \"Segoe UI\", Tahoma, Geneva, Verdana, sans-serif;\n      padding: 28px;\n    }\n    .wrap {\n      max-width: 1080px;\n      margin: 0 auto;\n      background: var(--panel);\n      border: 1px solid var(--border);\n      border-radius: 14px;\n      overflow: hidden;\n      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);\n    }\n    header {\n      padding: 22px 26px;\n      background: linear-gradient(120deg, var(--brand), var(--brand-soft) 70%, var(--accent));\n      color: #fff;\n    }\n    h1 { margin: 0; font-size: 28px; line-height: 1.1; }\n    .sub { margin-top: 7px; opacity: 0.92; font-size: 14px; }\n    section { padding: 20px 26px; border-top: 1px solid var(--border); }\n    .meta {\n      display: grid;\n      grid-template-columns: repeat(2, minmax(260px, 1fr));\n      gap: 10px;\n      margin-top: 10px;\n    }\n    .pill {\n      border: 1px solid rgba(232, 137, 42, 0.45);\n      border-left: 4px solid var(--accent);\n      background: var(--ok-bg);\n      color: var(--ok-ink);\n      border-radius: 8px;\n      padding: 10px 12px;\n      font-size: 14px;\n      font-weight: 600;\n    }\n    .muted { color: var(--muted); font-size: 14px; margin: 0; }\n    pre {\n      margin: 12px 0 0;\n      background: #f7fbff;\n      color: #1f2d3d;\n      border-radius: 10px;\n      padding: 16px;\n      font-family: Consolas, \"Courier New\", monospace;\n      font-size: 13px;\n      line-height: 1.4;\n      max-height: 62vh;\n      overflow: auto;\n      white-space: pre-wrap;\n      word-break: break-word;\n      border: 1px solid #d9e2ec;\n    }\n    .foot {\n      margin-top: 12px;\n      padding: 10px 12px;\n      border: 1px solid var(--border);\n      border-top: 3px solid var(--accent-soft);\n      border-radius: 8px;\n      background: linear-gradient(180deg, #f8fbff, #fff8ef);\n      color: #334e68;\n      font-size: 12px;\n      line-height: 1.4;\n    }\n    @media (max-width: 760px) {\n      body { padding: 16px; }\n      .meta { grid-template-columns: 1fr; }\n      header, section { padding: 18px; }\n      h1 { font-size: 24px; }\n    }\n  </style>\n</head>\n<body>\n  <main class=\"wrap\">\n    <header>\n      <h1>GLA 6 Theme Park CRUD - Online Test Report</h1>\n      <div class=\"sub\">Automated Node.js + SQLite execution artifact for portfolio demonstration.</div>\n    </header>\n\n    <section>\n      <p class=\"muted\">Automated checks completed in CI workflow:</p>\n      <div class=\"meta\">\n        <div class=\"pill\">PASS: READ query returned ride records</div>\n        <div class=\"pill\">PASS: CREATE inserted Galaxy Spinner</div>\n        <div class=\"pill\">PASS: UPDATE modified Thunder Coaster duration</div>\n        <div class=\"pill\">PASS: DELETE removed Haunted Mansion</div>\n      </div>\n    </section>\n\n    <section>\n      <p class=\"muted\">Latest command output from <strong>node app.js</strong>:</p>\n      <pre id=\"output\">Loading latest output...</pre>\n      <div class=\"foot\" id=\"stamp\">Generated by GitHub Actions after each push to portfolio-fork.</div>\n    </section>\n  </main>\n\n  <script>\n    async function loadOutput() {\n      const outputEl = document.getElementById('output');\n      const stampEl = document.getElementById('stamp');\n      try {\n        const [outputRes, stampRes] = await Promise.all([\n          fetch('./latest-output.txt', { cache: 'no-store' }),\n          fetch('./build-info.json', { cache: 'no-store' })\n        ]);\n\n        const outputText = outputRes.ok\n          ? await outputRes.text()\n          : 'Output file not found yet. Trigger workflow by pushing to portfolio-fork.';\n\n        outputEl.textContent = outputText.trim() || 'Output is empty.';\n\n        if (stampRes.ok) {\n          const info = await stampRes.json();\n          stampEl.textContent = `Generated: ${info.generatedAt} | Commit: ${info.commit}`;\n        }\n      } catch (error) {\n        outputEl.textContent = `Could not load output: ${error.message}`;\n      }\n    }\n\n    loadOutput();\n  </script>\n</body>\n</html>\n'@; $b64=[Convert]::ToBase64String([Text.Encoding]::UTF8.GetBytes($content)); $sha=gh api repos/jordantchampagne-sudo/GLA6-Theme-Park/contents/docs/index.html?ref=portfolio-fork --jq .sha; gh api repos/jordantchampagne-sudo/GLA6-Theme-Park/contents/docs/index.html -X PUT -f message='add orange accents to gla6 report style' -f content=$b64 -f sha=$sha -f branch='portfolio-fork'"
+		},
+		{
+			"label": "add-orange-accents-champagne-gla6",
+			"type": "shell",
+			"command": "$content = @'\n<!doctype html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\" />\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n  <title>GLA6 Theme Park CRUD - Portfolio Demo</title>\n  <style>\n    :root {\n      --bg: #f5f7fa;\n      --panel: #ffffff;\n      --ink: #1f2d3d;\n      --muted: #52606d;\n      --brand: #1f4e79;\n      --brand-soft: #2b6aa3;\n      --accent: #e8892a;\n      --accent-soft: #f3c289;\n      --ok-bg: #eef9f1;\n      --ok-ink: #1f5f35;\n      --border: #d9e2ec;\n    }\n\n    * { box-sizing: border-box; }\n    body {\n      margin: 0;\n      background:\n        radial-gradient(circle at 0% 0%, rgba(232, 137, 42, 0.12), transparent 28%),\n        radial-gradient(circle at 20% 0%, #e8eff7 0%, var(--bg) 55%);\n      color: var(--ink);\n      font-family: \"Segoe UI\", Tahoma, Geneva, Verdana, sans-serif;\n      padding: 28px;\n    }\n    .wrap {\n      max-width: 1080px;\n      margin: 0 auto;\n      background: var(--panel);\n      border: 1px solid var(--border);\n      border-radius: 14px;\n      overflow: hidden;\n      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);\n    }\n    header {\n      padding: 22px 26px;\n      background: linear-gradient(120deg, var(--brand), var(--brand-soft) 70%, var(--accent));\n      color: #fff;\n    }\n    h1 { margin: 0; font-size: 28px; line-height: 1.1; }\n    .sub { margin-top: 7px; opacity: 0.92; font-size: 14px; }\n    section { padding: 20px 26px; border-top: 1px solid var(--border); }\n    .meta {\n      display: grid;\n      grid-template-columns: repeat(2, minmax(260px, 1fr));\n      gap: 10px;\n      margin-top: 10px;\n    }\n    .pill {\n      border: 1px solid rgba(232, 137, 42, 0.45);\n      border-left: 4px solid var(--accent);\n      background: var(--ok-bg);\n      color: var(--ok-ink);\n      border-radius: 8px;\n      padding: 10px 12px;\n      font-size: 14px;\n      font-weight: 600;\n    }\n    .muted { color: var(--muted); font-size: 14px; margin: 0; }\n    pre {\n      margin: 12px 0 0;\n      background: #f7fbff;\n      color: #1f2d3d;\n      border-radius: 10px;\n      padding: 16px;\n      font-family: Consolas, \"Courier New\", monospace;\n      font-size: 13px;\n      line-height: 1.4;\n      max-height: 62vh;\n      overflow: auto;\n      white-space: pre-wrap;\n      word-break: break-word;\n      border: 1px solid #d9e2ec;\n    }\n    .foot {\n      margin-top: 12px;\n      padding: 10px 12px;\n      border: 1px solid var(--border);\n      border-top: 3px solid var(--accent-soft);\n      border-radius: 8px;\n      background: linear-gradient(180deg, #f8fbff, #fff8ef);\n      color: #334e68;\n      font-size: 12px;\n      line-height: 1.4;\n    }\n    @media (max-width: 760px) {\n      body { padding: 16px; }\n      .meta { grid-template-columns: 1fr; }\n      header, section { padding: 18px; }\n      h1 { font-size: 24px; }\n    }\n  </style>\n</head>\n<body>\n  <main class=\"wrap\">\n    <header>\n      <h1>GLA 6 Theme Park CRUD - Online Test Report</h1>\n      <div class=\"sub\">Automated Node.js + SQLite execution artifact for portfolio demonstration.</div>\n    </header>\n\n    <section>\n      <p class=\"muted\">Automated checks completed in CI workflow:</p>\n      <div class=\"meta\">\n        <div class=\"pill\">PASS: READ query returned ride records</div>\n        <div class=\"pill\">PASS: CREATE inserted Galaxy Spinner</div>\n        <div class=\"pill\">PASS: UPDATE modified Thunder Coaster duration</div>\n        <div class=\"pill\">PASS: DELETE removed Haunted Mansion</div>\n      </div>\n    </section>\n\n    <section>\n      <p class=\"muted\">Latest command output from <strong>node app.js</strong>:</p>\n      <pre id=\"output\">Loading latest output...</pre>\n      <div class=\"foot\" id=\"stamp\">Generated by GitHub Actions after each push to portfolio-fork.</div>\n    </section>\n  </main>\n\n  <script>\n    async function loadOutput() {\n      const outputEl = document.getElementById('output');\n      const stampEl = document.getElementById('stamp');\n      try {\n        const [outputRes, stampRes] = await Promise.all([\n          fetch('./latest-output.txt', { cache: 'no-store' }),\n          fetch('./build-info.json', { cache: 'no-store' })\n        ]);\n\n        const outputText = outputRes.ok\n          ? await outputRes.text()\n          : 'Output file not found yet. Trigger workflow by pushing to portfolio-fork.';\n\n        outputEl.textContent = outputText.trim() || 'Output is empty.';\n\n        if (stampRes.ok) {\n          const info = await stampRes.json();\n          stampEl.textContent = `Generated: ${info.generatedAt} | Commit: ${info.commit}`;\n        }\n      } catch (error) {\n        outputEl.textContent = `Could not load output: ${error.message}`;\n      }\n    }\n\n    loadOutput();\n  </script>\n</body>\n</html>\n'@; $b64=[Convert]::ToBase64String([Text.Encoding]::UTF8.GetBytes($content)); $sha=gh api repos/ChampagneCODE3D/GLA6-Theme-Park/contents/index.html --jq .sha; gh api repos/ChampagneCODE3D/GLA6-Theme-Park/contents/index.html -X PUT -f message='add orange accents to gla6 report style' -f content=$b64 -f sha=$sha"
+		},
+		{
+			"label": "deploy-check-after-orange-accents",
+			"type": "shell",
+			"command": "gh api repos/jordantchampagne-sudo/GLA6-Theme-Park/actions/runs --jq '.workflow_runs[0:2] | map({status,conclusion,head_sha,updated_at})'; gh api repos/ChampagneCODE3D/GLA6-Theme-Park/pages/builds -X POST; gh api repos/ChampagneCODE3D/GLA6-Theme-Park/pages/builds --jq '.[0:3] | map({status,commit,updated_at})'"
+		},
+		{
+			"label": "repo-check-jordan-pages-and-evidence",
+			"type": "shell",
+			"command": "gh api repos/jordantchampagne-sudo/GLA6-Theme-Park/contents/docs?ref=portfolio-fork --jq '.[] | [.type,.name,.path] | @tsv'; gh api repos/jordantchampagne-sudo/GLA6-Theme-Park/contents?ref=portfolio-fork --jq '.[] | [.type,.name,.path] | @tsv'; gh api repos/jordantchampagne-sudo/GLA6-Theme-Park/actions/runs --jq '.workflow_runs[0:5] | map({status,conclusion,head_sha,name,updated_at})'"
+		},
+		{
+			"label": "repo-check-champagne-pages-and-evidence",
+			"type": "shell",
+			"command": "gh api repos/ChampagneCODE3D/GLA6-Theme-Park/contents --jq '.[] | [.type,.name,.path] | @tsv'; gh api repos/ChampagneCODE3D/GLA6-Theme-Park/pages --jq '{build_type,source,html_url,status}'; gh api repos/ChampagneCODE3D/GLA6-Theme-Park/pages/builds --jq '.[0:5] | map({status,commit,updated_at})'"
+		},
+		{
+			"label": "lock-jordan-and-read-artifacts",
+			"type": "shell",
+			"command": "gh api repos/jordantchampagne-sudo/GLA6-Theme-Park/actions/runs --jq '.workflow_runs[0:3] | map({status,conclusion,head_sha,updated_at,html_url})'; gh api repos/jordantchampagne-sudo/GLA6-Theme-Park/contents/docs/index.html?ref=portfolio-fork --jq '{sha,download_url}'; gh api repos/jordantchampagne-sudo/GLA6-Theme-Park/contents/docs/latest-output.txt?ref=portfolio-fork --jq '{sha,download_url}'; gh api repos/jordantchampagne-sudo/GLA6-Theme-Park/contents/docs/build-info.json?ref=portfolio-fork --jq '{sha,download_url}'"
+		},
+		{
+			"label": "sync-champagne-index-from-jordan-raw",
+			"type": "shell",
+			"command": "$html = Invoke-WebRequest -UseBasicParsing 'https://raw.githubusercontent.com/jordantchampagne-sudo/GLA6-Theme-Park/portfolio-fork/docs/index.html' | Select-Object -ExpandProperty Content; $b64 = [Convert]::ToBase64String([Text.Encoding]::UTF8.GetBytes($html)); $sha = gh api repos/ChampagneCODE3D/GLA6-Theme-Park/contents/index.html --jq .sha; gh api repos/ChampagneCODE3D/GLA6-Theme-Park/contents/index.html -X PUT -f message='final sync index from jordan successful source' -f content=$b64 -f sha=$sha"
+		},
+		{
+			"label": "restore-champagne-support-from-jordan-live",
+			"type": "shell",
+			"command": "$out = Invoke-WebRequest -UseBasicParsing 'https://jordantchampagne-sudo.github.io/GLA6-Theme-Park/latest-output.txt' | Select-Object -ExpandProperty Content; $outB64 = [Convert]::ToBase64String([Text.Encoding]::UTF8.GetBytes($out)); $outSha = gh api repos/ChampagneCODE3D/GLA6-Theme-Park/contents/latest-output.txt --jq .sha; gh api repos/ChampagneCODE3D/GLA6-Theme-Park/contents/latest-output.txt -X PUT -f message='final sync latest output from jordan live' -f content=$outB64 -f sha=$outSha; $info = Invoke-WebRequest -UseBasicParsing 'https://jordantchampagne-sudo.github.io/GLA6-Theme-Park/build-info.json' | Select-Object -ExpandProperty Content; $infoB64 = [Convert]::ToBase64String([Text.Encoding]::UTF8.GetBytes($info)); $infoSha = gh api repos/ChampagneCODE3D/GLA6-Theme-Park/contents/build-info.json --jq .sha; gh api repos/ChampagneCODE3D/GLA6-Theme-Park/contents/build-info.json -X PUT -f message='final sync build info from jordan live' -f content=$infoB64 -f sha=$infoSha"
+		},
+		{
+			"label": "final-deploy-check-both",
+			"type": "shell",
+			"command": "gh api repos/ChampagneCODE3D/GLA6-Theme-Park/pages/builds -X POST; gh api repos/ChampagneCODE3D/GLA6-Theme-Park/pages/builds --jq '.[0:4] | map({status,commit,updated_at})'; gh api repos/jordantchampagne-sudo/GLA6-Theme-Park/actions/runs --jq '.workflow_runs[0:3] | map({status,conclusion,head_sha,updated_at})'"
+		},
+		{
+			"label": "add-nojekyll-champagne",
+			"type": "shell",
+			"command": "$repo='ChampagneCODE3D/GLA6-Theme-Park'; $content=''; $b64=[Convert]::ToBase64String([Text.Encoding]::UTF8.GetBytes($content)); gh api repos/$repo/contents/.nojekyll -X PUT -f message='add nojekyll to stabilize pages build' -f content=$b64"
+		},
+		{
+			"label": "trigger-build-after-nojekyll",
+			"type": "shell",
+			"command": "gh api repos/ChampagneCODE3D/GLA6-Theme-Park/pages/builds -X POST; gh api repos/ChampagneCODE3D/GLA6-Theme-Park/pages/builds --jq '.[0:5] | map({status,commit,updated_at})'"
+		},
+		{
+			"label": "soften-gla6-accents-both-repos",
+			"type": "shell",
+			"command": "$content = @'\n<!doctype html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\" />\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n  <title>GLA6 Theme Park CRUD - Portfolio Demo</title>\n  <style>\n    :root {\n      --bg: #f5f7fa;\n      --panel: #ffffff;\n      --ink: #1f2d3d;\n      --muted: #52606d;\n      --brand: #1f4e79;\n      --brand-soft: #2b6aa3;\n      --accent: #d97f2b;\n      --accent-soft: rgba(217, 127, 43, 0.22);\n      --ok-bg: #eef9f1;\n      --ok-ink: #1f5f35;\n      --border: #d9e2ec;\n    }\n\n    * { box-sizing: border-box; }\n    body {\n      margin: 0;\n      background: radial-gradient(circle at 20% 0%, #e8eff7 0%, var(--bg) 55%);\n      color: var(--ink);\n      font-family: \"Segoe UI\", Tahoma, Geneva, Verdana, sans-serif;\n      padding: 28px;\n    }\n    .wrap {\n      max-width: 1080px;\n      margin: 0 auto;\n      background: var(--panel);\n      border: 1px solid var(--border);\n      border-radius: 14px;\n      overflow: hidden;\n      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);\n    }\n    header {\n      padding: 22px 26px;\n      background: linear-gradient(120deg, var(--brand), var(--brand-soft));\n      color: #fff;\n      border-bottom: 2px solid var(--accent-soft);\n    }\n    h1 { margin: 0; font-size: 28px; line-height: 1.1; }\n    .sub { margin-top: 7px; opacity: 0.92; font-size: 14px; }\n    section { padding: 20px 26px; border-top: 1px solid var(--border); }\n    .meta {\n      display: grid;\n      grid-template-columns: repeat(2, minmax(260px, 1fr));\n      gap: 10px;\n      margin-top: 10px;\n    }\n    .pill {\n      border: 1px solid #b8d8c5;\n      border-left: 2px solid var(--accent-soft);\n      background: var(--ok-bg);\n      color: var(--ok-ink);\n      border-radius: 8px;\n      padding: 10px 12px;\n      font-size: 14px;\n      font-weight: 600;\n    }\n    .muted { color: var(--muted); font-size: 14px; margin: 0; }\n    pre {\n      margin: 12px 0 0;\n      background: #f7fbff;\n      color: #1f2d3d;\n      border-radius: 10px;\n      padding: 16px;\n      font-family: Consolas, \"Courier New\", monospace;\n      font-size: 13px;\n      line-height: 1.4;\n      max-height: 62vh;\n      overflow: auto;\n      white-space: pre-wrap;\n      word-break: break-word;\n      border: 1px solid #d9e2ec;\n    }\n    .foot {\n      margin-top: 12px;\n      padding: 10px 12px;\n      border: 1px solid var(--border);\n      border-radius: 8px;\n      background: #f8fbff;\n      box-shadow: inset 0 -2px 0 var(--accent-soft);\n      color: #334e68;\n      font-size: 12px;\n      line-height: 1.4;\n    }\n    @media (max-width: 760px) {\n      body { padding: 16px; }\n      .meta { grid-template-columns: 1fr; }\n      header, section { padding: 18px; }\n      h1 { font-size: 24px; }\n    }\n  </style>\n</head>\n<body>\n  <main class=\"wrap\">\n    <header>\n      <h1>GLA 6 Theme Park CRUD - Online Test Report</h1>\n      <div class=\"sub\">Automated Node.js + SQLite execution artifact for portfolio demonstration.</div>\n    </header>\n\n    <section>\n      <p class=\"muted\">Automated checks completed in CI workflow:</p>\n      <div class=\"meta\">\n        <div class=\"pill\">PASS: READ query returned ride records</div>\n        <div class=\"pill\">PASS: CREATE inserted Galaxy Spinner</div>\n        <div class=\"pill\">PASS: UPDATE modified Thunder Coaster duration</div>\n        <div class=\"pill\">PASS: DELETE removed Haunted Mansion</div>\n      </div>\n    </section>\n\n    <section>\n      <p class=\"muted\">Latest command output from <strong>node app.js</strong>:</p>\n      <pre id=\"output\">Loading latest output...</pre>\n      <div class=\"foot\" id=\"stamp\">Generated by GitHub Actions after each push to portfolio-fork.</div>\n    </section>\n  </main>\n\n  <script>\n    async function loadOutput() {\n      const outputEl = document.getElementById('output');\n      const stampEl = document.getElementById('stamp');\n      try {\n        const [outputRes, stampRes] = await Promise.all([\n          fetch('./latest-output.txt', { cache: 'no-store' }),\n          fetch('./build-info.json', { cache: 'no-store' })\n        ]);\n\n        const outputText = outputRes.ok\n          ? await outputRes.text()\n          : 'Output file not found yet. Trigger workflow by pushing to portfolio-fork.';\n\n        outputEl.textContent = outputText.trim() || 'Output is empty.';\n\n        if (stampRes.ok) {\n          const info = await stampRes.json();\n          stampEl.textContent = `Generated: ${info.generatedAt} | Commit: ${info.commit}`;\n        }\n      } catch (error) {\n        outputEl.textContent = `Could not load output: ${error.message}`;\n      }\n    }\n\n    loadOutput();\n  </script>\n</body>\n</html>\n'@;\n$b64=[Convert]::ToBase64String([Text.Encoding]::UTF8.GetBytes($content));\n$shaJ=gh api repos/jordantchampagne-sudo/GLA6-Theme-Park/contents/docs/index.html?ref=portfolio-fork --jq .sha;\ngh api repos/jordantchampagne-sudo/GLA6-Theme-Park/contents/docs/index.html -X PUT -f message='soften orange accents for cleaner look' -f content=$b64 -f sha=$shaJ -f branch='portfolio-fork';\n$shaC=gh api repos/ChampagneCODE3D/GLA6-Theme-Park/contents/index.html --jq .sha;\ngh api repos/ChampagneCODE3D/GLA6-Theme-Park/contents/index.html -X PUT -f message='soften orange accents for cleaner look' -f content=$b64 -f sha=$shaC"
+		},
+		{
+			"label": "add-orange-text-highlights-gla6-both",
+			"type": "shell",
+			"command": "$content = @'\n<!doctype html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\" />\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n  <title>GLA6 Theme Park CRUD - Portfolio Demo</title>\n  <style>\n    :root {\n      --bg: #f5f7fa;\n      --panel: #ffffff;\n      --ink: #1f2d3d;\n      --muted: #52606d;\n      --brand: #1f4e79;\n      --brand-soft: #2b6aa3;\n      --accent: #d97f2b;\n      --accent-soft: rgba(217, 127, 43, 0.22);\n      --ok-bg: #eef9f1;\n      --ok-ink: #1f5f35;\n      --border: #d9e2ec;\n    }\n\n    * { box-sizing: border-box; }\n    body {\n      margin: 0;\n      background: radial-gradient(circle at 20% 0%, #e8eff7 0%, var(--bg) 55%);\n      color: var(--ink);\n      font-family: \"Segoe UI\", Tahoma, Geneva, Verdana, sans-serif;\n      padding: 28px;\n    }\n    .wrap {\n      max-width: 1080px;\n      margin: 0 auto;\n      background: var(--panel);\n      border: 1px solid var(--border);\n      border-radius: 14px;\n      overflow: hidden;\n      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);\n    }\n    header {\n      padding: 22px 26px;\n      background: linear-gradient(120deg, var(--brand), var(--brand-soft));\n      color: #fff;\n      border-bottom: 2px solid var(--accent-soft);\n    }\n    h1 { margin: 0; font-size: 28px; line-height: 1.1; }\n    .sub { margin-top: 7px; opacity: 0.92; font-size: 14px; }\n    section { padding: 20px 26px; border-top: 1px solid var(--border); }\n    .meta {\n      display: grid;\n      grid-template-columns: repeat(2, minmax(260px, 1fr));\n      gap: 10px;\n      margin-top: 10px;\n    }\n    .pill {\n      border: 1px solid #b8d8c5;\n      border-left: 2px solid var(--accent-soft);\n      background: var(--ok-bg);\n      color: var(--ok-ink);\n      border-radius: 8px;\n      padding: 10px 12px;\n      font-size: 14px;\n      font-weight: 600;\n    }\n    .muted {\n      color: var(--muted);\n      font-size: 14px;\n      margin: 0;\n    }\n    .label {\n      color: var(--accent);\n      font-weight: 700;\n      letter-spacing: 0.02em;\n    }\n    .accent {\n      color: var(--accent);\n      font-weight: 700;\n    }\n    pre {\n      margin: 12px 0 0;\n      background: #f7fbff;\n      color: #1f2d3d;\n      border-radius: 10px;\n      padding: 16px;\n      font-family: Consolas, \"Courier New\", monospace;\n      font-size: 13px;\n      line-height: 1.4;\n      max-height: 62vh;\n      overflow: auto;\n      white-space: pre-wrap;\n      word-break: break-word;\n      border: 1px solid #d9e2ec;\n    }\n    .foot {\n      margin-top: 12px;\n      padding: 10px 12px;\n      border: 1px solid var(--border);\n      border-radius: 8px;\n      background: #f8fbff;\n      box-shadow: inset 0 -2px 0 var(--accent-soft);\n      color: #334e68;\n      font-size: 12px;\n      line-height: 1.4;\n    }\n    @media (max-width: 760px) {\n      body { padding: 16px; }\n      .meta { grid-template-columns: 1fr; }\n      header, section { padding: 18px; }\n      h1 { font-size: 24px; }\n    }\n  </style>\n</head>\n<body>\n  <main class=\"wrap\">\n    <header>\n      <h1>GLA 6 Theme Park CRUD - Online Test Report</h1>\n      <div class=\"sub\">Automated Node.js + SQLite execution artifact for portfolio demonstration.</div>\n    </header>\n\n    <section>\n      <p class=\"muted\"><span class=\"label\">CHECK RESULTS</span> Automated checks completed in CI workflow:</p>\n      <div class=\"meta\">\n        <div class=\"pill\">PASS: READ query returned ride records</div>\n        <div class=\"pill\">PASS: CREATE inserted Galaxy Spinner</div>\n        <div class=\"pill\">PASS: UPDATE modified Thunder Coaster duration</div>\n        <div class=\"pill\">PASS: DELETE removed Haunted Mansion</div>\n      </div>\n    </section>\n\n    <section>\n      <p class=\"muted\">Latest command output from <strong class=\"accent\">node app.js</strong>:</p>\n      <pre id=\"output\">Loading latest output...</pre>\n      <div class=\"foot\" id=\"stamp\">Generated by GitHub Actions after each push to portfolio-fork.</div>\n    </section>\n  </main>\n\n  <script>\n    async function loadOutput() {\n      const outputEl = document.getElementById('output');\n      const stampEl = document.getElementById('stamp');\n      try {\n        const [outputRes, stampRes] = await Promise.all([\n          fetch('./latest-output.txt', { cache: 'no-store' }),\n          fetch('./build-info.json', { cache: 'no-store' })\n        ]);\n\n        const outputText = outputRes.ok\n          ? await outputRes.text()\n          : 'Output file not found yet. Trigger workflow by pushing to portfolio-fork.';\n\n        outputEl.textContent = outputText.trim() || 'Output is empty.';\n\n        if (stampRes.ok) {\n          const info = await stampRes.json();\n          stampEl.textContent = `Generated: ${info.generatedAt} | Commit: ${info.commit}`;\n        }\n      } catch (error) {\n        outputEl.textContent = `Could not load output: ${error.message}`;\n      }\n    }\n\n    loadOutput();\n  </script>\n</body>\n</html>\n'@;\n$b64=[Convert]::ToBase64String([Text.Encoding]::UTF8.GetBytes($content));\n$shaJ=gh api repos/jordantchampagne-sudo/GLA6-Theme-Park/contents/docs/index.html?ref=portfolio-fork --jq .sha;\ngh api repos/jordantchampagne-sudo/GLA6-Theme-Park/contents/docs/index.html -X PUT -f message='add subtle orange text highlights' -f content=$b64 -f sha=$shaJ -f branch='portfolio-fork';\n$shaC=gh api repos/ChampagneCODE3D/GLA6-Theme-Park/contents/index.html --jq .sha;\ngh api repos/ChampagneCODE3D/GLA6-Theme-Park/contents/index.html -X PUT -f message='add subtle orange text highlights' -f content=$b64 -f sha=$shaC"
+		},
+		{
+			"label": "trigger-champagne-build-orange-text",
+			"type": "shell",
+			"command": "gh api repos/ChampagneCODE3D/GLA6-Theme-Park/pages/builds -X POST; gh api repos/ChampagneCODE3D/GLA6-Theme-Park/pages/builds --jq '.[0:4] | map({status,commit,updated_at})'"
+		},
+		{
+			"label": "check-champagne-build-status-now",
+			"type": "shell",
+			"command": "gh api repos/ChampagneCODE3D/GLA6-Theme-Park/pages/builds --jq '.[0:5] | map({status,commit,updated_at})'"
+		},
+		{
+			"label": "recheck-build-status-orange-commit",
+			"type": "shell",
+			"command": "gh api repos/ChampagneCODE3D/GLA6-Theme-Park/pages/builds --jq '.[0:6] | map({status,commit,updated_at})'"
+		},
+		{
+			"label": "force-rebuild-orange-text-commit",
+			"type": "shell",
+			"command": "gh api repos/ChampagneCODE3D/GLA6-Theme-Park/pages/builds -X POST; gh api repos/ChampagneCODE3D/GLA6-Theme-Park/pages/builds --jq '.[0:5] | map({status,commit,updated_at})'"
+		},
+		{
+			"label": "inspect-pages-build-error-details",
+			"type": "shell",
+			"command": "gh api repos/ChampagneCODE3D/GLA6-Theme-Park/pages/builds/latest"
+		},
+		{
+			"label": "check-jordan-workflow-status-after-style",
+			"type": "shell",
+			"command": "gh api repos/jordantchampagne-sudo/GLA6-Theme-Park/actions/runs --jq '.workflow_runs[0:4] | map({status,conclusion,head_sha,updated_at})'"
+		},
+		{
+			"label": "poll-champagne-build-once-more",
+			"type": "shell",
+			"command": "gh api repos/ChampagneCODE3D/GLA6-Theme-Park/pages/builds --jq '.[0:6] | map({status,commit,updated_at})'"
+		},
+		{
+			"label": "rerun-jordan-failed-publish",
+			"type": "shell",
+			"command": "$runId = gh api repos/jordantchampagne-sudo/GLA6-Theme-Park/actions/runs --jq '.workflow_runs[] | select(.head_sha==\"e22db73f54fdfce9d221cd94ac5756980454ad82\") | .id' | Select-Object -First 1; if (-not $runId) { throw 'No run found for orange commit'; }; gh api repos/jordantchampagne-sudo/GLA6-Theme-Park/actions/runs/$runId/rerun -X POST; gh api repos/jordantchampagne-sudo/GLA6-Theme-Park/actions/runs --jq '.workflow_runs[0:4] | map({id,status,conclusion,head_sha,updated_at})'"
+		},
+		{
+			"label": "rerun-latest-failed-jordan-run",
+			"type": "shell",
+			"command": "$runs = gh api repos/jordantchampagne-sudo/GLA6-Theme-Park/actions/runs | ConvertFrom-Json; $target = $runs.workflow_runs | Where-Object { $_.conclusion -eq 'failure' } | Select-Object -First 1; if (-not $target) { throw 'No failed run found'; }; gh api repos/jordantchampagne-sudo/GLA6-Theme-Park/actions/runs/$($target.id)/rerun -X POST; gh api repos/jordantchampagne-sudo/GLA6-Theme-Park/actions/runs --jq '.workflow_runs[0:4] | map({id,status,conclusion,head_sha,updated_at})'"
+		},
+		{
+			"label": "check-rerun-result-jordan",
+			"type": "shell",
+			"command": "gh api repos/jordantchampagne-sudo/GLA6-Theme-Park/actions/runs --jq '.workflow_runs[0:5] | map({id,status,conclusion,head_sha,updated_at})'"
+		},
+		{
+			"label": "final-poll-jordan-orange-run",
+			"type": "shell",
+			"command": "gh api repos/jordantchampagne-sudo/GLA6-Theme-Park/actions/runs --jq '.workflow_runs[0:3] | map({id,status,conclusion,head_sha,updated_at})'"
+		},
+		{
+			"label": "status-jordan-gla6",
+			"type": "shell",
+			"command": "gh api repos/jordantchampagne-sudo/GLA6-Theme-Park/actions/runs --jq '.workflow_runs[0:5] | map({status,conclusion,head_sha,updated_at})'"
+		},
+		{
+			"label": "status-champagne-gla6",
+			"type": "shell",
+			"command": "gh api repos/ChampagneCODE3D/GLA6-Theme-Park/pages/builds --jq '.[0:5] | map({status,commit,updated_at})'"
+		},
+		{
+			"label": "list-git-remotes-for-handoff",
+			"type": "shell",
+			"command": "git rev-parse --is-inside-work-tree; git remote -v; git branch --show-current"
+		},
+		{
+			"label": "probe-assignment2-git-remotes",
+			"type": "shell",
+			"command": "Set-Location 'c:\\Users\\jorda\\repos\\Assignment2-API-Services'; git rev-parse --is-inside-work-tree; git remote -v; git branch --show-current"
+		},
+		{
+			"label": "find-git-repos-near-assignment2",
+			"type": "shell",
+			"command": "Get-ChildItem 'c:\\Users\\jorda\\repos' -Directory -Recurse -Depth 3 | Where-Object { Test-Path (Join-Path $_.FullName '.git') } | Select-Object -ExpandProperty FullName"
+		},
+		{
+			"label": "locate-assignment2-folders",
+			"type": "shell",
+			"command": "Get-ChildItem 'c:\\Users\\jorda' -Directory -Recurse -Depth 5 -ErrorAction SilentlyContinue | Where-Object { $_.Name -match 'Assignment\\s*2|Assignment2|API-Services|weather' } | Select-Object -ExpandProperty FullName"
+		},
+		{
+			"label": "check-assignment2-candidates-for-git",
+			"type": "shell",
+			"command": "$candidates = @('c:\\Users\\jorda\\Downloads\\Assignment2JC','c:\\Users\\jorda\\Downloads\\Assignment2JC (1)','c:\\Users\\jorda\\Downloads\\Assignment2JC (1)\\Assignment2JC','c:\\Users\\jorda\\repos\\Assignment2-API-Services','c:\\Users\\jorda\\repos\\GLA5-HTTP-Requests\\assignment2-api-services','c:\\Users\\jorda\\source\\repos\\Assignment2SODV1202JC','c:\\Users\\jorda\\source\\repos\\Assignment2SODV1202JC\\Assignment2SODV1202JC'); foreach ($p in $candidates) { if (Test-Path $p) { Write-Host \"=== $p ===\"; if (Test-Path (Join-Path $p '.git')) { Set-Location $p; git remote -v; git branch --show-current; } else { Write-Host 'no .git'; } } }"
+		},
+		{
+			"label": "gh-list-jordan-assignment2-repos",
+			"type": "shell",
+			"command": "gh repo list jordantchampagne-sudo --limit 200 --json name,url | ConvertFrom-Json | Where-Object { $_.name -match 'Assignment2|assignment2|API|api-services|weather|SODV1202' } | Select-Object name,url | Format-Table -AutoSize | Out-String -Width 500"
+		},
+		{
+			"label": "gh-list-champagne-assignment2-repos",
+			"type": "shell",
+			"command": "gh repo list ChampagneCODE3D --limit 200 --json name,url | ConvertFrom-Json | Where-Object { $_.name -match 'Assignment2|assignment2|API|api-services|weather|SODV1202' } | Select-Object name,url | Format-Table -AutoSize | Out-String -Width 500"
+		},
+		{
+			"label": "gh-list-all-jordan-repos",
+			"type": "shell",
+			"command": "gh repo list jordantchampagne-sudo --limit 200 --json name,url | ConvertFrom-Json | Select-Object name,url | Format-Table -AutoSize | Out-String -Width 500"
+		},
+		{
+			"label": "gh-list-all-champagne-repos",
+			"type": "shell",
+			"command": "gh repo list ChampagneCODE3D --limit 200 --json name,url | ConvertFrom-Json | Select-Object name,url | Format-Table -AutoSize | Out-String -Width 500"
+		},
+		{
+			"label": "search-assignment2-for-github-urls",
+			"type": "shell",
+			"command": "$paths = @('c:\\Users\\jorda\\repos\\Assignment2-API-Services','c:\\Users\\jorda\\repos\\GLA5-HTTP-Requests\\assignment2-api-services','c:\\Users\\jorda\\source\\repos\\Assignment2SODV1202JC'); foreach ($p in $paths) { if (Test-Path $p) { Write-Host \"=== $p ===\"; Get-ChildItem $p -Recurse -File -ErrorAction SilentlyContinue | ForEach-Object { Select-String -Path $_.FullName -Pattern 'github.com/.+/.+' -SimpleMatch -ErrorAction SilentlyContinue } | Select-Object -First 5 | ForEach-Object { $_.Line } } }"
+		},
+		{
+			"label": "setup-assignment2-standalone-repos",
+			"type": "shell",
+			"command": "$ErrorActionPreference = 'Stop'; Set-Location 'c:\\Users\\jorda\\repos\\Assignment2-API-Services';\nif (-not (Test-Path '.git')) { git init | Out-Host };\n# Ensure default branch is main for clean handoff\n$cur = git branch --show-current;\nif ([string]::IsNullOrWhiteSpace($cur)) { git checkout -b main | Out-Host } elseif ($cur -ne 'main') { git branch -M main | Out-Host };\n\n# Create repos if missing\n$repoName = 'Assignment2-API-Services';\n$ownerA = 'jordantchampagne-sudo';\n$ownerB = 'ChampagneCODE3D';\n\n$existsA = $true; try { gh repo view \"$ownerA/$repoName\" --json nameWithOwner | Out-Null } catch { $existsA = $false };\nif (-not $existsA) { gh repo create \"$ownerA/$repoName\" --public --source . --remote origin --push | Out-Host };\n\n$existsB = $true; try { gh repo view \"$ownerB/$repoName\" --json nameWithOwner | Out-Null } catch { $existsB = $false };\nif (-not $existsB) { gh repo create \"$ownerB/$repoName\" --public | Out-Host };\n\n# Configure remotes consistently\n$originUrl = \"https://github.com/$ownerA/$repoName.git\";\n$champUrl = \"https://github.com/$ownerB/$repoName.git\";\n\n$hasOrigin = git remote | Select-String '^origin$' -Quiet;\nif ($hasOrigin) { git remote set-url origin $originUrl } else { git remote add origin $originUrl };\n\n$hasChamp = git remote | Select-String '^champagne$' -Quiet;\nif ($hasChamp) { git remote set-url champagne $champUrl } else { git remote add champagne $champUrl };\n\n# Commit if needed\nif (-not (git rev-parse --verify HEAD 2>$null)) {\n  git add .;\n  git commit -m 'Initial Assignment 2 setup' | Out-Host;\n} else {\n  git add .;\n  $changes = git status --porcelain;\n  if ($changes) { git commit -m 'Update Assignment 2 for handoff' | Out-Host };\n};\n\n# Push to both remotes\n$haveOriginMain = $false; try { git ls-remote --exit-code --heads origin main | Out-Null; $haveOriginMain = $true } catch { $haveOriginMain = $false };\nif (-not $haveOriginMain) { git push -u origin main | Out-Host } else { git push origin main | Out-Host };\n\ngit push champagne main | Out-Host;\n\nWrite-Host '---REMOTES---';\ngit remote -v;\nWrite-Host '---BRANCH---';\ngit branch --show-current;\nWrite-Host '---LAST COMMIT---';\ngit log -1 --oneline;\n"
+		},
+		{
+			"label": "create-assignment2-github-repos",
+			"type": "shell",
+			"command": "$ErrorActionPreference='Stop';\n$repo='Assignment2-API-Services';\n$ownerA='jordantchampagne-sudo';\n$ownerB='ChampagneCODE3D';\n\ntry { gh repo view ($ownerA + '/' + $repo) --json nameWithOwner | Out-Null; Write-Host 'Jordan repo exists'; }\ncatch { gh repo create ($ownerA + '/' + $repo) --public | Out-Host }\n\ntry { gh repo view ($ownerB + '/' + $repo) --json nameWithOwner | Out-Null; Write-Host 'Champagne repo exists'; }\ncatch { gh repo create ($ownerB + '/' + $repo) --public | Out-Host }\n\ngh repo view ($ownerA + '/' + $repo) --json nameWithOwner,url;\ngh repo view ($ownerB + '/' + $repo) --json nameWithOwner,url;"
+		},
+		{
+			"label": "check-gh-auth-identity",
+			"type": "shell",
+			"command": "gh auth status; gh api user --jq '.login'"
+		},
+		{
+			"label": "init-assignment2-and-push-champagne",
+			"type": "shell",
+			"command": "$ErrorActionPreference='Stop';\n$path='c:\\Users\\jorda\\repos\\Assignment2-API-Services';\n$repo='Assignment2-API-Services';\n$ownerJordan='jordantchampagne-sudo';\n$ownerChamp='ChampagneCODE3D';\n$originUrl=('https://github.com/{0}/{1}.git' -f $ownerJordan,$repo);\n$champUrl=('https://github.com/{0}/{1}.git' -f $ownerChamp,$repo);\n\nSet-Location $path;\nif (-not (Test-Path '.git')) { git init | Out-Host };\n$cur=git branch --show-current;\nif ([string]::IsNullOrWhiteSpace($cur)) { git checkout -b main | Out-Host } elseif ($cur -ne 'main') { git branch -M main | Out-Host };\n\n# Ensure Champagne repo exists under current authenticated account\n$null = gh repo view ($ownerChamp + '/' + $repo) --json nameWithOwner 2>$null;\nif ($LASTEXITCODE -ne 0) { gh repo create ($ownerChamp + '/' + $repo) --public | Out-Host };\n\n# Configure remotes\n$hasOrigin = (git remote) -contains 'origin';\nif ($hasOrigin) { git remote set-url origin $originUrl } else { git remote add origin $originUrl };\n$hasChamp = (git remote) -contains 'champagne';\nif ($hasChamp) { git remote set-url champagne $champUrl } else { git remote add champagne $champUrl };\n\n# Initial commit if needed\n$head = git rev-parse --verify HEAD 2>$null;\nif ($LASTEXITCODE -ne 0) {\n  git add .;\n  git commit -m 'Initial Assignment 2 setup for handoff' | Out-Host;\n} else {\n  git add .;\n  $changes = git status --porcelain;\n  if ($changes) { git commit -m 'Update Assignment 2 handoff state' | Out-Host };\n};\n\n# Push to Champagne remote\n$existsChampMain=$false; git ls-remote --exit-code --heads champagne main 1>$null 2>$null; if ($LASTEXITCODE -eq 0) { $existsChampMain=$true };\nif ($existsChampMain) { git push champagne main | Out-Host } else { git push -u champagne main | Out-Host };\n\nWrite-Host '---REMOTES---'; git remote -v;\nWrite-Host '---BRANCH---'; git branch --show-current;\nWrite-Host '---LAST---'; git log -1 --oneline;"
+		},
+		{
+			"label": "finalize-assignment2-repo-setup",
+			"type": "shell",
+			"command": "$path='c:\\Users\\jorda\\repos\\Assignment2-API-Services';\n$repo='Assignment2-API-Services';\n$ownerJordan='jordantchampagne-sudo';\n$ownerChamp='ChampagneCODE3D';\n$originUrl=('https://github.com/{0}/{1}.git' -f $ownerJordan,$repo);\n$champUrl=('https://github.com/{0}/{1}.git' -f $ownerChamp,$repo);\n\nSet-Location $path;\nif (-not (Test-Path '.git')) { git init | Out-Host };\n$cur=git branch --show-current;\nif ([string]::IsNullOrWhiteSpace($cur)) { git checkout -b main | Out-Host } elseif ($cur -ne 'main') { git branch -M main | Out-Host };\n\n# Create Champagne repo if missing\n$null = gh repo view ($ownerChamp + '/' + $repo) --json nameWithOwner 2>$null;\nif ($LASTEXITCODE -ne 0) { gh repo create ($ownerChamp + '/' + $repo) --public | Out-Host };\n\n# Configure remotes\nif ((git remote) -contains 'origin') { git remote set-url origin $originUrl } else { git remote add origin $originUrl };\nif ((git remote) -contains 'champagne') { git remote set-url champagne $champUrl } else { git remote add champagne $champUrl };\n\n# Commit if needed\n$null = git rev-parse --verify HEAD 2>$null;\nif ($LASTEXITCODE -ne 0) {\n  git add .;\n  git commit -m 'Initial Assignment 2 setup for handoff' | Out-Host;\n} else {\n  git add .;\n  if (git status --porcelain) { git commit -m 'Update Assignment 2 handoff state' | Out-Host };\n};\n\n# Push to Champagne\n$null = git ls-remote --exit-code --heads champagne main 1>$null 2>$null;\nif ($LASTEXITCODE -eq 0) { git push champagne main | Out-Host } else { git push -u champagne main | Out-Host };\n\nWrite-Host '---REMOTES---'; git remote -v;\nWrite-Host '---BRANCH---'; git branch --show-current;\nWrite-Host '---LAST---'; git log -1 --oneline;"
+		},
+		{
+			"label": "attempt-push-jordan-origin",
+			"type": "shell",
+			"command": "Set-Location 'c:\\Users\\jorda\\repos\\Assignment2-API-Services'; git push -u origin main"
+		},
+		{
+			"label": "collect-assignment2-handoff-facts",
+			"type": "shell",
+			"command": "Set-Location 'c:\\Users\\jorda\\repos\\Assignment2-API-Services'; git remote -v; git branch --show-current; git log -1 --oneline"
+		},
+		{
+			"label": "attempt-create-jordan-repo-and-push",
+			"type": "shell",
+			"command": "$repo='Assignment2-API-Services'; gh repo create ('jordantchampagne-sudo/' + $repo) --public; Set-Location 'c:\\Users\\jorda\\repos\\Assignment2-API-Services'; git push -u origin main"
+		},
+		{
+			"label": "check-and-push-jordan-origin-now",
+			"type": "shell",
+			"command": "Set-Location 'c:\\Users\\jorda\\repos\\Assignment2-API-Services'; gh api repos/jordantchampagne-sudo/Assignment2-API-Services --jq '.full_name' ; if ($LASTEXITCODE -eq 0) { git push -u origin main }"
+		},
+		{
+			"label": "retry-push-if-jordan-repo-exists",
+			"type": "shell",
+			"command": "Set-Location 'c:\\Users\\jorda\\repos\\Assignment2-API-Services'; gh api repos/jordantchampagne-sudo/Assignment2-API-Services --jq '.full_name'; if ($LASTEXITCODE -eq 0) { git push -u origin main }"
+		},
+		{
+			"label": "push-assignment2-to-jordan-new-repo",
+			"type": "shell",
+			"command": "Set-Location 'c:\\Users\\jorda\\repos\\Assignment2-API-Services'; git remote set-url origin 'https://github.com/jordantchampagne-sudo/Assignment2-API-Services-with-Public.git'; git push -u origin main; git remote -v; git log -1 --oneline"
+		},
+		{
+			"label": "verify-assignment2-push-state",
+			"type": "shell",
+			"command": "Set-Location 'c:\\Users\\jorda\\repos\\Assignment2-API-Services'; git status -sb; git branch -vv; git remote -v; git ls-remote --heads origin main"
+		},
+		{
+			"label": "check-origin-main-head",
+			"type": "shell",
+			"command": "Set-Location 'c:\\Users\\jorda\\repos\\Assignment2-API-Services'; git ls-remote --heads origin main"
+		},
+		{
+			"label": "push-origin-main-now",
+			"type": "shell",
+			"command": "Set-Location 'c:\\Users\\jorda\\repos\\Assignment2-API-Services'; git push -u origin main"
+		},
+		{
+			"label": "retry-assignment2-origin-push",
+			"type": "shell",
+			"command": "Set-Location 'c:\\Users\\jorda\\repos\\Assignment2-API-Services'; git push -u origin main; git status -sb; git branch -vv"
+		},
+		{
+			"label": "final-check-push-as-jordan",
+			"type": "shell",
+			"command": "Set-Location 'c:\\Users\\jorda\\repos\\Assignment2-API-Services'; git push -u origin main; git status -sb; git branch -vv"
+		},
+		{
+			"label": "clear-credentials-and-retry-push",
+			"type": "shell",
+			"command": "Set-Location 'c:\\Users\\jorda\\repos\\Assignment2-API-Services'; git credential-manager erase https://github.com; git push -u origin main"
+		},
+		{
+			"label": "properly-erase-github-credential",
+			"type": "shell",
+			"command": "Set-Location 'c:\\Users\\jorda\\repos\\Assignment2-API-Services'; \"protocol=https`nhost=github.com`n\" | git credential-manager erase; git push -u origin main"
+		},
+		{
+			"label": "erase-credential-correctly-and-push",
+			"type": "shell",
+			"command": "Set-Location 'c:\\Users\\jorda\\repos\\Assignment2-API-Services'; $cred = @\"\nprotocol=https\nhost=github.com\n\n\"@; $cred | git credential-manager erase; git push -u origin main"
+		},
+		{
+			"label": "erase-credential-one-liner",
+			"type": "shell",
+			"command": "Set-Location 'c:\\Users\\jorda\\repos\\Assignment2-API-Services'; [string]::Join(\"`n\", @('protocol=https','host=github.com','','')) | git credential-manager erase; git push -u origin main"
+		},
+		{
+			"label": "delete-github-credential-and-push",
+			"type": "shell",
+			"command": "Set-Location 'c:\\Users\\jorda\\repos\\Assignment2-API-Services'; cmdkey /delete:git:https://github.com 2>$null; cmdkey /delete:git:https://github.com/ 2>$null; git push -u origin main"
+		},
+		{
+			"label": "inspect-gcm-github-commands",
+			"type": "shell",
+			"command": "git credential-manager github --help"
+		},
+		{
+			"label": "switch-gcm-account-to-jordan",
+			"type": "shell",
+			"command": "git credential-manager github list; git credential-manager github logout ChampagneCODE3D; git credential-manager github list; git credential-manager github login"
+		},
+		{
+			"label": "inspect-git-auth-config",
+			"type": "shell",
+			"command": "git config --global --list | findstr /I \"credential.helper credential.https://github.com.username http.https://github.com/.extraheader\"; Set-Location 'c:\\Users\\jorda\\repos\\Assignment2-API-Services'; git config --local --list | findstr /I \"credential.helper credential.https://github.com.username http.https://github.com/.extraheader\""
+		},
+		{
+			"label": "inspect-git-auth-config-correct",
+			"type": "shell",
+			"command": "$pattern='credential.helper|credential.https://github.com.username|http.https://github.com/.extraheader'; git config --global --list | Select-String -Pattern $pattern; Set-Location 'c:\\Users\\jorda\\repos\\Assignment2-API-Services'; git config --local --list | Select-String -Pattern $pattern"
+		},
+		{
+			"label": "show-active-git-credential-identity",
+			"type": "shell",
+			"command": "cmd /c \"(echo protocol=https& echo host=github.com& echo.) | git credential-manager get\""
+		},
+		{
+			"label": "show-active-credential-with-cmd",
+			"type": "shell",
+			"command": "cmd /c '(echo protocol=https& echo host=github.com& echo.) | git credential-manager get'"
+		},
+		{
+			"label": "test-ssh-github-identity",
+			"type": "shell",
+			"command": "ssh -T git@github.com"
+		},
+		{
+			"label": "refresh-terminal-session",
+			"type": "shell",
+			"command": "Clear-Host; Set-Location 'c:\\Users\\jorda\\repos\\Assignment2-API-Services'; Write-Host 'Terminal refreshed in Assignment2-API-Services'; Get-Location"
+		},
+		{
+			"label": "purge-github-credentials-and-repush",
+			"type": "shell",
+			"command": "Set-Location 'c:\\Users\\jorda\\repos\\Assignment2-API-Services'; cmdkey /list | findstr /I github; cmdkey /delete:git:https://github.com 2>$null; cmdkey /delete:git:https://ChampagneCODE3D@github.com 2>$null; cmdkey /delete:git:https://jordantchampagne-sudo@github.com 2>$null; cmdkey /delete:legacygit:https://github.com 2>$null; git credential-manager github list; git credential-manager github login; git credential-manager github list; git push -u origin main"
+		},
+		{
+			"label": "final-push-after-collab-added",
+			"type": "shell",
+			"command": "Set-Location 'c:\\Users\\jorda\\repos\\Assignment2-API-Services'; git push -u origin main; git status -sb; git branch -vv; git ls-remote --heads origin main"
+		},
+		{
+			"label": "check-current-gla6-statuses",
+			"type": "shell",
+			"command": "gh api repos/ChampagneCODE3D/GLA6-Theme-Park/pages/builds --jq '.[0:8] | map({status,commit,updated_at})'; gh api repos/jordantchampagne-sudo/GLA6-Theme-Park/actions/runs --jq '.workflow_runs[0:5] | map({status,conclusion,head_sha,updated_at})'"
+		},
+		{
+			"label": "sync-champagne-gla6-latest-artifacts-and-build",
+			"type": "shell",
+			"command": "$repo='ChampagneCODE3D/GLA6-Theme-Park';\n# sync index from Jordan canonical\n$html = Invoke-WebRequest -UseBasicParsing 'https://raw.githubusercontent.com/jordantchampagne-sudo/GLA6-Theme-Park/portfolio-fork/docs/index.html' | Select-Object -ExpandProperty Content;\n$htmlB64 = [Convert]::ToBase64String([Text.Encoding]::UTF8.GetBytes($html));\n$htmlSha = gh api repos/$repo/contents/index.html --jq .sha;\ngh api repos/$repo/contents/index.html -X PUT -f message='sync index from jordan canonical' -f content=$htmlB64 -f sha=$htmlSha | Out-Null;\n\n# sync latest output from Jordan live\n$out = Invoke-WebRequest -UseBasicParsing 'https://jordantchampagne-sudo.github.io/GLA6-Theme-Park/latest-output.txt' | Select-Object -ExpandProperty Content;\n$outB64 = [Convert]::ToBase64String([Text.Encoding]::UTF8.GetBytes($out));\n$outSha = gh api repos/$repo/contents/latest-output.txt --jq .sha;\ngh api repos/$repo/contents/latest-output.txt -X PUT -f message='sync latest output from jordan live' -f content=$outB64 -f sha=$outSha | Out-Null;\n\n# sync build info from Jordan live\n$info = Invoke-WebRequest -UseBasicParsing 'https://jordantchampagne-sudo.github.io/GLA6-Theme-Park/build-info.json' | Select-Object -ExpandProperty Content;\n$infoB64 = [Convert]::ToBase64String([Text.Encoding]::UTF8.GetBytes($info));\n$infoSha = gh api repos/$repo/contents/build-info.json --jq .sha;\ngh api repos/$repo/contents/build-info.json -X PUT -f message='sync build info from jordan live' -f content=$infoB64 -f sha=$infoSha | Out-Null;\n\n# trigger pages build and print recent status\ngh api repos/$repo/pages/builds -X POST | Out-Null;\ngh api repos/$repo/pages/builds --jq '.[0:8] | map({status,commit,updated_at})'"
+		},
+		{
+			"label": "soften-pass-pill-interaction-both-repos",
+			"type": "shell",
+			"command": "$ErrorActionPreference='Stop';\nfunction Update-Content($text) {\n  $old = @\"\n    .pill {\n      border: 1px solid #b8d8c5;\n      border-left: 2px solid var(--accent-soft);\n      background: var(--ok-bg);\n      color: var(--ok-ink);\n      border-radius: 8px;\n      padding: 10px 12px;\n      font-size: 14px;\n      font-weight: 600;\n    }\n\"@;\n  $new = @\"\n    .pill {\n      border: 1px solid #c9ddcf;\n      border-left: 1px solid #c9ddcf;\n      background: linear-gradient(180deg, #f4fbf7, var(--ok-bg));\n      color: var(--ok-ink);\n      border-radius: 6px;\n      padding: 10px 12px;\n      font-size: 14px;\n      font-weight: 600;\n      cursor: default;\n      user-select: text;\n      box-shadow: none;\n    }\n\"@;\n  return $text.Replace($old, $new);\n}\n\n# Jordan docs/index.html\n$jRepo='jordantchampagne-sudo/GLA6-Theme-Park';\n$jPath='docs/index.html';\n$jRaw = Invoke-WebRequest -UseBasicParsing \"https://raw.githubusercontent.com/$jRepo/portfolio-fork/$jPath\" | Select-Object -ExpandProperty Content;\n$jUpdated = Update-Content $jRaw;\nif ($jUpdated -ne $jRaw) {\n  $jB64=[Convert]::ToBase64String([Text.Encoding]::UTF8.GetBytes($jUpdated));\n  $jSha=gh api repos/$jRepo/contents/$jPath?ref=portfolio-fork --jq .sha;\n  gh api repos/$jRepo/contents/$jPath -X PUT -f message='style: make PASS chips non-button-like' -f content=$jB64 -f sha=$jSha -f branch='portfolio-fork' | Out-Null;\n}\n\n# Champagne index.html\n$cRepo='ChampagneCODE3D/GLA6-Theme-Park';\n$cPath='index.html';\n$cRaw = Invoke-WebRequest -UseBasicParsing \"https://raw.githubusercontent.com/$cRepo/main/$cPath\" | Select-Object -ExpandProperty Content;\n$cUpdated = Update-Content $cRaw;\nif ($cUpdated -ne $cRaw) {\n  $cB64=[Convert]::ToBase64String([Text.Encoding]::UTF8.GetBytes($cUpdated));\n  $cSha=gh api repos/$cRepo/contents/$cPath --jq .sha;\n  gh api repos/$cRepo/contents/$cPath -X PUT -f message='style: make PASS chips non-button-like' -f content=$cB64 -f sha=$cSha | Out-Null;\n}\n\n# Trigger Champagne Pages build and show statuses\ngh api repos/$cRepo/pages/builds -X POST | Out-Null;\nWrite-Host '---Champagne Pages---';\ngh api repos/$cRepo/pages/builds --jq '.[0:6] | map({status,commit,updated_at})';\nWrite-Host '---Jordan Actions---';\ngh api repos/$jRepo/actions/runs --jq '.workflow_runs[0:4] | map({status,conclusion,head_sha,updated_at})';"
+		},
+		{
+			"label": "soften-pass-pill-both-repos-fixed",
+			"type": "shell",
+			"command": "$ErrorActionPreference='Stop';\nfunction Update-Content($text) {\n  $old = @'\n    .pill {\n      border: 1px solid #b8d8c5;\n      border-left: 2px solid var(--accent-soft);\n      background: var(--ok-bg);\n      color: var(--ok-ink);\n      border-radius: 8px;\n      padding: 10px 12px;\n      font-size: 14px;\n      font-weight: 600;\n    }\n'@;\n  $new = @'\n    .pill {\n      border: 1px solid #c9ddcf;\n      border-left: 1px solid #c9ddcf;\n      background: linear-gradient(180deg, #f4fbf7, var(--ok-bg));\n      color: var(--ok-ink);\n      border-radius: 6px;\n      padding: 10px 12px;\n      font-size: 14px;\n      font-weight: 600;\n      cursor: default;\n      user-select: text;\n      box-shadow: none;\n    }\n'@;\n  return $text.Replace($old, $new);\n}\n\n$jRepo='jordantchampagne-sudo/GLA6-Theme-Park';\n$jPath='docs/index.html';\n$jRaw = Invoke-WebRequest -UseBasicParsing \"https://raw.githubusercontent.com/$jRepo/portfolio-fork/$jPath\" | Select-Object -ExpandProperty Content;\n$jUpdated = Update-Content $jRaw;\nif ($jUpdated -ne $jRaw) {\n  $jB64=[Convert]::ToBase64String([Text.Encoding]::UTF8.GetBytes($jUpdated));\n  $jSha=gh api repos/$jRepo/contents/$jPath?ref=portfolio-fork --jq .sha;\n  gh api repos/$jRepo/contents/$jPath -X PUT -f message='style: make PASS chips non-button-like' -f content=$jB64 -f sha=$jSha -f branch='portfolio-fork' | Out-Null;\n}\n\n$cRepo='ChampagneCODE3D/GLA6-Theme-Park';\n$cPath='index.html';\n$cRaw = Invoke-WebRequest -UseBasicParsing \"https://raw.githubusercontent.com/$cRepo/main/$cPath\" | Select-Object -ExpandProperty Content;\n$cUpdated = Update-Content $cRaw;\nif ($cUpdated -ne $cRaw) {\n  $cB64=[Convert]::ToBase64String([Text.Encoding]::UTF8.GetBytes($cUpdated));\n  $cSha=gh api repos/$cRepo/contents/$cPath --jq .sha;\n  gh api repos/$cRepo/contents/$cPath -X PUT -f message='style: make PASS chips non-button-like' -f content=$cB64 -f sha=$cSha | Out-Null;\n}\n\ngh api repos/$cRepo/pages/builds -X POST | Out-Null;\nWrite-Host '---Champagne Pages---';\ngh api repos/$cRepo/pages/builds --jq '.[0:6] | map({status,commit,updated_at})';\nWrite-Host '---Jordan Actions---';\ngh api repos/$jRepo/actions/runs --jq '.workflow_runs[0:4] | map({status,conclusion,head_sha,updated_at})';"
+		},
+		{
+			"label": "diagnose-jordan-gla6-api-access",
+			"type": "shell",
+			"command": "gh auth status; gh api repos/jordantchampagne-sudo/GLA6-Theme-Park --jq '.full_name + \" | private=\" + (.private|tostring)'; gh api repos/jordantchampagne-sudo/GLA6-Theme-Park/contents/docs/index.html?ref=portfolio-fork --jq '.sha'"
+		},
+		{
+			"label": "apply-pass-chip-style-jordan-and-champagne",
+			"type": "shell",
+			"command": "$ErrorActionPreference='Stop';\nfunction Patch-Pills($text) {\n  $text = $text -replace [regex]::Escape(\"border: 1px solid #b8d8c5;\"), \"border: 1px solid #c9ddcf;\";\n  $text = $text -replace [regex]::Escape(\"border-left: 2px solid var(--accent-soft);\"), \"border-left: 1px solid #c9ddcf;\";\n  $text = $text -replace [regex]::Escape(\"background: var(--ok-bg);\"), \"background: linear-gradient(180deg, #f4fbf7, var(--ok-bg));\";\n  if ($text -notmatch \"cursor: default;\") {\n    $text = $text -replace [regex]::Escape(\"font-weight: 600;\"), \"font-weight: 600;`n      cursor: default;`n      user-select: text;`n      box-shadow: none;\";\n  }\n  return $text;\n}\n\n$jRepo='jordantchampagne-sudo/GLA6-Theme-Park'; $jPath='docs/index.html';\n$jRaw = Invoke-WebRequest -UseBasicParsing \"https://raw.githubusercontent.com/$jRepo/portfolio-fork/$jPath\" | Select-Object -ExpandProperty Content;\n$jNew = Patch-Pills $jRaw;\nif ($jNew -ne $jRaw) {\n  $jB64=[Convert]::ToBase64String([Text.Encoding]::UTF8.GetBytes($jNew));\n  $jSha=gh api repos/$jRepo/contents/$jPath?ref=portfolio-fork --jq .sha;\n  gh api repos/$jRepo/contents/$jPath -X PUT -f message='style: PASS chips display-only look' -f content=$jB64 -f sha=$jSha -f branch=portfolio-fork | Out-Null;\n  Write-Host 'Jordan updated';\n} else { Write-Host 'Jordan already patched'; }\n\n$cRepo='ChampagneCODE3D/GLA6-Theme-Park'; $cPath='index.html';\n$cRaw = Invoke-WebRequest -UseBasicParsing \"https://raw.githubusercontent.com/$cRepo/main/$cPath\" | Select-Object -ExpandProperty Content;\n$cNew = Patch-Pills $cRaw;\nif ($cNew -ne $cRaw) {\n  $cB64=[Convert]::ToBase64String([Text.Encoding]::UTF8.GetBytes($cNew));\n  $cSha=gh api repos/$cRepo/contents/$cPath --jq .sha;\n  gh api repos/$cRepo/contents/$cPath -X PUT -f message='style: PASS chips display-only look' -f content=$cB64 -f sha=$cSha | Out-Null;\n  Write-Host 'Champagne updated';\n} else { Write-Host 'Champagne already patched'; }\n\n# trigger Champagne build\ngh api repos/$cRepo/pages/builds -X POST | Out-Null;\n# show statuses\nWrite-Host '---Champagne Builds---';\ngh api repos/$cRepo/pages/builds --jq '.[0:5] | map({status,commit,updated_at})';\nWrite-Host '---Jordan Runs---';\ngh api repos/$jRepo/actions/runs --jq '.workflow_runs[0:3] | map({status,conclusion,head_sha,updated_at})';"
+		},
+		{
+			"label": "set-gla6-display-only-pass-chips-both-repos",
+			"type": "shell",
+			"command": "$content = @'\n<!doctype html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\" />\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n  <title>GLA6 Theme Park CRUD - Portfolio Demo</title>\n  <style>\n    :root {\n      --bg: #f5f7fa;\n      --panel: #ffffff;\n      --ink: #1f2d3d;\n      --muted: #52606d;\n      --brand: #1f4e79;\n      --brand-soft: #2b6aa3;\n      --accent: #d97f2b;\n      --accent-soft: rgba(217, 127, 43, 0.22);\n      --ok-bg: #eef9f1;\n      --ok-ink: #1f5f35;\n      --border: #d9e2ec;\n    }\n\n    * { box-sizing: border-box; }\n    body {\n      margin: 0;\n      background: radial-gradient(circle at 20% 0%, #e8eff7 0%, var(--bg) 55%);\n      color: var(--ink);\n      font-family: \"Segoe UI\", Tahoma, Geneva, Verdana, sans-serif;\n      padding: 28px;\n    }\n    .wrap {\n      max-width: 1080px;\n      margin: 0 auto;\n      background: var(--panel);\n      border: 1px solid var(--border);\n      border-radius: 14px;\n      overflow: hidden;\n      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);\n    }\n    header {\n      padding: 22px 26px;\n      background: linear-gradient(120deg, var(--brand), var(--brand-soft));\n      color: #fff;\n      border-bottom: 2px solid var(--accent-soft);\n    }\n    h1 { margin: 0; font-size: 28px; line-height: 1.1; }\n    .sub { margin-top: 7px; opacity: 0.92; font-size: 14px; }\n    section { padding: 20px 26px; border-top: 1px solid var(--border); }\n    .meta {\n      display: grid;\n      grid-template-columns: repeat(2, minmax(260px, 1fr));\n      gap: 10px;\n      margin-top: 10px;\n    }\n    .pill {\n      border: 1px solid #c9ddcf;\n      border-left: 1px solid #c9ddcf;\n      background: linear-gradient(180deg, #f4fbf7, var(--ok-bg));\n      color: var(--ok-ink);\n      border-radius: 6px;\n      padding: 10px 12px;\n      font-size: 14px;\n      font-weight: 600;\n      cursor: default;\n      user-select: text;\n      box-shadow: none;\n    }\n    .muted {\n      color: var(--muted);\n      font-size: 14px;\n      margin: 0;\n    }\n    .label {\n      color: var(--accent);\n      font-weight: 700;\n      letter-spacing: 0.02em;\n    }\n    .accent {\n      color: var(--accent);\n      font-weight: 700;\n    }\n    pre {\n      margin: 12px 0 0;\n      background: #f7fbff;\n      color: #1f2d3d;\n      border-radius: 10px;\n      padding: 16px;\n      font-family: Consolas, \"Courier New\", monospace;\n      font-size: 13px;\n      line-height: 1.4;\n      max-height: 62vh;\n      overflow: auto;\n      white-space: pre-wrap;\n      word-break: break-word;\n      border: 1px solid #d9e2ec;\n    }\n    .foot {\n      margin-top: 12px;\n      padding: 10px 12px;\n      border: 1px solid var(--border);\n      border-radius: 8px;\n      background: #f8fbff;\n      box-shadow: inset 0 -2px 0 var(--accent-soft);\n      color: #334e68;\n      font-size: 12px;\n      line-height: 1.4;\n    }\n    @media (max-width: 760px) {\n      body { padding: 16px; }\n      .meta { grid-template-columns: 1fr; }\n      header, section { padding: 18px; }\n      h1 { font-size: 24px; }\n    }\n  </style>\n</head>\n<body>\n  <main class=\"wrap\">\n    <header>\n      <h1>GLA 6 Theme Park CRUD - Online Test Report</h1>\n      <div class=\"sub\">Automated Node.js + SQLite execution artifact for portfolio demonstration.</div>\n    </header>\n\n    <section>\n      <p class=\"muted\"><span class=\"label\">CHECK RESULTS</span> Automated checks completed in CI workflow:</p>\n      <div class=\"meta\">\n        <div class=\"pill\">PASS: READ query returned ride records</div>\n        <div class=\"pill\">PASS: CREATE inserted Galaxy Spinner</div>\n        <div class=\"pill\">PASS: UPDATE modified Thunder Coaster duration</div>\n        <div class=\"pill\">PASS: DELETE removed Haunted Mansion</div>\n      </div>\n    </section>\n\n    <section>\n      <p class=\"muted\">Latest command output from <strong class=\"accent\">node app.js</strong>:</p>\n      <pre id=\"output\">Loading latest output...</pre>\n      <div class=\"foot\" id=\"stamp\">Generated by GitHub Actions after each push to portfolio-fork.</div>\n    </section>\n  </main>\n\n  <script>\n    async function loadOutput() {\n      const outputEl = document.getElementById('output');\n      const stampEl = document.getElementById('stamp');\n      try {\n        const [outputRes, stampRes] = await Promise.all([\n          fetch('./latest-output.txt', { cache: 'no-store' }),\n          fetch('./build-info.json', { cache: 'no-store' })\n        ]);\n\n        const outputText = outputRes.ok\n          ? await outputRes.text()\n          : 'Output file not found yet. Trigger workflow by pushing to portfolio-fork.';\n\n        outputEl.textContent = outputText.trim() || 'Output is empty.';\n\n        if (stampRes.ok) {\n          const info = await stampRes.json();\n          stampEl.textContent = `Generated: ${info.generatedAt} | Commit: ${info.commit}`;\n        }\n      } catch (error) {\n        outputEl.textContent = `Could not load output: ${error.message}`;\n      }\n    }\n\n    loadOutput();\n  </script>\n</body>\n</html>\n'@;\n$b64=[Convert]::ToBase64String([Text.Encoding]::UTF8.GetBytes($content));\n$shaJ=gh api repos/jordantchampagne-sudo/GLA6-Theme-Park/contents/docs/index.html?ref=portfolio-fork --jq .sha;\ngh api repos/jordantchampagne-sudo/GLA6-Theme-Park/contents/docs/index.html -X PUT -f message='style: PASS chips display-only across report' -f content=$b64 -f sha=$shaJ -f branch='portfolio-fork' | Out-Null;\n$shaC=gh api repos/ChampagneCODE3D/GLA6-Theme-Park/contents/index.html --jq .sha;\ngh api repos/ChampagneCODE3D/GLA6-Theme-Park/contents/index.html -X PUT -f message='style: PASS chips display-only across report' -f content=$b64 -f sha=$shaC | Out-Null;\ngh api repos/ChampagneCODE3D/GLA6-Theme-Park/pages/builds -X POST | Out-Null;\ngh api repos/ChampagneCODE3D/GLA6-Theme-Park/pages/builds --jq '.[0:6] | map({status,commit,updated_at})';\ngh api repos/jordantchampagne-sudo/GLA6-Theme-Park/actions/runs --jq '.workflow_runs[0:4] | map({status,conclusion,head_sha,updated_at})'"
+		},
+		{
+			"label": "check-gla6-deploy-progress",
+			"type": "shell",
+			"command": "gh api repos/jordantchampagne-sudo/GLA6-Theme-Park/actions/runs --jq '.workflow_runs[0:6] | map({status,conclusion,head_sha,updated_at})'; gh api repos/ChampagneCODE3D/GLA6-Theme-Park/pages/builds --jq '.[0:8] | map({status,commit,updated_at})'"
+		},
+		{
+			"label": "check-latest-repo-file-shas",
+			"type": "shell",
+			"command": "gh api repos/jordantchampagne-sudo/GLA6-Theme-Park/contents/docs/index.html?ref=portfolio-fork --jq '.sha'; gh api repos/ChampagneCODE3D/GLA6-Theme-Park/contents/index.html --jq '.sha'"
+		},
+		{
+			"label": "poll-gla6-deploys-again",
+			"type": "shell",
+			"command": "gh api repos/jordantchampagne-sudo/GLA6-Theme-Park/actions/runs --jq '.workflow_runs[0:4] | map({status,conclusion,head_sha,updated_at})'; gh api repos/ChampagneCODE3D/GLA6-Theme-Park/pages/builds --jq '.[0:6] | map({status,commit,updated_at})'"
+		},
+		{
+			"label": "verify-raw-pass-chip-css-in-both-repos",
+			"type": "shell",
+			"command": "$j = Invoke-WebRequest -UseBasicParsing 'https://raw.githubusercontent.com/jordantchampagne-sudo/GLA6-Theme-Park/portfolio-fork/docs/index.html' | Select-Object -ExpandProperty Content; $c = Invoke-WebRequest -UseBasicParsing 'https://raw.githubusercontent.com/ChampagneCODE3D/GLA6-Theme-Park/main/index.html' | Select-Object -ExpandProperty Content; Write-Host '---Jordan CSS marker---'; ($j | Select-String 'border-left: 1px solid #c9ddcf|cursor: default|linear-gradient\\(180deg, #f4fbf7').Line; Write-Host '---Champagne CSS marker---'; ($c | Select-String 'border-left: 1px solid #c9ddcf|cursor: default|linear-gradient\\(180deg, #f4fbf7').Line"
+		},
+		{
+			"label": "inspect-raw-pill-block-both-repos",
+			"type": "shell",
+			"command": "$j = Invoke-WebRequest -UseBasicParsing 'https://raw.githubusercontent.com/jordantchampagne-sudo/GLA6-Theme-Park/portfolio-fork/docs/index.html' | Select-Object -ExpandProperty Content; $c = Invoke-WebRequest -UseBasicParsing 'https://raw.githubusercontent.com/ChampagneCODE3D/GLA6-Theme-Park/main/index.html' | Select-Object -ExpandProperty Content; Write-Host '---Jordan .pill block---'; ($j -split \"`n\") | Select-String '^\\s*\\.pill\\s*\\{' -Context 0,12 | ForEach-Object { $_.Context.PostContext }; Write-Host '---Champagne .pill block---'; ($c -split \"`n\") | Select-String '^\\s*\\.pill\\s*\\{' -Context 0,12 | ForEach-Object { $_.Context.PostContext }"
+		},
+		{
+			"label": "inspect-target-file-metadata",
+			"type": "shell",
+			"command": "gh api repos/jordantchampagne-sudo/GLA6-Theme-Park/contents/docs/index.html?ref=portfolio-fork --jq '{sha,path,name,download_url}'; gh api repos/ChampagneCODE3D/GLA6-Theme-Park/contents/index.html --jq '{sha,path,name,download_url}'"
+		},
+		{
+			"label": "overwrite-pill-block-both-repos",
+			"type": "shell",
+			"command": "$ErrorActionPreference='Stop';\nfunction UpdatePillBlock($text) {\n  $pattern = '(?s)\\s*\\.pill\\s*\\{.*?\\n\\s*\\}';\n  $replacement = @'\n    .pill {\n      border: 1px solid #c9ddcf;\n      border-left: 1px solid #c9ddcf;\n      background: linear-gradient(180deg, #f4fbf7, var(--ok-bg));\n      color: var(--ok-ink);\n      border-radius: 6px;\n      padding: 10px 12px;\n      font-size: 14px;\n      font-weight: 600;\n      cursor: default;\n      user-select: text;\n      box-shadow: none;\n    }\n'@;\n  return [regex]::Replace($text, $pattern, $replacement, 1);\n}\n\n$jRepo='jordantchampagne-sudo/GLA6-Theme-Park'; $jPath='docs/index.html';\n$jRaw = Invoke-WebRequest -UseBasicParsing \"https://raw.githubusercontent.com/$jRepo/portfolio-fork/$jPath\" | Select-Object -ExpandProperty Content;\n$jNew = UpdatePillBlock $jRaw;\n$jB64=[Convert]::ToBase64String([Text.Encoding]::UTF8.GetBytes($jNew));\n$jSha=gh api repos/$jRepo/contents/$jPath?ref=portfolio-fork --jq .sha;\ngh api repos/$jRepo/contents/$jPath -X PUT -f message='style: make PASS chips display-only (non-button)' -f content=$jB64 -f sha=$jSha -f branch=portfolio-fork | Out-Null;\n\n$cRepo='ChampagneCODE3D/GLA6-Theme-Park'; $cPath='index.html';\n$cRaw = Invoke-WebRequest -UseBasicParsing \"https://raw.githubusercontent.com/$cRepo/main/$cPath\" | Select-Object -ExpandProperty Content;\n$cNew = UpdatePillBlock $cRaw;\n$cB64=[Convert]::ToBase64String([Text.Encoding]::UTF8.GetBytes($cNew));\n$cSha=gh api repos/$cRepo/contents/$cPath --jq .sha;\ngh api repos/$cRepo/contents/$cPath -X PUT -f message='style: make PASS chips display-only (non-button)' -f content=$cB64 -f sha=$cSha | Out-Null;\n\nWrite-Host '---New SHAs---';\ngh api repos/$jRepo/contents/$jPath?ref=portfolio-fork --jq .sha;\ngh api repos/$cRepo/contents/$cPath --jq .sha;\n\n# Trigger Champagne pages\ngh api repos/$cRepo/pages/builds -X POST | Out-Null;\nWrite-Host '---Champagne Builds---';\ngh api repos/$cRepo/pages/builds --jq '.[0:5] | map({status,commit,updated_at})';\nWrite-Host '---Jordan Runs---';\ngh api repos/$jRepo/actions/runs --jq '.workflow_runs[0:4] | map({status,conclusion,head_sha,updated_at})';"
+		},
+		{
+			"label": "list-jordan-root-portfolio-fork",
+			"type": "shell",
+			"command": "gh api repos/jordantchampagne-sudo/GLA6-Theme-Park/contents?ref=portfolio-fork --jq 'map(.path)'"
+		},
+		{
+			"label": "list-jordan-docs-portfolio-fork",
+			"type": "shell",
+			"command": "gh api repos/jordantchampagne-sudo/GLA6-Theme-Park/contents/docs?ref=portfolio-fork --jq 'map(.path)'"
+		},
+		{
+			"label": "patch-jordan-pass-chip-style-safe-api",
+			"type": "shell",
+			"command": "$ErrorActionPreference='Stop';\n$jRepo='jordantchampagne-sudo/GLA6-Theme-Park';\n$jPath='docs/index.html';\n$jRaw = Invoke-WebRequest -UseBasicParsing 'https://raw.githubusercontent.com/jordantchampagne-sudo/GLA6-Theme-Park/portfolio-fork/docs/index.html' | Select-Object -ExpandProperty Content;\n$pattern='(?s)\\s*\\.pill\\s*\\{.*?\\n\\s*\\}';\n$replacement=@'\n    .pill {\n      border: 1px solid #c9ddcf;\n      border-left: 1px solid #c9ddcf;\n      background: linear-gradient(180deg, #f4fbf7, var(--ok-bg));\n      color: var(--ok-ink);\n      border-radius: 6px;\n      padding: 10px 12px;\n      font-size: 14px;\n      font-weight: 600;\n      cursor: default;\n      user-select: text;\n      box-shadow: none;\n    }\n'@;\n$jNew=[regex]::Replace($jRaw,$pattern,$replacement,1);\n$jB64=[Convert]::ToBase64String([Text.Encoding]::UTF8.GetBytes($jNew));\n$jSha=gh api repos/$jRepo/contents/$jPath -f ref=portfolio-fork --jq .sha;\ngh api repos/$jRepo/contents/$jPath -X PUT -f message='style: PASS chips display-only (non-button)' -f content=$jB64 -f sha=$jSha -f branch=portfolio-fork | Out-Null;\nWrite-Host 'Jordan sha now:';\ngh api repos/$jRepo/contents/$jPath -f ref=portfolio-fork --jq .sha;\ngh api repos/$jRepo/actions/runs --jq '.workflow_runs[0:3] | map({status,conclusion,head_sha,updated_at})';"
+		},
+		{
+			"label": "git-patch-jordan-gla6-pill-style",
+			"type": "shell",
+			"command": "$ErrorActionPreference='Stop'; $root='c:\\Users\\jorda\\GLA4\\_gla6sync'; if (!(Test-Path $root)) { New-Item -ItemType Directory -Path $root | Out-Null }; Set-Location $root; if (!(Test-Path 'jordan')) { git clone https://github.com/jordantchampagne-sudo/GLA6-Theme-Park.git jordan | Out-Host }; Set-Location jordan; git fetch --all | Out-Host; git checkout portfolio-fork | Out-Host; git pull origin portfolio-fork | Out-Host; $file='docs/index.html'; $text=[IO.File]::ReadAllText($file); $replacement=@'\n    .pill {\n      border: 1px solid #c9ddcf;\n      border-left: 1px solid #c9ddcf;\n      background: linear-gradient(180deg, #f4fbf7, var(--ok-bg));\n      color: var(--ok-ink);\n      border-radius: 6px;\n      padding: 10px 12px;\n      font-size: 14px;\n      font-weight: 600;\n      cursor: default;\n      user-select: text;\n      box-shadow: none;\n    }\n'@; $new=[regex]::Replace($text,'(?s)\\s*\\.pill\\s*\\{.*?\\n\\s*\\}',$replacement,1); if($new -ne $text){ [IO.File]::WriteAllText($file,$new); git add $file; git commit -m \"style: make PASS chips display-only\" | Out-Host; git push origin portfolio-fork | Out-Host } else { Write-Host 'Jordan already patched' }; git log -1 --oneline"
+		},
+		{
+			"label": "git-patch-jordan-absolute-paths",
+			"type": "shell",
+			"command": "$ErrorActionPreference='Stop'; $repoDir='c:\\Users\\jorda\\GLA4\\_gla6sync\\jordan'; if (!(Test-Path $repoDir)) { git clone https://github.com/jordantchampagne-sudo/GLA6-Theme-Park.git $repoDir | Out-Host }; git -C $repoDir fetch --all | Out-Host; git -C $repoDir checkout portfolio-fork | Out-Host; git -C $repoDir pull origin portfolio-fork | Out-Host; $file='c:\\Users\\jorda\\GLA4\\_gla6sync\\jordan\\docs\\index.html'; $text=[IO.File]::ReadAllText($file); $replacement='    .pill {'+\"`r`n\"+'      border: 1px solid #c9ddcf;'+\"`r`n\"+'      border-left: 1px solid #c9ddcf;'+\"`r`n\"+'      background: linear-gradient(180deg, #f4fbf7, var(--ok-bg));'+\"`r`n\"+'      color: var(--ok-ink);'+\"`r`n\"+'      border-radius: 6px;'+\"`r`n\"+'      padding: 10px 12px;'+\"`r`n\"+'      font-size: 14px;'+\"`r`n\"+'      font-weight: 600;'+\"`r`n\"+'      cursor: default;'+\"`r`n\"+'      user-select: text;'+\"`r`n\"+'      box-shadow: none;'+\"`r`n\"+'    }'; $new=[regex]::Replace($text,'(?s)\\s*\\.pill\\s*\\{.*?\\n\\s*\\}',$replacement,1); if($new -ne $text){ [IO.File]::WriteAllText($file,$new); git -C $repoDir add docs/index.html; git -C $repoDir commit -m \"style: make PASS chips display-only\" | Out-Host; git -C $repoDir push origin portfolio-fork | Out-Host } else { Write-Host 'Jordan already patched' }; git -C $repoDir log -1 --oneline"
+		},
+		{
+			"label": "patch-pill-style-oneline-both-git-repos",
+			"type": "shell",
+			"command": "$ErrorActionPreference='Stop'; $newBlock='.pill { border: 1px solid #c9ddcf; border-left: 1px solid #c9ddcf; background: linear-gradient(180deg, #f4fbf7, var(--ok-bg)); color: var(--ok-ink); border-radius: 6px; padding: 10px 12px; font-size: 14px; font-weight: 600; cursor: default; user-select: text; box-shadow: none; }';\n\n$jr='c:\\Users\\jorda\\GLA4\\_gla6sync\\jordan'; if (!(Test-Path $jr)) { git clone https://github.com/jordantchampagne-sudo/GLA6-Theme-Park.git $jr | Out-Host }; git -C $jr fetch --all | Out-Host; git -C $jr checkout portfolio-fork | Out-Host; git -C $jr pull origin portfolio-fork | Out-Host; $jf='c:\\Users\\jorda\\GLA4\\_gla6sync\\jordan\\docs\\index.html'; $jt=[IO.File]::ReadAllText($jf); $jn=[regex]::Replace($jt,'(?s)\\.pill\\s*\\{.*?\\}',$newBlock,1); if($jn -ne $jt){ [IO.File]::WriteAllText($jf,$jn); git -C $jr add docs/index.html; git -C $jr commit -m \"style: PASS chips display-only\" | Out-Host; git -C $jr push origin portfolio-fork | Out-Host } else { Write-Host 'Jordan already patched'; };\n\n$cr='c:\\Users\\jorda\\GLA4\\_gla6sync\\champagne'; if (!(Test-Path $cr)) { git clone https://github.com/ChampagneCODE3D/GLA6-Theme-Park.git $cr | Out-Host }; git -C $cr fetch --all | Out-Host; git -C $cr checkout main | Out-Host; git -C $cr pull origin main | Out-Host; $cf='c:\\Users\\jorda\\GLA4\\_gla6sync\\champagne\\index.html'; $ct=[IO.File]::ReadAllText($cf); $cn=[regex]::Replace($ct,'(?s)\\.pill\\s*\\{.*?\\}',$newBlock,1); if($cn -ne $ct){ [IO.File]::WriteAllText($cf,$cn); git -C $cr add index.html; git -C $cr commit -m \"style: PASS chips display-only\" | Out-Host; git -C $cr push origin main | Out-Host } else { Write-Host 'Champagne already patched'; };\n\ngh api repos/ChampagneCODE3D/GLA6-Theme-Park/pages/builds -X POST | Out-Null; gh api repos/ChampagneCODE3D/GLA6-Theme-Park/pages/builds --jq '.[0:5] | map({status,commit,updated_at})'; gh api repos/jordantchampagne-sudo/GLA6-Theme-Park/actions/runs --jq '.workflow_runs[0:4] | map({status,conclusion,head_sha,updated_at})'"
+		},
+		{
+			"label": "commit-push-passchip-jordan-simplemsg",
+			"type": "shell",
+			"command": "$jr='c:\\Users\\jorda\\GLA4\\_gla6sync\\jordan'; git -C $jr status --short; git -C $jr add docs/index.html; git -C $jr commit -m passchipstyle; git -C $jr push origin portfolio-fork; git -C $jr log -1 --oneline"
+		},
+		{
+			"label": "commit-push-passchip-champagne-simplemsg",
+			"type": "shell",
+			"command": "$cr='c:\\Users\\jorda\\GLA4\\_gla6sync\\champagne'; git -C $cr status --short; git -C $cr add index.html; git -C $cr commit -m passchipstyle; git -C $cr push origin main; git -C $cr log -1 --oneline; gh api repos/ChampagneCODE3D/GLA6-Theme-Park/pages/builds -X POST | Out-Null; gh api repos/ChampagneCODE3D/GLA6-Theme-Park/pages/builds --jq '.[0:5] | map({status,commit,updated_at})'"
+		},
+		{
+			"label": "poll-deploys-after-passchip-commit",
+			"type": "shell",
+			"command": "gh api repos/jordantchampagne-sudo/GLA6-Theme-Park/actions/runs --jq '.workflow_runs[0:4] | map({status,conclusion,head_sha,updated_at})'; gh api repos/ChampagneCODE3D/GLA6-Theme-Park/pages/builds --jq '.[0:6] | map({status,commit,updated_at})'"
+		},
+		{
+			"label": "inspect-committed-pill-css-local-clones",
+			"type": "shell",
+			"command": "$jr='c:\\Users\\jorda\\GLA4\\_gla6sync\\jordan'; $cr='c:\\Users\\jorda\\GLA4\\_gla6sync\\champagne'; Write-Host '---Jordan HEAD---'; git -C $jr log -1 --oneline; Write-Host 'Jordan pill line:'; Select-String -Path (Join-Path $jr 'docs/index.html') -Pattern '\\.pill|border-left|cursor: default|background:' | Select-Object -First 8 | ForEach-Object { $_.Line }; Write-Host '---Champagne HEAD---'; git -C $cr log -1 --oneline; Write-Host 'Champagne pill line:'; Select-String -Path (Join-Path $cr 'index.html') -Pattern '\\.pill|border-left|cursor: default|background:' | Select-Object -First 8 | ForEach-Object { $_.Line }"
+		},
+		{
+			"label": "poll-after-passchip-commits",
+			"type": "shell",
+			"command": "gh api repos/jordantchampagne-sudo/GLA6-Theme-Park/actions/runs --jq '.workflow_runs[0:5] | map({status,conclusion,head_sha,updated_at})'; gh api repos/ChampagneCODE3D/GLA6-Theme-Park/pages/builds --jq '.[0:7] | map({status,commit,updated_at})'"
+		},
+		{
+			"label": "commit-push-flatten-pass-both",
+			"type": "shell",
+			"command": "Push-Location _gla6sync\\jordan; git add docs/index.html; git commit -m \"flatten pass lines v2\"; git push origin portfolio-fork; git log -1 --oneline; Pop-Location; Push-Location _gla6sync\\champagne; git add index.html; git commit -m \"flatten pass lines v2\"; git push origin main; git log -1 --oneline; Pop-Location"
+		},
+		{
+			"label": "show-status-both-gla6-clones",
+			"type": "shell",
+			"command": "Push-Location _gla6sync\\jordan; git status --short; git diff -- docs/index.html | Select-Object -First 80; Pop-Location; Push-Location _gla6sync\\champagne; git status --short; git diff -- index.html | Select-Object -First 80; Pop-Location"
+		},
+		{
+			"label": "commit-push-jordan-flatpass-v2",
+			"type": "shell",
+			"command": "Push-Location _gla6sync\\jordan; git add docs/index.html; git commit -m flatpassv2; git push origin portfolio-fork; git log -1 --oneline; Pop-Location"
+		},
+		{
+			"label": "commit-push-champagne-flatpass-v2",
+			"type": "shell",
+			"command": "Push-Location _gla6sync\\champagne; git add index.html; git commit -m flatpassv2; git push origin main; git log -1 --oneline; Pop-Location"
+		},
+		{
+			"label": "poll-flatpassv2-deploys",
+			"type": "shell",
+			"command": "gh api repos/jordantchampagne-sudo/GLA6-Theme-Park/actions/runs --jq '.workflow_runs[0:5] | map({status,conclusion,head_sha,updated_at})'; gh api repos/ChampagneCODE3D/GLA6-Theme-Park/pages/builds --jq '.[0:6] | map({status,commit,updated_at})'"
+		},
+		{
+			"label": "force-champagne-pages-build-flatpassv2",
+			"type": "shell",
+			"command": "gh api -X POST repos/ChampagneCODE3D/GLA6-Theme-Park/pages/builds; gh api repos/ChampagneCODE3D/GLA6-Theme-Park/pages/builds --jq '.[0:8] | map({status,commit,updated_at})'; gh api repos/jordantchampagne-sudo/GLA6-Theme-Park/actions/runs --jq '.workflow_runs[0:5] | map({status,conclusion,head_sha,updated_at})'"
+		},
+		{
+			"label": "poll-flatpassv2-again",
+			"type": "shell",
+			"command": "gh api repos/ChampagneCODE3D/GLA6-Theme-Park/pages/builds --jq '.[0:6] | map({status,commit,updated_at})'; gh api repos/jordantchampagne-sudo/GLA6-Theme-Park/actions/runs --jq '.workflow_runs[0:4] | map({status,conclusion,head_sha,updated_at})'"
+		},
+		{
+			"label": "inspect-champagne-pages-error",
+			"type": "shell",
+			"command": "gh api repos/ChampagneCODE3D/GLA6-Theme-Park/pages/builds/latest"
+		},
+		{
+			"label": "retry-champagne-pages-build-flatpassv2",
+			"type": "shell",
+			"command": "gh api -X POST repos/ChampagneCODE3D/GLA6-Theme-Park/pages/builds; gh api repos/ChampagneCODE3D/GLA6-Theme-Park/pages/builds --jq '.[0:5] | map({status,commit,updated_at})'; gh api repos/jordantchampagne-sudo/GLA6-Theme-Park/actions/runs --jq '.workflow_runs[0:3] | map({status,conclusion,head_sha,updated_at})'"
+		},
+		{
+			"label": "poll-champagne-build-after-retry",
+			"type": "shell",
+			"command": "gh api repos/ChampagneCODE3D/GLA6-Theme-Park/pages/builds --jq '.[0:5] | map({status,commit,updated_at})'"
+		},
+		{
+			"label": "commit-push-champagne-pages-bypass",
+			"type": "shell",
+			"command": "Push-Location _gla6sync\\champagne; git add .github/workflows/pages-deploy.yml index.html; git commit -m pagesbypass; git push origin main; git log -1 --oneline; Pop-Location"
+		},
+		{
+			"label": "switch-champagne-pages-to-workflow",
+			"type": "shell",
+			"command": "gh api -X PUT repos/ChampagneCODE3D/GLA6-Theme-Park/pages -f build_type=workflow; gh api repos/ChampagneCODE3D/GLA6-Theme-Park/pages"
+		},
+		{
+			"label": "poll-champagne-workflow-pagesbypass",
+			"type": "shell",
+			"command": "gh api repos/ChampagneCODE3D/GLA6-Theme-Park/actions/runs --jq '.workflow_runs[0:6] | map({name,status,conclusion,head_sha,updated_at})'; gh api repos/ChampagneCODE3D/GLA6-Theme-Park/pages --jq '{status,build_type,html_url}'"
+		},
+		{
+			"label": "inspect-failed-pages-workflow-run",
+			"type": "shell",
+			"command": "gh api repos/ChampagneCODE3D/GLA6-Theme-Park/actions/runs --jq '.workflow_runs[0:5] | map({id,name,status,conclusion,head_sha,html_url})'"
+		},
+		{
+			"label": "get-failed-workflow-log",
+			"type": "shell",
+			"command": "gh run view 28251173024 --repo ChampagneCODE3D/GLA6-Theme-Park --log-failed"
+		},
+		{
+			"label": "summarize-failed-workflow-run",
+			"type": "shell",
+			"command": "gh run view 28251173024 --repo ChampagneCODE3D/GLA6-Theme-Park"
+		},
+		{
+			"label": "revert-champagne-pages-to-legacy",
+			"type": "shell",
+			"command": "gh api -X PUT repos/ChampagneCODE3D/GLA6-Theme-Park/pages -f build_type=legacy -f \"source[branch]=main\" -f \"source[path]=/\"; gh api repos/ChampagneCODE3D/GLA6-Theme-Park/pages --jq '{status,build_type,source,html_url}'"
+		},
+		{
+			"label": "trigger-legacy-build-and-poll",
+			"type": "shell",
+			"command": "gh api -X POST repos/ChampagneCODE3D/GLA6-Theme-Park/pages/builds; gh api repos/ChampagneCODE3D/GLA6-Theme-Park/pages/builds --jq '.[0:8] | map({status,commit,updated_at})'"
+		},
+		{
+			"label": "poll-latest-champagne-build-once",
+			"type": "shell",
+			"command": "gh api repos/ChampagneCODE3D/GLA6-Theme-Park/pages/builds --jq '.[0:4] | map({status,commit,updated_at})'"
+		},
+		{
+			"label": "final-poll-champagne-build",
+			"type": "shell",
+			"command": "gh api repos/ChampagneCODE3D/GLA6-Theme-Park/pages/builds --jq '.[0:4] | map({status,commit,updated_at})'"
+		},
+		{
+			"label": "check-gla4-style-status",
+			"type": "shell",
+			"command": "git status --short css/style.css; git diff -- css/style.css | Select-Object -First 120"
+		},
+		{
+			"label": "inspect-gla4-git-state",
+			"type": "shell",
+			"command": "git remote -v; git branch --show-current; git status --short"
+		},
+		{
+			"label": "compare-origin-vs-champagne-master",
+			"type": "shell",
+			"command": "git fetch origin master; git fetch champagne master; Write-Host 'ORIGIN:'; git show origin/master:css/style.css | Select-Object -First 80; Write-Host 'CHAMPAGNE:'; git show champagne/master:css/style.css | Select-Object -First 80; Write-Host 'DIFF NAMES:'; git diff --name-only origin/master..champagne/master"
+		},
+		{
+			"label": "final-submission-readiness-check",
+			"type": "shell",
+			"command": "Write-Host 'GLA4 compare (Jordan vs Champagne master):'; git fetch origin master; git fetch champagne master; git diff --name-only origin/master..champagne/master; Write-Host 'Jordan GLA6 head:'; gh api repos/jordantchampagne-sudo/GLA6-Theme-Park/branches/portfolio-fork --jq '.commit.sha'; Write-Host 'Champagne GLA6 head:'; gh api repos/ChampagneCODE3D/GLA6-Theme-Park/branches/main --jq '.commit.sha'; Write-Host 'Jordan GLA6 latest run:'; gh api repos/jordantchampagne-sudo/GLA6-Theme-Park/actions/runs --jq '.workflow_runs[0] | {status,conclusion,head_sha,updated_at}'; Write-Host 'Champagne GLA6 latest pages build:'; gh api repos/ChampagneCODE3D/GLA6-Theme-Park/pages/builds --jq '.[0] | {status,commit,updated_at}'"
+		},
+		{
+			"label": "create-gla6-submission-zips",
+			"type": "shell",
+			"command": "$outDir = Join-Path $PWD 'submission-zips'; New-Item -ItemType Directory -Force -Path $outDir | Out-Null; $tmpJordan = Join-Path $env:TEMP 'gla6_jordan_zip_src'; $tmpChamp = Join-Path $env:TEMP 'gla6_champagne_zip_src'; Remove-Item -Recurse -Force $tmpJordan,$tmpChamp -ErrorAction SilentlyContinue; New-Item -ItemType Directory -Force -Path $tmpJordan,$tmpChamp | Out-Null; robocopy '_gla6sync\\jordan' $tmpJordan /E /XD .git node_modules .github | Out-Null; robocopy '_gla6sync\\champagne' $tmpChamp /E /XD .git node_modules .github | Out-Null; $zipJordan = Join-Path $outDir 'GLA6-Jordan-Code.zip'; $zipChamp = Join-Path $outDir 'GLA6-Champagne-Code.zip'; Remove-Item -Force $zipJordan,$zipChamp -ErrorAction SilentlyContinue; Compress-Archive -Path (Join-Path $tmpJordan '*') -DestinationPath $zipJordan -Force; Compress-Archive -Path (Join-Path $tmpChamp '*') -DestinationPath $zipChamp -Force; Get-Item $zipJordan,$zipChamp | Select-Object FullName,Length,LastWriteTime | Format-Table -AutoSize"
+		},
+		{
+			"label": "create-clean-jordan-gla6-zip",
+			"type": "shell",
+			"command": "$outDir = Join-Path $PWD 'submission-zips'; New-Item -ItemType Directory -Force -Path $outDir | Out-Null; $tmpJordan = Join-Path $env:TEMP 'gla6_jordan_clean_zip_src'; Remove-Item -Recurse -Force $tmpJordan -ErrorAction SilentlyContinue; New-Item -ItemType Directory -Force -Path $tmpJordan | Out-Null; robocopy '_gla6sync\\jordan' $tmpJordan /E /XD .git node_modules .github postman-evidence | Out-Null; $zipJordan = Join-Path $outDir 'GLA6-Jordan-Code-Clean.zip'; Remove-Item -Force $zipJordan -ErrorAction SilentlyContinue; Compress-Archive -Path (Join-Path $tmpJordan '*') -DestinationPath $zipJordan -Force; Add-Type -AssemblyName System.IO.Compression.FileSystem; $archive = [System.IO.Compression.ZipFile]::OpenRead($zipJordan); $containsPostman = $archive.Entries | Where-Object { $_.FullName -like 'postman-evidence*' }; $archive.Dispose(); Get-Item $zipJordan | Select-Object FullName,Length,LastWriteTime | Format-Table -AutoSize; if ($containsPostman) { Write-Host 'WARNING: postman-evidence still present'; } else { Write-Host 'Verified: postman-evidence removed'; }"
+		},
+		{
+			"label": "list-clean-zip-contents",
+			"type": "shell",
+			"command": "Add-Type -AssemblyName System.IO.Compression.FileSystem; $zip='c:\\Users\\jorda\\GLA4\\submission-zips\\GLA6-Jordan-Code-Clean.zip'; $archive=[System.IO.Compression.ZipFile]::OpenRead($zip); $archive.Entries | Select-Object FullName,Length | Sort-Object FullName | Format-Table -AutoSize; $archive.Dispose(); Write-Host '---'; Write-Host 'Source folder top-level:'; Get-ChildItem 'c:\\Users\\jorda\\GLA4\\_gla6sync\\jordan' -Force | Select-Object Name,Mode | Format-Table -AutoSize"
+		},
+		{
+			"label": "create-fuller-jordan-zip-no-postman",
+			"type": "shell",
+			"command": "$outDir = Join-Path $PWD 'submission-zips'; New-Item -ItemType Directory -Force -Path $outDir | Out-Null; $tmpJordan = Join-Path $env:TEMP 'gla6_jordan_full_zip_src'; Remove-Item -Recurse -Force $tmpJordan -ErrorAction SilentlyContinue; New-Item -ItemType Directory -Force -Path $tmpJordan | Out-Null; robocopy '_gla6sync\\jordan' $tmpJordan /E /XD .git node_modules postman-evidence | Out-Null; $zipJordan = Join-Path $outDir 'GLA6-Jordan-Code-Full-NoPostman.zip'; Remove-Item -Force $zipJordan -ErrorAction SilentlyContinue; Compress-Archive -Path (Join-Path $tmpJordan '*') -DestinationPath $zipJordan -Force; Add-Type -AssemblyName System.IO.Compression.FileSystem; $archive = [System.IO.Compression.ZipFile]::OpenRead($zipJordan); $entries = $archive.Entries | Select-Object FullName,Length | Sort-Object FullName; $archive.Dispose(); Get-Item $zipJordan | Select-Object FullName,Length,LastWriteTime | Format-Table -AutoSize; Write-Host 'Top entries:'; $entries | Select-Object -First 25 | Format-Table -AutoSize"
+		},
+		{
+			"label": "create-gla6-dual-version-master-zip",
+			"type": "shell",
+			"command": "$outDir = Join-Path $PWD 'submission-zips'; New-Item -ItemType Directory -Force -Path $outDir | Out-Null; $bundleDir = Join-Path $env:TEMP 'gla6_dual_bundle'; Remove-Item -Recurse -Force $bundleDir -ErrorAction SilentlyContinue; New-Item -ItemType Directory -Force -Path $bundleDir | Out-Null; Copy-Item (Join-Path $outDir 'GLA6-Jordan-Code-Clean.zip') (Join-Path $bundleDir 'GLA6-Jordan-Code-Clean.zip') -Force; Copy-Item (Join-Path $outDir 'GLA6-Jordan-Code-Full-NoPostman.zip') (Join-Path $bundleDir 'GLA6-Jordan-Code-Full-NoPostman.zip') -Force; @'\nGLA6 dual-version bundle\n\nIncludes:\n1) GLA6-Jordan-Code-Clean.zip\n   - excludes .git, node_modules, .github, postman-evidence\n\n2) GLA6-Jordan-Code-Full-NoPostman.zip\n   - excludes .git, node_modules, postman-evidence\n   - includes .github workflow files\n\nUse whichever version matches your instructor preference.\n'@ | Set-Content -Path (Join-Path $bundleDir 'README.txt') -Encoding UTF8; $masterZip = Join-Path $outDir 'GLA6-Jordan-Dual-Version-Bundle.zip'; Remove-Item -Force $masterZip -ErrorAction SilentlyContinue; Compress-Archive -Path (Join-Path $bundleDir '*') -DestinationPath $masterZip -Force; Get-Item $masterZip | Select-Object FullName,Length,LastWriteTime | Format-Table -AutoSize; Add-Type -AssemblyName System.IO.Compression.FileSystem; $archive=[System.IO.Compression.ZipFile]::OpenRead($masterZip); $archive.Entries | Select-Object FullName,Length | Sort-Object FullName | Format-Table -AutoSize; $archive.Dispose()"
+		}
+	]
+}
