@@ -8,6 +8,19 @@ const searchInput = document.getElementById("searchInput");
 
 let allUsers = [];
 
+function createFallbackAvatar(name) {
+  const initials = name
+    .split(" ")
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((part) => part[0])
+    .join("")
+    .toUpperCase();
+
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100"><rect width="100%" height="100%" rx="16" fill="#1f4d3f"/><text x="50%" y="56%" font-size="34" font-family="Arial, sans-serif" fill="white" text-anchor="middle">${initials}</text></svg>`;
+  return `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg)}`;
+}
+
 function clearElement(element) {
   while (element.firstChild) {
     element.removeChild(element.firstChild);
@@ -119,7 +132,7 @@ async function loadData() {
       email: user.email,
       city: user.address.city,
       company: user.company.name,
-      image: randomImages[index] || "https://via.placeholder.com/100"
+      image: randomImages[index] || createFallbackAvatar(user.name)
     }));
 
     allUsers = enhancedUsers;
