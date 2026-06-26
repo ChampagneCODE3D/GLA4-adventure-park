@@ -1,7 +1,7 @@
 const ticketForm = document.getElementById("ticketForm");
 const confirmationMessage = document.getElementById("confirmationMessage");
 const yearElement = document.getElementById("currentYear");
-const API_BASE_URL = window.BOOKING_API_URL || "";
+const API_BASE_URL = window.BOOKING_API_URL || "https://adventure-park-booking.onrender.com";
 
 function generateTicketNumber() {
   const randomPart = Math.floor(1000 + Math.random() * 9000);
@@ -33,34 +33,31 @@ if (ticketForm) {
 
     if (confirmationMessage) {
       confirmationMessage.textContent = "Submitting your booking...";
+      confirmationMessage.style.color = "";
     }
 
     try {
       const response = await fetch(`${API_BASE_URL}/api/booking`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name,
-          email,
-          tickets,
-          ticketNumber,
-          submittedAt: new Date().toISOString()
-        })
+        body: JSON.stringify({ name, email, tickets, ticketNumber, submittedAt: new Date().toISOString() })
       });
 
       const result = await response.json().catch(() => ({}));
 
       if (!response.ok) {
-        throw new Error(result.message || "The booking service is unavailable right now.");
+        throw new Error(result.message || "Booking failed. Please try again.");
       }
 
       if (confirmationMessage) {
-        confirmationMessage.textContent = `Thank you, ${name}. Your booking for ${tickets} ticket(s) is confirmed. Ticket Number: ${ticketNumber}.`;
+        confirmationMessage.textContent = `🎟️ Booking confirmed! Thank you, ${name}. Your ${tickets} ticket(s) are reserved. Reference: ${ticketNumber}. A confirmation has been sent to ${email}.`;
+        confirmationMessage.style.color = "green";
       }
       ticketForm.reset();
     } catch (error) {
       if (confirmationMessage) {
-        confirmationMessage.textContent = error.message || "We could not submit your booking. Please try again later.";
+        confirmationMessage.textContent = "We could not complete your booking right now. Please try again shortly.";
+        confirmationMessage.style.color = "red";
       }
     }
   });

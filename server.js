@@ -1,9 +1,23 @@
 const express = require('express');
 const nodemailer = require('nodemailer');
+const cors = require('cors');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+const allowedOrigins = [
+  'https://champagnecode3d.github.io',
+  'https://jordantchampagne-sudo.github.io',
+  'http://localhost:3000',
+  'http://127.0.0.1:5500'
+];
+
+app.use(cors({
+  origin: (origin, callback) => {
+    if (!origin || allowedOrigins.includes(origin)) return callback(null, true);
+    callback(new Error('Not allowed by CORS'));
+  }
+}));
 app.use(express.json());
 
 app.get('/health', (req, res) => {
