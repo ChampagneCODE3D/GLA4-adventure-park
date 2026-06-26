@@ -5,8 +5,14 @@ const postCountEl = document.getElementById("postCount");
 const loadingMessage = document.getElementById("loadingMessage");
 const errorMessage = document.getElementById("errorMessage");
 const searchInput = document.getElementById("searchInput");
+const postSearchInput = document.getElementById("postSearchInput");
 
 let allUsers = [];
+let allPosts = [];
+let featuredUserIndex = 0;
+let featuredPostIndex = 0;
+let modal = null;
+const visibleFeaturedCount = 3;
 
 function createFallbackAvatar(name) {
   const initials = name
@@ -27,9 +33,82 @@ function clearElement(element) {
   }
 }
 
+function buildModal() {
+  if (modal) {
+    return modal;
+  }
+
+  modal = document.createElement("div");
+  modal.className = "modal-backdrop";
+  modal.innerHTML = `
+    <div class="modal-card" role="dialog" aria-modal="true">
+      <button class="modal-close" type="button" aria-label="Close details">×</button>
+      <div class="modal-body"></div>
+    </div>
+  `;
+
+  modal.addEventListener("click", (event) => {
+    if (event.target === modal) {
+      closeModal();
+    }
+  });
+
+  modal.querySelector(".modal-close").addEventListener("click", closeModal);
+  document.body.appendChild(modal);
+  return modal;
+}
+
+function closeModal() {
+  if (modal) {
+    modal.classList.remove("is-open");
+  }
+}
+
+function openModal(type, item) {
+  const modalElement = buildModal();
+  const body = modalElement.querySelector(".modal-body");
+
+  if (type === "user") {
+    body.innerHTML = `
+      <div class="modal-hero">
+        <img src="${item.image}" alt="${item.name}" />
+        <div>
+          <h3>${item.name}</h3>
+          <p>${item.email}</p>
+        </div>
+      </div>
+      <p><strong>City:</strong> ${item.city}</p>
+      <p><strong>Company:</strong> ${item.company}</p>
+      <p>This visitor card is part of the rotating spotlight so the page feels more alive and easier to browse.</p>
+    `;
+  } else {
+    const firstParagraph = item.body || "The park has another strange story to share.";
+    const secondParagraph = item.body && item.body.length > 100
+      ? "Guests keep comparing notes around the grounds, and the mystery seems to deepen the longer the story is discussed."
+      : "The rumor is spreading through the park, and visitors are eager to see whether the mystery grows by evening.";
+
+    body.innerHTML = `
+      <h3>${item.title}</h3>
+      <p>${firstParagraph}</p>
+      <p>${secondParagraph}</p>
+      <p class="modal-note">This post opens in a popup so guests can read the full story without losing their place on the page.</p>
+    `;
+  }
+
+  modalElement.classList.add("is-open");
+}
+
 function createUserCardElement(user) {
   const card = document.createElement("article");
   card.className = "user-card";
+  card.tabIndex = 0;
+  card.addEventListener("click", () => openModal("user", user));
+  card.addEventListener("keydown", (event) => {
+    if (event.key === "Enter" || event.key === " ") {
+      event.preventDefault();
+      openModal("user", user);
+    }
+  });
 
   const image = document.createElement("img");
   image.src = user.image;
@@ -53,42 +132,92 @@ function createUserCardElement(user) {
   return card;
 }
 
-function renderUsers(users) {
+function getFeaturedUsers(source) {
+  if (!source.length) {
+    return [];
+  }
+
+  const size = source.length;
+  const start = featuredUserIndex % size;
+  const items = [];
+
+  for (let offset = 0; offset < visibleFeaturedCount; offset += 1) {
+    items.push(source[(start + offset) % size]);
+  }
+
+  return items;
+}
+
+function getFeaturedPosts(source) {
+  if (!source.length) {
+    return [];
+  }
+
+  const size = source.length;
+  const start = featuredPostIndex % size;
+  const items = [];
+
+  for (let offset = 0; offset < visibleFeaturedCount; offset += 1) {
+    items.push(source[(start + offset) % size]);
+  }
+
+  return items;
+}
+
+function renderUsers(usersOverride) {
   if (!userContainer) {
     return;
   }
 
   clearElement(userContainer);
 
-  if (users.length === 0) {
+  const source = usersOverride || getFilteredUsers();
+
+  if (source.length === 0) {
     const empty = document.createElement("p");
     empty.className = "loading";
-    empty.textContent = "No users match your search.";
+    empty.textContent = "No visitors match your search.";
     userContainer.appendChild(empty);
     return;
   }
 
   const fragment = document.createDocumentFragment();
-  users.forEach((user) => {
+  getFeaturedUsers(source).forEach((user) => {
     fragment.appendChild(createUserCardElement(user));
   });
 
   userContainer.appendChild(fragment);
 }
 
-function renderPosts(posts) {
+function renderPosts(postsOverride) {
   if (!postsContainer) {
     return;
   }
 
-  const limitedPosts = posts.slice(0, 8);
   clearElement(postsContainer);
 
-  const fragment = document.createDocumentFragment();
+  const source = postsOverride || getFilteredPosts();
 
-  limitedPosts.forEach((post) => {
+  if (source.length === 0) {
+    const empty = document.createElement("p");
+    empty.className = "loading";
+    empty.textContent = "No posts match your search.";
+    postsContainer.appendChild(empty);
+    return;
+  }
+
+  const fragment = document.createDocumentFragment();
+  getFeaturedPosts(source).forEach((post) => {
     const article = document.createElement("article");
     article.className = "post-item";
+    article.tabIndex = 0;
+    article.addEventListener("click", () => openModal("post", post));
+    article.addEventListener("keydown", (event) => {
+      if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        openModal("post", post);
+      }
+    });
 
     const title = document.createElement("h3");
     title.textContent = post.title;
@@ -103,10 +232,53 @@ function renderPosts(posts) {
   postsContainer.appendChild(fragment);
 }
 
+function getFilteredUsers() {
+  const query = (searchInput?.value || "").trim().toLowerCase();
+  if (!query) {
+    return allUsers;
+  }
+
+  return allUsers.filter((user) => {
+    const haystack = `${user.name} ${user.city} ${user.company}`.toLowerCase();
+    return haystack.includes(query);
+  });
+}
+
+function getFilteredPosts() {
+  const query = (postSearchInput?.value || "").trim().toLowerCase();
+  if (!query) {
+    return allPosts;
+  }
+
+  return allPosts.filter((post) => {
+    const haystack = `${post.title} ${post.body}`.toLowerCase();
+    return haystack.includes(query);
+  });
+}
+
 function filterUsersByName(searchValue) {
-  const query = searchValue.trim().toLowerCase();
-  const filtered = allUsers.filter((user) => user.name.toLowerCase().includes(query));
-  renderUsers(filtered);
+  featuredUserIndex = 0;
+  renderUsers(getFilteredUsers());
+}
+
+function filterPosts(searchValue) {
+  featuredPostIndex = 0;
+  renderPosts(getFilteredPosts());
+}
+
+function startRotation() {
+  window.clearInterval(window.adventureRotationTimer);
+  window.adventureRotationTimer = window.setInterval(() => {
+    if (allUsers.length) {
+      featuredUserIndex = (featuredUserIndex + 1) % allUsers.length;
+      renderUsers(getFilteredUsers());
+    }
+
+    if (allPosts.length) {
+      featuredPostIndex = (featuredPostIndex + 1) % allPosts.length;
+      renderPosts(getFilteredPosts());
+    }
+  }, 30000);
 }
 
 async function loadData() {
@@ -115,7 +287,7 @@ async function loadData() {
   }
 
   try {
-    loadingMessage.textContent = "Loading users and posts...";
+    loadingMessage.textContent = "Loading visitors and posts...";
     errorMessage.textContent = "";
 
     const [users, posts] = await Promise.all([getUsers(), getPosts()]);
@@ -136,8 +308,10 @@ async function loadData() {
     }));
 
     allUsers = enhancedUsers;
+    allPosts = posts;
     renderUsers(allUsers);
-    renderPosts(posts);
+    renderPosts(allPosts);
+    startRotation();
 
     userCountEl.textContent = String(allUsers.length);
     postCountEl.textContent = String(posts.length);
@@ -151,6 +325,12 @@ async function loadData() {
 if (searchInput) {
   searchInput.addEventListener("input", (event) => {
     filterUsersByName(event.target.value);
+  });
+}
+
+if (postSearchInput) {
+  postSearchInput.addEventListener("input", (event) => {
+    filterPosts(event.target.value);
   });
 }
 
